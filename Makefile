@@ -27,6 +27,7 @@ $(OBJ_DIR)%.o: $(SRC_PATH)%.c
 
 clean:
 	rm -rf $(OBJ)
+	rm -rf $(OBJ_DIR)
 	@make -C Libft/ clean
 	@make -C minilibx-linux/ clean
 fclean: clean
