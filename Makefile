@@ -1,29 +1,34 @@
 NAME=cub3D
-LIB=minilibx/libmlx_Linux.a
+LIB=minilibx-linux/libmlx_Linux.a
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -Imlx
 
-FILES = src/game.c
+SRC_PATH=	./src/
+SRC_FILES=	game.c
 
-OBJ=$(%.c=%.o)
-SOFLAGS=-Iinclude -ldl -lglfw -pthread -lm
+OBJ_DIR = obj/
+
+OBJ=$(SRC_FILES:%.c=$(OBJ_DIR)%.o)
+SOFLAGS= -Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm
 
 # rules
 all: $(NAME)
 
 Libft/libft.a : 
 	@make bonus -C Libft/
-	@make -C minilibx/
+	@make -C minilibx-linux/
 
-$(NAME):Libft/libft.a $(OBJ)
+$(NAME):$(OBJ) Libft/libft.a 
 	$(CC) $^ $(LIB) $(SOFLAGS) -o $(NAME)
-%.o: %.c
-	$(CC) $(CFLAGS) -c $<
+
+$(OBJ_DIR)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ)
 	@make -C Libft/ clean
-	@make -C minilibx/ clean
+	@make -C minilibx-linux/ clean
 fclean: clean
 	rm -f $(NAME)
 	@make -C Libft/ fclean

@@ -7,12 +7,12 @@ static void cube(void)
 	void	*win_ptr;
 
 	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "prueba");
+	win_ptr = mlx_new_window(mlx_ptr, 1500, 1500, "prueba");
 	mlx_pixel_put(mlx_ptr, win_ptr, 250, 250, 0xFFFFFFF);
 	mlx_loop(mlx_ptr);
 }
 
-int	mian(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	if(argc > 3)
 	{
