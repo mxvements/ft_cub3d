@@ -17,6 +17,15 @@ typedef struct s_map
 	char		**map2d;
 }					t_map;
 
+typedef struct s_player
+{
+	int			x;
+	int			y;
+	int			a;
+	int			wolk;	//andar 0 parado, 1 para delante, -1 para atras	
+	int			spin;   //girar 1 derecha, -1 izquierda
+}					t_player;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -25,9 +34,11 @@ typedef struct s_data
 	int			y_max;
 	int			size;
 	int			steps;
+	int			sp_spin;
 	int			x;
 	int			y;
 	t_map		*map;
+	t_player	*player;
 }					t_data;
 
 enum {
@@ -39,7 +50,8 @@ enum {
 	key_DOWN=65364,
 	key_RIGHT=65363,
 	key_UP=65362,
-	key_SPACE=65, // pendiente de confirmar
+	key_SPACE=32,
+	key_R=114,
 	key_ESC = 65307
 };
 
