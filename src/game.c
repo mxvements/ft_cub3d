@@ -9,28 +9,50 @@ static int	close_win(t_data *data)
 	exit(1);
 }
 
+static void move(t_data *data, int x, int y)
+{
+	data->player->x += x;
+	data->player->y += y;
+}
+
 static int	ft_hook_key(int key, t_data *data)
 {
 	if (key == key_ESC)
 		close_win(data);
-	// if (key == key_A || key == key_LEFT)
-	// {
-	// 	move(mlx, 0, -1);
-	// }
-	// if (key == key_S || key == key_DOWN)
-	// {
-	// 	move(mlx, 1, 0);
-	// }
-	// if (key == key_D || key == key_RIGHT)
-	// {
-	// 	move(mlx, 0, 1);
-	// }
-	// if (key == key_W || key == key_UP)
-	// {
-	// 	move(mlx, -1, 0);
-	// }
+	if (key == key_A || key == key_LEFT)
+	{
+		move(data, 0, -1);
+	}
+	if (key == key_S || key == key_DOWN)
+	{
+		move(data, 1, 0);
+	}
+	if (key == key_D || key == key_RIGHT)
+	{
+		move(data, 0, 1);
+	}
+	if (key == key_W || key == key_UP)
+	{
+		move(data, -1, 0);
+	}
 	// printf("teclado -> %i \n",key);
 	return (0);
+}
+
+
+static void cube_init(t_data *data)
+{
+	t_player *player;
+
+	data->size = 128; // cada cuadrado, centro seria 64x64
+	data->x_max = 1280; //10 x128
+	data->y_max = data->x_max;
+	
+	player = malloc(sizeof(t_player));
+	player->x = (5 * data->size) + (data->size / 2);
+	player->y = (8 * data->size) + (data->size / 2);
+	player->a = 0;
+	data->player = player;
 }
 
 static void cube(void)
@@ -38,15 +60,14 @@ static void cube(void)
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	data->x_max = 1500;
-	data->y_max = data->x_max;
+	cube_init(data);
 	data->steps = 3; //velocidad de avance
 	data->sp_spin =3 *(3.14/180); //velocidad de giro
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
-
 	mlx_key_hook(data->win, ft_hook_key, data);
-	// mlx_pixel_put(data->mlx, data->win, 250, 250, 0xF7DC6F);
+	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
+	mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");
 	mlx_loop(data->mlx);
 }
 

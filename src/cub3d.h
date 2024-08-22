@@ -10,6 +10,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
+# include <math.h>
 
 typedef struct s_map
 {
@@ -35,8 +36,6 @@ typedef struct s_data
 	int			size;
 	int			steps;
 	int			sp_spin;
-	int			x;
-	int			y;
 	t_map		*map;
 	t_player	*player;
 }					t_data;

@@ -4,7 +4,8 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror -Imlx
 
 SRC_PATH=	./src/
-SRC_FILES=	game.c
+SRC_FILES=	game.c\
+			ray_casting.c
 
 OBJ_DIR = obj/
 
