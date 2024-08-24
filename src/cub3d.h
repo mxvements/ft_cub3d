@@ -16,6 +16,12 @@ typedef struct s_map
 {
 	char		*map;
 	char		**map2d;
+	char		NO_texture;
+	char		SO_texture;
+	char		WE_texture;
+	char		EA_texture;
+	int			floor;
+	int			ceiling;
 }					t_map;
 
 typedef struct s_player
