@@ -21,31 +21,32 @@ static int	ft_hook_key(int key, t_data *data)
 		close_win(data);
 	if (key == key_A || key == key_LEFT)
 	{
-		double oldDirX = dirX;
-		dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-		dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-		double oldPlaneX = planeX;
-		planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-		planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+		move(data, 1, 0);
+		// double oldDirX = dirX;
+		// dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
+		// dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+		// double oldPlaneX = planeX;
+		// planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+		// planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
 	}
 	if (key == key_S || key == key_DOWN)
 	{
-		if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-    	if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
+		// if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
+    	// if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
 	}
 	if (key == key_D || key == key_RIGHT)
 	{
-		double oldDirX = dirX;
-		dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-		dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-		double oldPlaneX = planeX;
-		planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-		planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+		// double oldDirX = dirX;
+		// dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
+		// dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
+		// double oldPlaneX = planeX;
+		// planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
+		// planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 	}
 	if (key == key_W || key == key_UP)
 	{
-		if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-      	if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
+		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
+      	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
 	// printf("teclado -> %i \n",key);
 	return (0);
@@ -76,10 +77,10 @@ char	*read_map(char *s)
 static void cube_init(t_data *data)
 {
 	t_player *player;
-	double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+	// double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
 
-	double time = 0; //time of current frame
-	double oldTime = 0; //time of previous frame
+	// double time = 0; //time of current frame
+	// double oldTime = 0; //time of previous frame
 
 	data->size = 128; // cada cuadrado, centro seria 64x64
 	data->x_max = 10; //10 x128
@@ -103,20 +104,20 @@ static void cube_init(t_data *data)
 	// data->map->map2d = mapa;
 	player->x = 4.0;
 	player->y = 4.0;
-	player->dirX = -1.0;
+	player->dirX = 0.0;
 	player->dirY = 0.0;
 	data->player = player;
 
-	oldTime = time;
-    time = getTicks();
-    double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-    print(1.0 / frameTime); //FPS counter
-    redraw();
-    cls();
+	// oldTime = time;
+    // time = getTicks();
+    // double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
+    // print(1.0 / frameTime); //FPS counter
+    // redraw();
+    // cls();
 
     //speed modifiers
-    double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-    double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
+    // double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
+    // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 }
 
 static void cube(char *map)
