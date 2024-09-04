@@ -1,9 +1,81 @@
 
 #include "cub3d.h"
 
-void ray(float x, float y, int ang)
+void ray(t_data *data)
 {
+    for (int x = 0; x < data->x_max; x++) {
+        // Calcular el ángulo del rayo para cada columna en la pantalla
+        float cameraX = 2 * x / (float)data->x_max - 1; // Coordenada X en el espacio de la cámara
+        float rayDirX = data->player->dirX + cameraX;       // Dirección del rayo en X
+        float rayDirY = data->player->dirY;                 // Dirección del rayo en Y
 
+        // Posición inicial en la cuadrícula del mapa
+        int mapX = (int)data->player->x;
+        int mapY = (int)data->player->y;
+
+        // Distancia del rayo en ambas direcciones
+        float sideDistX, sideDistY;
+
+        // Longitud del rayo desde una x o y hasta la siguiente celda
+        float deltaDistX = fabs(1 / rayDirX);
+        float deltaDistY = fabs(1 / rayDirY);
+
+        // Dirección en la que se mueve el rayo (1 o -1) y la distancia a la próxima intersección en esa dirección
+        int stepX, stepY;
+        
+        // Calcular stepX y stepY, así como sideDistX y sideDistY
+        if (rayDirX < 0) {
+            stepX = -1;
+            sideDistX = (data->player->x - mapX) * deltaDistX;
+        } else {
+            stepX = 1;
+            sideDistX = (mapX + 1.0 - data->player->x) * deltaDistX;
+        }
+
+        if (rayDirY < 0) {
+            stepY = -1;
+            sideDistY = (data->player->y - mapY) * deltaDistY;
+        } else {
+            stepY = 1;
+            sideDistY = (mapY + 1.0 - data->player->y) * deltaDistY;
+        }
+
+        // Realizar el DDA para encontrar la intersección del rayo con una pared
+        int hit = 0;  // ¿Se encontró una pared?
+        int side;     // Si fue una intersección en el eje X o Y
+
+
+        while (hit == 0) {
+            // Saltar a la siguiente celda en el eje X o Y
+            printf("sideDis y-> %f.\n", sideDistY);
+            printf("sideDis x-> %f.\n", sideDistX);
+            if (sideDistX < sideDistY) {
+                sideDistX += deltaDistX;
+                mapX += stepX;
+                side = 0;
+            } else {
+                sideDistY += deltaDistY;
+                mapY += stepY;
+                side = 1;
+            }
+	        printf("aqui-> %d y %d.\n", mapX, mapY);
+
+            // Verificar si el rayo ha alcanzado una pared
+            if (data->map->map2d[mapX][mapY] == '1') 
+                hit = 1;
+        }
+
+        // Calcular la distancia al punto de impacto
+        float distancia;
+        if (side == 0) {
+            distancia = (mapX - data->player->x + (1 - stepX) / 2) / rayDirX;
+        } else {
+            distancia = (mapY - data->player->y + (1 - stepY) / 2) / rayDirY;
+        }
+
+        // Imprimir la distancia calculada para cada rayo
+        printf("Rayo %d: distancia a la pared = %f\n", x, distancia);
+    }
 }
 
 /*
@@ -16,8 +88,10 @@ int mapa[MAP_WIDTH][MAP_HEIGHT] = {
     {1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 1, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 1, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 1},
     {1, 1, 1, 1, 1, 1, 1, 1}

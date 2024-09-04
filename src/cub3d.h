@@ -26,8 +26,10 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	int			x;
-	int			y;
+	float			x;
+	float			y;
+	float			dirX;
+	float			dirY;
 	int			a;
 	int			wolk;	//andar 0 parado, 1 para delante, -1 para atras	
 	int			spin;   //girar 1 derecha, -1 izquierda
@@ -59,5 +61,7 @@ enum {
 	key_R=114,
 	key_ESC = 65307
 };
+
+void ray(t_data *data);
 
 #endif
