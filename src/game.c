@@ -102,9 +102,9 @@ static void cube_init(t_data *data)
 	// 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	// };
 	// data->map->map2d = mapa;
-	player->x = 4.0;
-	player->y = 4.0;
-	player->dirX = 0.0;
+	player->x = 1.0;
+	player->y = 1.0;
+	player->dirX = 1.0;
 	player->dirY = 0.0;
 	data->player = player;
 
@@ -119,6 +119,18 @@ static void cube_init(t_data *data)
     // double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
     // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 }
+
+/* static int	del(t_data *data)
+{
+	data->count++;
+	if (data->count % 10000 == 0)
+	{
+		data->ngif += 1;
+		data->count = 0;
+		print_map(data, data->map);
+	}
+	return (0);
+} */
 
 static void cube(char *map)
 {
@@ -140,6 +152,8 @@ static void cube(char *map)
 	ray(data);
 	mlx_key_hook(data->win, ft_hook_key, data);
 	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
+
+	// mlx_loop_hook(data->mlx, del, data);
 	mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");
 	mlx_loop(data->mlx);
 }

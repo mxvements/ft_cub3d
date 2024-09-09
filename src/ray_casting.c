@@ -8,6 +8,7 @@ void ray(t_data *data)
         float cameraX = 2 * x / (float)data->x_max - 1; // Coordenada X en el espacio de la cámara
         float rayDirX = data->player->dirX + cameraX;       // Dirección del rayo en X
         float rayDirY = data->player->dirY;                 // Dirección del rayo en Y
+        printf("valor de ray dir -> %f .\n", rayDirY);
 
         // Posición inicial en la cuadrícula del mapa
         int mapX = (int)data->player->x;
@@ -34,9 +35,11 @@ void ray(t_data *data)
 
         if (rayDirY < 0) {
             stepY = -1;
+            printf("datay -> %f , mapaY -> %d , deltaDistY -> %f .\n", data->player->y, mapY, deltaDistY);
             sideDistY = (data->player->y - mapY) * deltaDistY;
         } else {
             stepY = 1;
+            printf("datay -> %f , mapaY -> %d , deltaDistY -> %f .\n", data->player->y, mapY, deltaDistY);
             sideDistY = (mapY + 1.0 - data->player->y) * deltaDistY;
         }
 
