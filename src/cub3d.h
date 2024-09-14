@@ -22,6 +22,13 @@ typedef struct s_map
 	char		EA_texture;
 	int			floor;
 	int			ceiling;
+	void		*img_pared;
+	void		*img_arena;
+	void		*img_people;
+	char		*path_pared;
+	char		*path_arena;
+	char		*path_aladin;
+	
 }					t_map;
 
 typedef struct s_player
@@ -30,9 +37,9 @@ typedef struct s_player
 	float			y;
 	float			dirX;
 	float			dirY;
-	int			a;
-	int			wolk;	//andar 0 parado, 1 para delante, -1 para atras	
-	int			spin;   //girar 1 derecha, -1 izquierda
+	int				a;
+	int				wolk;	//andar 0 parado, 1 para delante, -1 para atras	
+	int				spin;   //girar 1 derecha, -1 izquierda
 }					t_player;
 
 typedef struct s_data
@@ -44,6 +51,7 @@ typedef struct s_data
 	int			size;
 	int			steps;
 	int			sp_spin;
+	int			count;
 	t_map		*map;
 	t_player	*player;
 }					t_data;
@@ -62,6 +70,11 @@ enum {
 	key_ESC = 65307
 };
 
-void ray(t_data *data);
+void	ray(t_data *data);
+void	insect_img(t_data *data, t_map *map);
+void	mapok(char **res, t_data *data, int i, int j);
+void	ini(t_data *data);
+void	print_map(t_data *mlx, t_map *map);
+int		del(t_data *data);
 
 #endif

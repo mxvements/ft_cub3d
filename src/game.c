@@ -82,8 +82,8 @@ static void cube_init(t_data *data)
 	// double time = 0; //time of current frame
 	// double oldTime = 0; //time of previous frame
 
-	data->size = 128; // cada cuadrado, centro seria 64x64
-	data->x_max = 10; //10 x128
+	data->size = 64; // cada cuadrado, centro seria 64x64
+	data->x_max = 10 * data->size; //10 x128
 	data->y_max = data->x_max;
 	
 	player = malloc(sizeof(t_player));
@@ -107,6 +107,7 @@ static void cube_init(t_data *data)
 	player->dirX = 1.0;
 	player->dirY = 0.0;
 	data->player = player;
+	ini(data);
 
 	// oldTime = time;
     // time = getTicks();
@@ -120,17 +121,16 @@ static void cube_init(t_data *data)
     // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 }
 
-/* static int	del(t_data *data)
+int	del(t_data *data)
 {
 	data->count++;
 	if (data->count % 10000 == 0)
 	{
-		data->ngif += 1;
 		data->count = 0;
 		print_map(data, data->map);
 	}
 	return (0);
-} */
+}
 
 static void cube(char *map)
 {
@@ -144,17 +144,19 @@ static void cube(char *map)
 	maps->map = map;
 	res = ft_split(maps->map, '\n');
 	maps->map2d = res;
+	data->count = 0;
 	cube_init(data);
 	data->steps = 3; //velocidad de avance
 	data->sp_spin =3 *(3.14/180); //velocidad de giro
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
-	ray(data);
+	//ray(data);
+	print_map(data, data->map);
 	mlx_key_hook(data->win, ft_hook_key, data);
 	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
-
-	// mlx_loop_hook(data->mlx, del, data);
-	mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");
+	// mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");
+	mlx_hook(data->win, 17, 0, close_win, data);
+	mlx_loop_hook(data->mlx, del, data);
 	mlx_loop(data->mlx);
 }
 
