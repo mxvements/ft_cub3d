@@ -102,12 +102,12 @@ static void cube_init(t_data *data)
 	// 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	// };
 	// data->map->map2d = mapa;
-	player->x = 1.0;
-	player->y = 1.0;
+	player->x = .0;
+	player->y = 8.0;
 	player->dirX = 1.0;
 	player->dirY = 0.0;
 	data->player = player;
-	ini(data);
+	
 
 	// oldTime = time;
     // time = getTicks();
@@ -142,14 +142,15 @@ static void cube(char *map)
 	maps = malloc(sizeof(t_map));
 	data->map = maps;
 	maps->map = map;
+	cube_init(data);
 	res = ft_split(maps->map, '\n');
 	maps->map2d = res;
-	data->count = 0;
-	cube_init(data);
 	data->steps = 3; //velocidad de avance
 	data->sp_spin =3 *(3.14/180); //velocidad de giro
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
+	data->count = 0;
+	ini(data);
 	//ray(data);
 	print_map(data, data->map);
 	mlx_key_hook(data->win, ft_hook_key, data);
