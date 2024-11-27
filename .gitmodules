@@ -1,0 +1,9 @@
+[submodule "minilibx"]
+	path = minilibx
+	url = git@github.com:42Paris/minilibx-linux.git
+[submodule "libft"]
+	path = libft
+	url = git@github.com:mxvements/ft_libft.git
+[submodule "gnl"]
+	path = gnl
+	url = git@github.com:mxvements/ft_get_next_line.git
