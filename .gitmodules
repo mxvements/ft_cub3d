@@ -4,3 +4,6 @@
 [submodule "gnl"]
 	path = gnl
 	url = git@github.com:mxvements/ft_get_next_line.git
+[submodule "mlx_linux"]
+	path = mlx_linux
+	url = git@github.com:42Paris/minilibx-linux.git
