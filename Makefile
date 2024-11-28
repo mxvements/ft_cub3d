@@ -74,7 +74,7 @@ fclean: clean
 	make fclean -C $(LIBFT_DIR)
 	@echo "$(ORANGE)[$(NAME)]	Cleaning mlx_linux..$(RESET_COLOR)"
 	make clean -C mlx_linux
-	@echo "$(BOLD)$(ORANGE)[$(NAME)]	Removing $(NAME)...$(RESET_COLOR)"
+	@echo "$(BOLD)$(PINK)[$(NAME)]	Removing $(NAME)...$(RESET_COLOR)"
 	rm -rf $(NAME)
 
 norminette:
