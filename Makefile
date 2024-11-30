@@ -20,7 +20,14 @@ RESET_COLOR = \033[0m
 # src
 
 SRC_DIR=	./src/
-SRC=		main.c 
+SRC=		main.c
+
+PRS_DIR=	./src/parse_map/
+PSR=		parse_file.c
+
+ERR_DIR=	./src/errors
+ERR=			print_error.c 
+
 
 # libft
 
@@ -38,7 +45,9 @@ GNL_SRCS=	get_next_line.c \
 # objs
 
 OBJ_DIR=	./obj/
-OBJ=	$(SRC:%.c=$(OBJ_DIR)%.o)
+OBJ=	$(SRC:%.c=$(OBJ_DIR)%.o) \
+		$(PSR:%.c=$(OBJ_DIR)%.o) \
+		$(ERR:%.c=$(OBJ_DIR)%.o)
 
 ###############################################################################
 
@@ -54,7 +63,17 @@ $(NAME): $(OBJ)
 	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Linking objs files with libraries...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_LINUX) -o $(NAME)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c 
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(PRS_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(ERR_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
