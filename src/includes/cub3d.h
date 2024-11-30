@@ -12,8 +12,11 @@
 # include <errno.h>
 # include <math.h>
 
+# include "../../libft/libft.h"
+# include "../../gnl/get_next_line.h"
 # include "colors.h"
 # include "error_msg.h"
+
 
 enum e_texure_index
 {
@@ -34,6 +37,7 @@ typedef struct s_map
 {
 	int		fd;
 	char	*path;
+	char 	**map; //two dimensional array
 	int		height;
 	int		width;
 } t_map;
@@ -47,5 +51,6 @@ typedef struct s_cub
 
 
 void	print_error(char *custom_msg);
+t_cub	*parse_map(t_cub *cub, char *filepath);
 
 #endif
