@@ -17,6 +17,7 @@
 # include "colors.h"
 # include "error_msg.h"
 
+#define	WALL_SIDES	4
 
 enum e_texure_index
 {
@@ -28,7 +29,7 @@ enum e_texure_index
 
 typedef struct s_texture
 {
-	char	*wall[4]; // use enum to know wich side of wall
+	char	*wall[WALL_SIDES]; // use enum to know wich side of wall
 	char	*floor;
 	char	*ceiling;
 } t_texture;
@@ -51,6 +52,8 @@ typedef struct s_cub
 
 
 void	print_error(char *custom_msg);
-t_cub	*parse_map(t_cub *cub, char *filepath);
+t_cub	*parse_input(t_cub *cub, char *filepath);
+int check_file_extension(char *filepath, char *extension);
+// int	check_textures(t_texture *texture);
 
 #endif

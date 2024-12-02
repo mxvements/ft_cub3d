@@ -22,8 +22,9 @@ RESET_COLOR = \033[0m
 SRC_DIR=	./src/
 SRC=		main.c
 
-PRS_DIR=	./src/parse_map/
-PSR=		parse_map.c
+PRS_DIR=	./src/parse_input/
+PSR=		parse_input.c \
+			check_input.c
 
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 

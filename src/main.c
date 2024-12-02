@@ -14,11 +14,12 @@ static void *init_cub(char *filepath)
 	if (!cub->textures)
 		return (NULL); //print message in case of error & free
 	
-	cub = parse_map(cub, filepath);
+	cub = parse_input(cub, filepath);
 	if (!cub)
-		return (NULL);
+		return (NULL); //print message & free
 	return (cub);
 }
+
 
 /**
  * CUB3D
@@ -30,6 +31,8 @@ int main(int argc, char **argv)
 {
 	if (argc != 2)
 		print_error(ERR_USE);
+	if (check_file_extension(argv[1], ".cub") < 0)
+		print_error(ERR_CUB);
 	init_cub(argv[1]);
 		
 	
