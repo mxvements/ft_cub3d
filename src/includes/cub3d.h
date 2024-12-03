@@ -36,11 +36,11 @@ typedef struct s_texture
 
 typedef struct s_map
 {
-	int		fd;
-	char	*path;
-	char 	**map; //two dimensional array
-	int		height;
-	int		width;
+	int			fd;
+	char		*path;
+	char 		**map; //two dimensional array
+	long long	height;
+	long long	width;
 } t_map;
 
 typedef struct s_cub

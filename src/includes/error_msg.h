@@ -10,8 +10,8 @@
 # define ERR_TXT_SOUTH	"South texture should have '.xpm' extension"
 # define ERR_TXT_WEST	"West texture should have '.xpm' extension"
 # define ERR_TXT_EAST	"East texture should have '.xpm' extension"
-
-
+# define ERR_COL_F		"Floor must be a color"
+# define ERR_COL_C		"Ceiling must be a color"
 
 
 

@@ -8,7 +8,7 @@ int	check_file_extension(char *filepath, char *extension)
 	int			i;
 
 	i = 0;
-	printf("%s\n", filepath + start);
+	// printf("%s\n", filepath + start);
 	while (filepath[start + i])
 	{
 		if (filepath[start + i] - extension[i] != 0)
