@@ -1,41 +1,149 @@
-NAME=cub3D
-LIB=minilibx-linux/libmlx_Linux.a
-CC=gcc
-CFLAGS=-Wall -Wextra -Werror -Imlx
 
-SRC_PATH=	./src/
-SRC_FILES=	game.c\
+# LIB=minilibx-linux/libmlx_Linux.a
+# CC=gcc
+# CFLAGS=-Wall -Wextra -Werror -Imlx
+
+# SOFLAGS= -Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm
+
+# # rules
+# all: $(NAME)
+
+# Libft/libft.a : 
+# 	@make bonus -C Libft/
+# 	@make -C minilibx-linux/
+
+# $(NAME):$(OBJ) Libft/libft.a 
+# 	$(CC) $^ $(LIB) $(SOFLAGS) -o $(NAME)
+
+# $(OBJ_DIR)%.o: $(SRC_PATH)%.c
+# 	@mkdir -p $(OBJ_DIR)
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+# clean:
+# 	rm -rf $(OBJ)
+# 	rm -rf $(OBJ_DIR)
+# 	@make -C Libft/ clean
+# 	@make -C minilibx-linux/ clean
+# fclean: clean
+# 	rm -f $(NAME)
+# 	@make -C Libft/ fclean
+# re: fclean all
+# 	@meke -C Libft/ re
+# .PHONY: all re fclean clean
+
+# compilation variables
+
+CC=			cc
+NAME=		cub3D
+CFLAGS=		-Wall -Wextra -Werror -g3
+CFLAG_SAN=	-fsanitize=address
+MLX_LINUX=	-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+
+# colors
+
+LIGHT_BLUE = \033[38;2;53;200;240m
+DARK_BLUE = \033[0;34m
+ORANGE = \033[38;5;214m
+PINK = \033[38;5;213m
+BOLD = \033[1m
+RESET_COLOR = \033[0m
+
+###############################################################################
+
+# src
+
+SRC_DIR=	./src/
+SRC=		main.c\
+			game.c\
 			ray_casting.c\
 			printMap.c\
 			adicional.c
 
-OBJ_DIR = obj/
+PRS_DIR=	./src/parse_input/
+PSR=		parse_input.c \
+			check_input.c
 
-OBJ=$(SRC_FILES:%.c=$(OBJ_DIR)%.o)
-SOFLAGS= -Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm
+ERR_DIR=	./src/errors/
+ERR=		print_error.c 
+
+
+# libft
+
+LIBFT_DIR=	./libft/
+LIBFT=		./libft/libft.a
+
+# gnl
+
+GNL_DIR=	./gnl/
+GNL_SRCS=	get_next_line.c \
+			get_next_line_utils.c
+
+###############################################################################
+
+# objs
+
+OBJ_DIR=	./obj/
+OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
+		$(SRC:%.c=$(OBJ_DIR)%.o) \
+		$(PSR:%.c=$(OBJ_DIR)%.o) \
+		$(ERR:%.c=$(OBJ_DIR)%.o)
+
+###############################################################################
 
 # rules
+
 all: $(NAME)
 
-Libft/libft.a : 
-	@make bonus -C Libft/
-	@make -C minilibx-linux/
+$(NAME): $(OBJ)
+	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Compiling libft...$(RESET_COLOR)"
+	make -C $(LIBFT_DIR)
+	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Compiling mlx_linux...$(RESET_COLOR)"
+	make -C mlx_linux
+	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Linking objs files with libraries...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_LINUX) -o $(NAME)
 
-$(NAME):$(OBJ) Libft/libft.a 
-	$(CC) $^ $(LIB) $(SOFLAGS) -o $(NAME)
-
-$(OBJ_DIR)%.o: $(SRC_PATH)%.c
+$(OBJ_DIR)%.o: $(GNL_DIR)%.c 
 	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c 
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(PRS_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(ERR_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+sanitize: fclean $(NAME)
+	$(CC) $(CFLAGS) $(CFLAG_SAN) $(OBJ) $(LIBFT) $(MLX_LINUX) -o $(NAME)
+
 clean:
+	@echo "$(ORANGE)[$(NAME)]	Cleaning libft...$(RESET_COLOR)"
+	make clean -C $(LIBFT_DIR)
+	make clean -C mlx_linux
+	@echo "$(PINK)[$(NAME)]	Removing $(OBJ_DIR)...$(RESET_COLOR)"
 	rm -rf $(OBJ)
-	rm -rf $(OBJ_DIR)
-	@make -C Libft/ clean
-	@make -C minilibx-linux/ clean
+
 fclean: clean
-	rm -f $(NAME)
-	@make -C Libft/ fclean
+	@echo "$(BOLD)$(ORANGE)[$(NAME)]	fCleaning libft...$(RESET_COLOR)"
+	make fclean -C $(LIBFT_DIR)
+	@echo "$(ORANGE)[$(NAME)]	Cleaning mlx_linux..$(RESET_COLOR)"
+	make clean -C mlx_linux
+	@echo "$(BOLD)$(PINK)[$(NAME)]	Removing $(NAME)...$(RESET_COLOR)"
+	rm -rf $(NAME)
+
+norminette:
+	@echo "$(BOLD)$(PINK)[$(NAME)]	Running norminette on all source files...$(RESET_COLOR)"
+	norminette $(SRC_DIR)/*.c $(SRC_DIR)/**/*.c
+
 re: fclean all
-	@meke -C Libft/ re
-.PHONY: all re fclean clean
+
+.PHONY: sanitize clean fclean norminette re
