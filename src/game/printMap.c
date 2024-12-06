@@ -6,7 +6,7 @@
 /*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 12:30:06 by zlu               #+#    #+#             */
-/*   Updated: 2024/12/06 14:53:08 by zlu              ###   ########.fr       */
+/*   Updated: 2024/12/06 16:24:20 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,24 @@
 
 void	insect_img(t_data *data, t_map_game *map)
 {
-	// int		i;
-	// int		j;
+	int		i;
+	int		j;
 	char	**res;
 
-	// i = 0;
+	i = 0;
 	res = map->map2d;
 	testprintMap(res);
-	mlx_pixel_put(data->mlx, data->win, 5, 5, 0x00FF0000);
-	// mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, data->size, data->size);
+	while(i<data->size)
+	{
+		j = 0;
+		while(j<data->size)
+		{
+			mlx_pixel_put(data->mlx, data->win, i, j, 0x00FF0000);
+			j++;
+		}
+		i++;
+	}
+	mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, data->size, data->size);
 	printf("hola\n");
 	// while (res[i])
 	// {
@@ -87,15 +96,16 @@ void	ini(t_data *data)
 
 	img_size[0] = 128;
 	img_size[1] = 128;
-	data->map->path_pared = "../textures/pared.xpm";
-	data->map->path_arena = "../textures/arena.xpm";
-	data->map->path_aladin = "../textures/aladin.xpm";
-	data->map->img_pared = mlx_xpm_file_to_image(data->mlx,
-			data->map->path_pared, &img_size[0], &img_size[1]);
-	data->map->img_arena = mlx_xpm_file_to_image(data->mlx,
-			data->map->path_arena, &img_size[0], &img_size[1]);
-	data->map->img_people = mlx_xpm_file_to_image(data->mlx,
-			data->map->path_aladin, &img_size[0], &img_size[1]);
+	data->map->path_pared = "../../textures/pared.xpm";
+	printf("path->%s.\n", data->map->path_pared);
+	// data->map->path_arena = "../../textures/arena.xpm";
+	// data->map->path_aladin = "../../textures/aladin.xpm";
+	data->map->img_pared = mlx_xpm_file_to_image(data->mlx, data->map->path_pared, &img_size[0], &img_size[1]);
+	printf("img->%p.\n", data->map->img_pared );
+	// data->map->img_arena = mlx_xpm_file_to_image(data->mlx,
+	// 		data->map->path_arena, &img_size[0], &img_size[1]);
+	// data->map->img_people = mlx_xpm_file_to_image(data->mlx,
+	// 		data->map->path_aladin, &img_size[0], &img_size[1]);
 
 }
 

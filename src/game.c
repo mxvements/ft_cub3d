@@ -11,6 +11,7 @@ static int	close_win(t_data *data)
 
 static void move(t_data *data, int x, int y)
 {
+	printf("se esta moviendo.\n");
 	data->player->x += x;
 	data->player->y += y;
 }
@@ -21,7 +22,7 @@ static int	ft_hook_key(int key, t_data *data)
 		close_win(data);
 	if (key == key_A || key == key_LEFT)
 	{
-		move(data, 1, 0);
+		move(data, -1, 0);
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
 		// dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
@@ -31,11 +32,13 @@ static int	ft_hook_key(int key, t_data *data)
 	}
 	if (key == key_S || key == key_DOWN)
 	{
+		move(data, 0, -1);
 		// if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
     	// if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
 	}
 	if (key == key_D || key == key_RIGHT)
 	{
+		move(data, 1, 0);
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
 		// dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
@@ -45,6 +48,7 @@ static int	ft_hook_key(int key, t_data *data)
 	}
 	if (key == key_W || key == key_UP)
 	{
+		move(data, 0, 1);
 		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
       	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
@@ -91,18 +95,6 @@ static void cube_init(t_data *data)
 	// player->x = (5 * data->size) + (data->size / 2);
 	// player->y = (8 * data->size) + (data->size / 2);
 	// player->a = 0;
-	// int mapa[10][10];
-	// int mapa[data->x_max][data->y_max] = {
-	// 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-	// 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	// 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	// };
-	// data->map->map2d = mapa;
 	player->x = .0;
 	player->y = 8.0;
 	player->dirX = 1.0;

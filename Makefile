@@ -82,7 +82,7 @@ GNL_SRCS=	get_next_line.c \
 			get_next_line_utils.c
 
 MLX_DIR=	./minilibx-linux
-MLX=		./minilibx-linux/libmlx.a
+MLX=		./minilibx-linux/libmlx_Linux.a
 
 ###############################################################################
 

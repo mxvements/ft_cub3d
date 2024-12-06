@@ -5,7 +5,8 @@
 
 # include "cub3d.h"
 
-# include "../../minilibx-linux/mlx.h"
+// # include "../../minilibx-linux/mlx.h"
+// # include "../../minilibx-linux/mlx_int.h"
 
 typedef struct s_map_game
 {
