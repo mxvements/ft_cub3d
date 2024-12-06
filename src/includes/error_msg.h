@@ -5,6 +5,7 @@
 # define ERR_CUB	"file should have '.cub' extension"
 # define ERR_FD		"Error reading input file"
 # define ERR_TXT	"All textures should have '.xpm' extension"
+# define ERR_COL	"All colors must be defined by 3 numbers"
 
 # define ERR_TXT_NORTH	"North texture should have '.xpm' extension"
 # define ERR_TXT_SOUTH	"South texture should have '.xpm' extension"

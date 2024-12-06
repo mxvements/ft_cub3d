@@ -14,6 +14,7 @@
 
 # include "../../libft/libft.h"
 # include "../../gnl/get_next_line.h"
+# include "../../minilibx-linux/mlx.h"
 # include "colors.h"
 # include "error_msg.h"
 
@@ -29,9 +30,9 @@ enum e_texure_index
 
 typedef struct s_texture
 {
-	char	*wall[WALL_SIDES]; // use enum to know wich side of wall
-	char	*floor;
-	char	*ceiling;
+	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
+	long long	floor;
+	long long	ceiling;
 } t_texture;
 
 typedef struct s_map
@@ -50,10 +51,14 @@ typedef struct s_cub
 	t_texture	*textures;
 } t_cub ;
 
+/* PARSING */
+t_cub		*parse_input(t_cub *cub, char *filepath);
+int			parse_texture_and_colors(t_texture *tx, int fd);
+int			check_file_extension(char *filepath, char *extension);
+int			check_color(char **rgb);
+long long	color_str_to_long(char **rgb);
 
+/* ERRORS */
 void	print_error(char *custom_msg);
-t_cub	*parse_input(t_cub *cub, char *filepath);
-int check_file_extension(char *filepath, char *extension);
-// int	check_textures(t_texture *texture);
 
 #endif

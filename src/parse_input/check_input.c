@@ -15,17 +15,13 @@ int	check_file_extension(char *filepath, char *extension)
 			return (-1);
 		i++;
 	}
+	mlx_init();
 	return (0);
 }
 
-// int	check_textures(t_texture *texture)
-// {
-// 	const char	*ext = ".xpm";
-
-// 	if (check_file_extension(texture->wall[NORTH], ext) < 0
-// 		|| check_file_extension(texture->wall[SOUTH], ext) < 0
-// 		|| check_file_extension(texture->wall[WEST], ext) < 0
-// 		|| check_file_extension(texture->wall[EAST], ext) < 0)
-// 		return (-1);
-// 	return (0);
-// }
+int	check_color(char **rgb)
+{
+	if (!rgb || strarr_len(rgb) != 3)
+		return (-1);
+	return (0);
+}
