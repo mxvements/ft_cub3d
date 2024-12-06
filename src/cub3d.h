@@ -70,6 +70,10 @@ enum {
 	key_ESC = 65307
 };
 
+//adicional
+void    testprintMap(char **map);
+
+//funciones
 void	ray(t_data *data);
 void	insect_img(t_data *data, t_map *map);
 void	mapok(char **res, t_data *data, int i, int j);

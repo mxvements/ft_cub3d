@@ -6,7 +6,8 @@ CFLAGS=-Wall -Wextra -Werror -Imlx
 SRC_PATH=	./src/
 SRC_FILES=	game.c\
 			ray_casting.c\
-			printMap.c
+			printMap.c\
+			adicional.c
 
 OBJ_DIR = obj/
 
