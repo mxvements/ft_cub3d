@@ -37,7 +37,7 @@ CC=			cc
 NAME=		cub3D
 CFLAGS=		-Wall -Wextra -Werror -g3
 CFLAG_SAN=	-fsanitize=address
-MLX_LINUX=	-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLX_LINUX=	-Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 
 # colors
 
@@ -54,8 +54,11 @@ RESET_COLOR = \033[0m
 
 SRC_DIR=	./src/
 SRC=		main.c\
-			game.c\
-			ray_casting.c\
+			game.c
+			
+
+GAME_DIR=	./src/game/
+GAME=		ray_casting.c\
 			printMap.c\
 			adicional.c
 
@@ -78,6 +81,9 @@ GNL_DIR=	./gnl/
 GNL_SRCS=	get_next_line.c \
 			get_next_line_utils.c
 
+MLX_DIR=	./minilibx-linux
+MLX=		./minilibx-linux/libmlx.a
+
 ###############################################################################
 
 # objs
@@ -85,6 +91,7 @@ GNL_SRCS=	get_next_line.c \
 OBJ_DIR=	./obj/
 OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(SRC:%.c=$(OBJ_DIR)%.o) \
+		$(GAME:%.c=$(OBJ_DIR)%.o) \
 		$(PSR:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o)
 
@@ -98,9 +105,9 @@ $(NAME): $(OBJ)
 	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Compiling libft...$(RESET_COLOR)"
 	make -C $(LIBFT_DIR)
 	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Compiling mlx_linux...$(RESET_COLOR)"
-	make -C mlx_linux
+	make -C $(MLX_DIR)
 	@echo "$(BOLD)$(LIGHT_BLUE)[$(NAME)]	Linking objs files with libraries...$(RESET_COLOR)"
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_LINUX) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(MLX_LINUX) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(GNL_DIR)%.c 
 	@mkdir -p $(OBJ_DIR)
@@ -111,6 +118,12 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(GAME_DIR)%.c 
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 $(OBJ_DIR)%.o: $(PRS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
@@ -128,7 +141,7 @@ sanitize: fclean $(NAME)
 clean:
 	@echo "$(ORANGE)[$(NAME)]	Cleaning libft...$(RESET_COLOR)"
 	make clean -C $(LIBFT_DIR)
-	make clean -C mlx_linux
+	make clean -C $(MLX_DIR)
 	@echo "$(PINK)[$(NAME)]	Removing $(OBJ_DIR)...$(RESET_COLOR)"
 	rm -rf $(OBJ)
 
@@ -136,7 +149,7 @@ fclean: clean
 	@echo "$(BOLD)$(ORANGE)[$(NAME)]	fCleaning libft...$(RESET_COLOR)"
 	make fclean -C $(LIBFT_DIR)
 	@echo "$(ORANGE)[$(NAME)]	Cleaning mlx_linux..$(RESET_COLOR)"
-	make clean -C mlx_linux
+	make clean -C $(MLX_DIR)
 	@echo "$(BOLD)$(PINK)[$(NAME)]	Removing $(NAME)...$(RESET_COLOR)"
 	rm -rf $(NAME)
 

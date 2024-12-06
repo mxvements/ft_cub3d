@@ -1,5 +1,5 @@
 
-#include "cub3d.h"
+#include "includes/cub3d_game.h"
 
 
 static int	close_win(t_data *data)
@@ -51,6 +51,7 @@ static int	ft_hook_key(int key, t_data *data)
 	// printf("teclado -> %i \n",key);
 	return (0);
 }
+
 char	*read_map(char *s)
 {
 	int		fd;
@@ -58,7 +59,7 @@ char	*read_map(char *s)
 	int		count;
 	char	buffer[101];
 
-	res = NULL;
+	res = "\n";
 	fd = open(s, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
@@ -68,7 +69,7 @@ char	*read_map(char *s)
 		if (count == -1)
 			return (NULL);
 		buffer[count] = '\0';
-		res = ft_strjoin_gnl(res, buffer);
+		res = ft_strjoin(res, buffer); //TODO hablar con lucia para ver la funcion que libera la memoria
 		count = read(fd, buffer, 100);
 	}
 	return (close(fd), res);
@@ -82,8 +83,8 @@ static void cube_init(t_data *data)
 	// double time = 0; //time of current frame
 	// double oldTime = 0; //time of previous frame
 
-	data->size = 64; // cada cuadrado, centro seria 64x64
-	data->x_max = 10 * data->size; //10 x128
+	data->size = 128; // cada cuadrado, centro seria 64x64
+	data->x_max = 10 * data->size; //10 x 64
 	data->y_max = data->x_max;
 	
 	player = malloc(sizeof(t_player));
@@ -121,22 +122,22 @@ static void cube_init(t_data *data)
     // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 }
 
-int	del(t_data *data)
+int	del_data(t_data *data)
 {
 	data->count++;
 	if (data->count % 10000 == 0)
 	{
 		data->count = 0;
-		print_map(data, data->map);
+		print_map_game(data, data->map);
 	}
 	return (0);
 }
 
 static void cube(char *map)
 {
-	t_data	*data;
-	t_map	*maps;
-	char	**res;
+	t_data		*data;
+	t_map_game	*maps;
+	char		**res;
 
 	data = malloc(sizeof(t_data));
 	maps = malloc(sizeof(t_map));
@@ -146,14 +147,14 @@ static void cube(char *map)
 	maps->map2d = res;
 	data->steps = 3; //velocidad de avance
 	data->sp_spin =3 *(3.14/180); //velocidad de giro
-	data->mlx = mlx_init();
 	cube_init(data);
+	ini(data);
+	data->mlx = mlx_init();
 	printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
 	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
 	data->count = 0;
-	ini(data);
 	//ray(data);
-	print_map(data, data->map);
+	print_map_game(data, data->map);
 	mlx_key_hook(data->win, ft_hook_key, data);
 	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
 	// mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");

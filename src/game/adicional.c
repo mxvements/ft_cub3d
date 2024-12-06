@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../includes/cub3d_game.h"
 
 void    testprintMap(char **map)
 {

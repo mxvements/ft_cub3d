@@ -1,18 +1,13 @@
 
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_GAME_H
+# define CUB3D_GAME_H
 
-# include "../minilibx-linux/mlx.h"
-# include "../Libft/libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <string.h>
-# include <math.h>
+# include "cub3d.h"
 
-typedef struct s_map
+# include "../../minilibx-linux/mlx.h"
+
+typedef struct s_map_game
 {
 	char		*map;
 	char		**map2d;
@@ -29,7 +24,7 @@ typedef struct s_map
 	char		*path_arena;
 	char		*path_aladin;
 	
-}					t_map;
+}					t_map_game;
 
 typedef struct s_player
 {
@@ -52,7 +47,7 @@ typedef struct s_data
 	int			steps;
 	int			sp_spin;
 	int			count;
-	t_map		*map;
+	t_map_game	*map;
 	t_player	*player;
 }					t_data;
 
@@ -75,10 +70,10 @@ void    testprintMap(char **map);
 
 //funciones
 void	ray(t_data *data);
-void	insect_img(t_data *data, t_map *map);
+void	insect_img(t_data *data, t_map_game *map);
 void	mapok(char **res, t_data *data, int i, int j);
 void	ini(t_data *data);
-void	print_map(t_data *mlx, t_map *map);
-int		del(t_data *data);
+void	print_map_game(t_data *mlx, t_map_game *map);
+int		del_data(t_data *data);
 
 #endif

@@ -1,6 +1,6 @@
 #include "includes/cub3d.h"
 
-static void *init_cub(char *filepath)
+/* static void *init_cub(char *filepath)
 {
 	t_cub		*cub;
 
@@ -18,7 +18,7 @@ static void *init_cub(char *filepath)
 	if (!cub)
 		return (NULL); //print message & free
 	return (cub);
-}
+} */
 
 
 /**
@@ -27,7 +27,7 @@ static void *init_cub(char *filepath)
  * Execution
  * 		./cub3d <path/to/map.cub>
  */
-int main(int argc, char **argv)
+/* int main(int argc, char **argv)
 {
 	if (argc != 2)
 		print_error(ERR_USE);
@@ -37,4 +37,4 @@ int main(int argc, char **argv)
 		
 	
 	return (0);
-}
+} */

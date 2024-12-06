@@ -6,13 +6,13 @@
 /*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 12:30:06 by zlu               #+#    #+#             */
-/*   Updated: 2024/10/24 18:43:46 by zlu              ###   ########.fr       */
+/*   Updated: 2024/12/06 14:53:08 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d_game.h"
 
-void	insect_img(t_data *data, t_map *map)
+void	insect_img(t_data *data, t_map_game *map)
 {
 	// int		i;
 	// int		j;
@@ -21,7 +21,9 @@ void	insect_img(t_data *data, t_map *map)
 	// i = 0;
 	res = map->map2d;
 	testprintMap(res);
-	mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, data->size, data->size);
+	mlx_pixel_put(data->mlx, data->win, 5, 5, 0x00FF0000);
+	// mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, data->size, data->size);
+	printf("hola\n");
 	// while (res[i])
 	// {
 	// 	j = 0;
@@ -39,7 +41,7 @@ void	mapok(char **res, t_data *data, int i, int j)
 	// int x = 0;
 
 	
-	// printf("i -> %d , j-> %d y data-> %c.\n", i, j, res[i][j]);
+	 printf("i -> %d , j-> %d y data-> %c y longitud-> %d.\n", i, j, res[i][j], data->size);
 	if (res[i][j] == '1')
 	{
 		// while (x < data->size)
@@ -51,7 +53,7 @@ void	mapok(char **res, t_data *data, int i, int j)
 		
 		// printf("aqui1\n");
 		// mlx_pixel_put(data->mlx, data->win, i, j, 0x000000);
-		mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, j * data->size, i * data->size);
+		// mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, j * data->size, i * data->size);
 		// printf("aqui2\n");
 		
 	}
@@ -63,8 +65,8 @@ void	mapok(char **res, t_data *data, int i, int j)
 		// 	/* code */
 		// }
 		// mlx_pixel_put(data->mlx, data->win, i, j, 0xFF00FF);
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->map->img_people, j * data->size, i * data->size);
+		// mlx_put_image_to_window(data->mlx, data->win,
+			// data->map->img_people, j * data->size, i * data->size);
 	if (res[i][j] != '1'){
 		// printf("aqui mapok\n");
 		// while (x < data->size)
@@ -74,8 +76,8 @@ void	mapok(char **res, t_data *data, int i, int j)
 		// 	/* code */
 		// }
 		
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->map->img_arena, j * data->size, i * data->size);
+		// mlx_put_image_to_window(data->mlx, data->win,
+			// data->map->img_arena, j * data->size, i * data->size);
 	}
 }
 
@@ -83,8 +85,8 @@ void	ini(t_data *data)
 {
 	int	img_size[2];
 
-	img_size[0] = 64;
-	img_size[1] = 64;
+	img_size[0] = 128;
+	img_size[1] = 128;
 	data->map->path_pared = "../textures/pared.xpm";
 	data->map->path_arena = "../textures/arena.xpm";
 	data->map->path_aladin = "../textures/aladin.xpm";
@@ -97,7 +99,7 @@ void	ini(t_data *data)
 
 }
 
-void	print_map(t_data *data, t_map *map)
+void	print_map_game(t_data *data, t_map_game *map)
 {
 	mlx_clear_window(data->mlx, data->win);
 	insect_img(data, map);

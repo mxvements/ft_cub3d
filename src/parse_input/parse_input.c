@@ -99,7 +99,7 @@ static int parse_texture(t_texture *tx, int fd)
 				if (j == 4) //floor
 					tx->floor = color;
 				else
-					tx->ceiling;
+					tx->ceiling = color;
 			}
 		}
 	}

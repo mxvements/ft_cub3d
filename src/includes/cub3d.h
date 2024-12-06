@@ -14,6 +14,7 @@
 
 # include "../../libft/libft.h"
 # include "../../gnl/get_next_line.h"
+# include "../../minilibx-linux/mlx.h"
 # include "colors.h"
 # include "error_msg.h"
 
@@ -29,9 +30,9 @@ enum e_texure_index
 
 typedef struct s_texture
 {
-	char	*wall[WALL_SIDES]; // use enum to know wich side of wall
-	char	*floor;
-	char	*ceiling;
+	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
+	long long	floor;
+	long long	ceiling;
 } t_texture;
 
 typedef struct s_map
