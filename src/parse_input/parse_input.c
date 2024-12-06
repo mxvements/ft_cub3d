@@ -16,27 +16,16 @@ t_cub	*parse_input(t_cub *cub, char *filepath)
 
 	map = cub->map;
 	texture = cub->textures;
-	map->fd = open(filepath, O_RDONLY);
-	if (map->fd < 0)
+	cub->fd = open(filepath, O_RDONLY);
+	if (cub->fd < 0)
 		return (NULL); //will need to free map and print the proper err message, errno is set
 	//read, the 1sr 6 lines are textures, then the map
-	if (parse_texture_and_colors(texture, map->fd) < 0)
+	if (parse_texture_and_colors(texture, cub->fd) < 0)
 		return (NULL);
-
-	// //then, get the rest, which is the map
-	char *tmp;
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	while (1)
-	{
-		tmp = get_next_line(map->fd);
-		if (!tmp)
-			break ;
-		map->map = strarr_add(map->map, tmp);
-		if (!map->map)
-			return (NULL);
-	}
+	if (parse_map(map, cub->fd) < 0)
+		return (NULL);
 	//just to check:
 	printf("map length: %d\n", strarr_len(map->map));
-	close(map->fd);
+	close(cub->fd);
 	return (cub);
 }

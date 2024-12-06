@@ -37,11 +37,10 @@ typedef struct s_texture
 
 typedef struct s_map
 {
-	int			fd;
-	char		*path;
-	char 		**map; //two dimensional array
-	long long	height;
-	long long	width;
+	char	*path;
+	int 	**map; //two dimensional array
+	int		height;
+	int		width;
 } t_map;
 
 typedef struct s_cub
@@ -49,16 +48,19 @@ typedef struct s_cub
 	void		*mlx;
 	t_map 		*map;
 	t_texture	*textures;
+	int			fd;
 } t_cub ;
 
 /* PARSING */
 t_cub		*parse_input(t_cub *cub, char *filepath);
 int			parse_texture_and_colors(t_texture *tx, int fd);
+int			parse_map(t_map *map, int fd);
 int			check_file_extension(char *filepath, char *extension);
 int			check_color(char **rgb);
+int			check_map(char **map);
 long long	color_str_to_long(char **rgb);
 
 /* ERRORS */
-void	print_error(char *custom_msg);
+int		print_error(char *custom_msg);
 
 #endif

@@ -16,7 +16,10 @@ static void *init_cub(char *filepath)
 	
 	cub = parse_input(cub, filepath);
 	if (!cub)
+	{
+		printf("Should free the map here");
 		return (NULL); //print message & free
+	}
 	return (cub);
 }
 
@@ -29,11 +32,15 @@ static void *init_cub(char *filepath)
  */
 int main(int argc, char **argv)
 {
+	void *status;
+
 	if (argc != 2)
 		print_error(ERR_USE);
 	if (check_file_extension(argv[1], ".cub") < 0)
 		print_error(ERR_CUB);
-	init_cub(argv[1]);
+	status = init_cub(argv[1]);
+	if (!status)
+		return (1);
 		
 	
 	return (0);
