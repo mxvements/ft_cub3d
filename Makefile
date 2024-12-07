@@ -59,6 +59,7 @@ SRC=		main.c\
 
 GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
+			mov.c\
 			printMap.c\
 			adicional.c
 

@@ -9,20 +9,15 @@ static int	close_win(t_data *data)
 	exit(1);
 }
 
-static void move(t_data *data, int x, int y)
-{
-	printf("se esta moviendo.\n");
-	data->player->x += x;
-	data->player->y += y;
-}
-
 static int	ft_hook_key(int key, t_data *data)
 {
+	
 	if (key == key_ESC)
 		close_win(data);
 	if (key == key_A || key == key_LEFT)
 	{
-		move(data, -1, 0);
+		move(data, 0, -1);
+		print_map_game(data, data->map);
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
 		// dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
@@ -32,13 +27,15 @@ static int	ft_hook_key(int key, t_data *data)
 	}
 	if (key == key_S || key == key_DOWN)
 	{
-		move(data, 0, -1);
+		move(data, 1, 0);
+		print_map_game(data, data->map);
 		// if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
     	// if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
 	}
 	if (key == key_D || key == key_RIGHT)
 	{
-		move(data, 1, 0);
+		move(data, 0, 1);
+		print_map_game(data, data->map);
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
 		// dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
@@ -48,35 +45,13 @@ static int	ft_hook_key(int key, t_data *data)
 	}
 	if (key == key_W || key == key_UP)
 	{
-		move(data, 0, 1);
+		move(data, -1, 0);
+		print_map_game(data, data->map);
 		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
       	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
-	// printf("teclado -> %i \n",key);
+	printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
 	return (0);
-}
-
-char	*read_map(char *s)
-{
-	int		fd;
-	char	*res;
-	int		count;
-	char	buffer[101];
-
-	res = "\n";
-	fd = open(s, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	count = read(fd, buffer, 100);
-	while (count != 0)
-	{
-		if (count == -1)
-			return (NULL);
-		buffer[count] = '\0';
-		res = ft_strjoin(res, buffer); //TODO hablar con lucia para ver la funcion que libera la memoria
-		count = read(fd, buffer, 100);
-	}
-	return (close(fd), res);
 }
 
 static void cube_init(t_data *data)
@@ -88,18 +63,20 @@ static void cube_init(t_data *data)
 	// double oldTime = 0; //time of previous frame
 
 	data->size = 128; // cada cuadrado, centro seria 64x64
-	data->x_max = 10 * data->size; //10 x 64
+	data->x_max = 10 * data->size; //10 x 128
 	data->y_max = data->x_max;
 	
 	player = malloc(sizeof(t_player));
 	// player->x = (5 * data->size) + (data->size / 2);
 	// player->y = (8 * data->size) + (data->size / 2);
 	// player->a = 0;
-	player->x = .0;
-	player->y = 8.0;
+	/* player->x = 2.0;
+	player->y = 8.0; */
 	player->dirX = 1.0;
 	player->dirY = 0.0;
 	data->player = player;
+	positionPlayer(data);
+	printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
 	
 
 	// oldTime = time;
@@ -140,10 +117,10 @@ static void cube(char *map)
 	data->steps = 3; //velocidad de avance
 	data->sp_spin =3 *(3.14/180); //velocidad de giro
 	cube_init(data);
-	ini(data);
 	data->mlx = mlx_init();
 	printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
 	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
+	ini(data);
 	data->count = 0;
 	//ray(data);
 	print_map_game(data, data->map);

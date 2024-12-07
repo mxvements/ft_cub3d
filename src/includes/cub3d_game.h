@@ -27,6 +27,14 @@ typedef struct s_map_game
 	
 }					t_map_game;
 
+typedef struct	s_data_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data_img;
+
 typedef struct s_player
 {
 	float			x;
@@ -50,6 +58,7 @@ typedef struct s_data
 	int			count;
 	t_map_game	*map;
 	t_player	*player;
+	t_data_img	*img;
 }					t_data;
 
 enum {
@@ -76,5 +85,8 @@ void	mapok(char **res, t_data *data, int i, int j);
 void	ini(t_data *data);
 void	print_map_game(t_data *mlx, t_map_game *map);
 int		del_data(t_data *data);
+void	move(t_data *data, int x, int y);
+char	*read_map(char *s);
+void	positionPlayer(t_data *data);
 
 #endif
