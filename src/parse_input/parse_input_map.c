@@ -1,18 +1,25 @@
 #include "../includes/cub3d.h"
 
-// static int	print_map(t_map *map)
-// {
-// 	int i;
-// 	int j;
+/**
+ * @brief Function to set all rows to max length of the map, filling with ' ' on
+ * empty spaces
+ * 
+ * @return int 
+ */
+static int normalize_map()
+{
 
-// 	i = -1;
-// 	while (map->map[++i])
-// 	{
-
-// 	}
-// }
-
-
+}
+/**
+ * @brief Read file line by line (after textures and colors lines), checking
+ * each time for the length (cols), and the permitted chars. A the end, sets the 
+ * final length of the map (rows) and checks for the map to be compliant with 
+ * the rules of the subject
+ * 
+ * @param map 
+ * @param fd 
+ * @return int 
+ */
 int	parse_map(t_map *map, int fd)
 {
 	char 	*tmp;

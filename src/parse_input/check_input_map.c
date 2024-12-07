@@ -1,8 +1,17 @@
 #include "../includes/cub3d.h"
+
 /**
- * 3	// first char of line
- * -1	// any other char, no vector exluded
- * 1	// last char of line
+ * @brief Get the excluded vector by char object.
+ * 
+ * + Fist char: excludes vector {0, -1} on idx 3, which would go a char before
+ * 
+ * + Inside char: does not excludes any vector, returns -1
+ * 
+ * + Last char: excludes vecor {0, 1} on idx 1, which would go a char after
+ * 
+ * @param map 
+ * @param char_idx 
+ * @return int 
  */
 static int	get_excluded_vector_by_char(t_map *map, int char_idx)
 {
@@ -16,10 +25,19 @@ static int	get_excluded_vector_by_char(t_map *map, int char_idx)
 		return (char_exclusion[1]);
 }
 
+
 /**
- * 2	//first line
- * -1	//any other line, no vector excluded
- * 0	//last line
+ * @brief Get the excluded vector by line position
+ * 
+ * - Fist line: excludes vector {-1,0} on idx 2, which would go a row above
+ * 
+ * - Inside line: does not exclude any vector, we return -1
+ * 
+ * - Last line: excludes vector {1, 0} on idx 1, which would go a row below
+ * 
+ * @param map 
+ * @param line_idx 
+ * @return * int, index position of the vector to exclude
  */
 static int	get_excluded_vector_by_line(t_map *map, int line_idx)
 {
@@ -71,7 +89,6 @@ int	check_map(t_map *map)
 		j = -1;
 		while (map->map[i][++j])
 		{
-			// printf("current idx: \'%c\'\n", map[i][j]);
 			// first line and last lines check -> cannot have '0'
 			if (i == 0 || i == map->rows - 1)
 			{
