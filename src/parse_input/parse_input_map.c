@@ -6,9 +6,40 @@
  * 
  * @return int 
  */
-static int normalize_map()
+//TODO: borrar todos los saltos de linea que me matan
+static int normalize_map(t_map *map)
 {
+	int		i;
+	int		line_len;
+	char 	*padding;
+	int		padding_len;
+	char	*tmp;
 
+	i = -1;
+	while (map->map[++i])
+	{
+		line_len = ft_strlen(map->map[i]);
+		if (line_len == map->cols)
+			continue ;
+		//if the length is different, then we copy
+		padding_len = map->cols - line_len;
+		padding = (char *)ft_calloc(1, sizeof(char) * (map->cols - line_len + 1));
+		if (!padding)
+			return (print_error(NULL));
+		padding[padding_len] = '\0';
+		ft_memset((void *)padding, ' ', padding_len);
+		printf("padding: [%s]\n", padding);
+		tmp = ft_strdup(map->map[i]);
+		if (!tmp)
+			return (print_error(NULL));
+		free(map->map[i]);
+		map->map[i] = ft_strjoin(tmp, padding);
+		if (!map->map[i])
+			return (print_error(NULL));
+		free(tmp);
+		printf("final string: [%s]\n", map->map[i]);
+	}
+	return (0);
 }
 /**
  * @brief Read file line by line (after textures and colors lines), checking
@@ -45,6 +76,9 @@ int	parse_map(t_map *map, int fd)
 		free(tmp);
 	}
 	printf("Map dims: [%d, %d]\n", map->rows, map->cols);
+	/*normalize map so all rows are the same legth */
+	if (normalize_map(map) < 0)
+		return (-1);
 	/*check map*/
 	if (check_map(map) < 0)
 		return (-1);

@@ -1,7 +1,7 @@
 #include "../includes/cub3d.h"
 
 /**
- * @brief Get the excluded vector by char object.
+ * @brief Get the excluded vector by char position.
  * 
  * + Fist char: excludes vector {0, -1} on idx 3, which would go a char before
  * 
