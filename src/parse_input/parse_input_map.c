@@ -1,35 +1,45 @@
 #include "../includes/cub3d.h"
 
-// static int parse_map_to_int(t_map *map, char **src)
+// static int	print_map(t_map *map)
 // {
 // 	int i;
 // 	int j;
 
-	
+// 	i = -1;
+// 	while (map->map[++i])
+// 	{
+
+// 	}
 // }
+
 
 int	parse_map(t_map *map, int fd)
 {
-	char *tmp;
-	char **tmp_map;
+	char 	*tmp;
+	size_t	tmp_len;
 
-	tmp_map = (char **)ft_calloc(1, sizeof(char *));
-	if (!tmp_map)
-		return (print_error(NULL)); //error de malloc
+	map->map = (char **)ft_calloc(1, sizeof(char *));
+	if (!map->map)
+		return (print_error(NULL));
 	while (1)
 	{
 		tmp = get_next_line(fd);
 		if (!tmp)
 			break ;
-		tmp_map = strarr_add(tmp_map, tmp);
-		if (!tmp_map)
+		map->rows++;
+		tmp_len = check_permitted_char(tmp);
+		if (tmp_len < 0)
 			return (-1);
+		if ((int)tmp_len > map->cols)
+			map->cols = (int)tmp_len;
+		map->map= strarr_add(map->map, tmp);
+		if (!map->map)
+			return (print_error(NULL));
+		free(tmp);
 	}
-	//convert char to number, delete '\t'
-	if (parse_map_to_int(map, tmp_map) < 0)
-		return (-1);
-	//check map
-	if (check_map(map->map) < 0)
+	printf("Map dims: [%d, %d]\n", map->rows, map->cols);
+	/*check map*/
+	if (check_map(map) < 0)
 		return (-1);
 	return (0);
 }

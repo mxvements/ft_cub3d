@@ -27,7 +27,8 @@ PSR=		parse_input.c \
 			parse_input_textures_and_colors.c \
 			parse_input_map.c \
 			parse_utils.c \
-			check_input.c
+			check_input.c \
+			check_input_map.c
 			
 
 ERR_DIR=	./src/errors/

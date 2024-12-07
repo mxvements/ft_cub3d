@@ -25,7 +25,7 @@ t_cub	*parse_input(t_cub *cub, char *filepath)
 	if (parse_map(map, cub->fd) < 0)
 		return (NULL);
 	//just to check:
-	printf("map length: %d\n", strarr_len(map->map));
+	// printf("map length: %d\n", strarr_len(map->map));
 	close(cub->fd);
 	return (cub);
 }
