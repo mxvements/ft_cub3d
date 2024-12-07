@@ -64,8 +64,8 @@ void	ini(t_data *data)
 {
 	int	img_size[2];
 
-	img_size[0] = 32;
-	img_size[1] = 32;
+	img_size[0] = 128;
+	img_size[1] = 128;
 	data->map->path_pared = "./textures/pared.xpm";
 	data->map->path_arena = "./textures/arena.xpm";
 	data->map->path_aladin = "./textures/aladin.xpm";

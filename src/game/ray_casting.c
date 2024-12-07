@@ -13,6 +13,8 @@ void ray(t_data *data)
         // Posición inicial en la cuadrícula del mapa
         int mapX = (int)data->player->x;
         int mapY = (int)data->player->y;
+	    printf("jugador x->%d, y->%d\n", mapX, mapY);
+
 
         // Distancia del rayo en ambas direcciones
         float sideDistX, sideDistY;
@@ -61,7 +63,7 @@ void ray(t_data *data)
                 mapY += stepY;
                 side = 1;
             }
-	        printf("aqui-> %d y %d.\n", mapX, mapY);
+	        printf("map aqui-> %d y %d.\n", mapX, mapY);
 
             // Verificar si el rayo ha alcanzado una pared
             if (data->map->map2d[mapX][mapY] == '1') 

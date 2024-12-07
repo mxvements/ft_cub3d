@@ -50,7 +50,8 @@ static int	ft_hook_key(int key, t_data *data)
 		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
       	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
-	printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
+	ray(data);
+	/* printf("jugador x->%f, y->%f\n", data->player->x, data->player->y); */
 	return (0);
 }
 
@@ -72,11 +73,11 @@ static void cube_init(t_data *data)
 	// player->a = 0;
 	/* player->x = 2.0;
 	player->y = 8.0; */
-	player->dirX = 1.0;
+	player->dirX = 0.5;
 	player->dirY = 0.0;
 	data->player = player;
 	positionPlayer(data);
-	printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
+	// printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
 	
 
 	// oldTime = time;
@@ -122,7 +123,7 @@ static void cube(char *map)
 	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
 	ini(data);
 	data->count = 0;
-	//ray(data);
+	
 	print_map_game(data, data->map);
 	mlx_key_hook(data->win, ft_hook_key, data);
 	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
