@@ -18,12 +18,14 @@ t_cub	*parse_input(t_cub *cub, char *filepath)
 	texture = cub->textures;
 	cub->fd = open(filepath, O_RDONLY);
 	if (cub->fd < 0)
-		return (NULL); //will need to free map and print the proper err message, errno is set
-	//read, the 1sr 6 lines are textures, then the map
+		return (NULL);
 	if (parse_texture_and_colors(texture, cub->fd) < 0)
 		return (NULL);
 	if (parse_map(map, cub->fd) < 0)
-		return (NULL);
+	{
+		printf("Should free the map here");
+		return (NULL); //TODO: return - in case of error, must handle it here
+	}
 	//just to check:
 	// printf("map length: %d\n", strarr_len(map->map));
 	close(cub->fd);

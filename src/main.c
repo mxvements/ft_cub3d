@@ -6,18 +6,25 @@ static void *init_cub(char *filepath)
 
 	cub = (t_cub *)ft_calloc(1, sizeof(t_cub));
 	if (!cub)
-		return (NULL); //print message 
+		return (print_error(NULL)); //print message 
 	cub->map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!cub->map)
-		return (NULL); //print message in case of error & free
+	{
+		free(cub);
+		return (print_error(NULL));
+	}
 	cub->textures = (t_texture *) ft_calloc(1, sizeof(t_texture));
 	if (!cub->textures)
-		return (NULL); //print message in case of error & free
+	{
+		//TODO: free cub function
+		free(cub->map);
+		free(cub);
+		return (print_error(NULL)); 
+	}
 	
 	cub = parse_input(cub, filepath);
 	if (!cub)
 	{
-		printf("Should free the map here");
 		return (NULL); //print message & free
 	}
 	return (cub);
