@@ -37,24 +37,43 @@ typedef struct s_texture
 
 typedef struct s_map
 {
-	int			fd;
-	char		*path;
-	char 		**map; //two dimensional array
-	long long	height;
-	long long	width;
+	char	*path;
+	char 	**map; //two dimensional array
+	int		rows;
+	int		cols;
 } t_map;
+
+typedef struct s_player
+{
+    float           x; //parseo (N.S.E.W)
+    float           y; //parseo (N)
+    float           dirX; //parseo, dar vector
+    float           dirY; //parseo, dar vector
+    int             a;
+    int             wolk;   //andar 0 parado, 1 para delante, -1 para atras
+    int             spin;   //girar 1 derecha, -1 izquierda
+}                   t_player;
 
 typedef struct s_cub
 {
 	void		*mlx;
 	t_map 		*map;
 	t_texture	*textures;
+	t_player	*player;
+	int			fd;
 } t_cub ;
 
+/* PARSING */
+t_cub		*parse_input(t_cub *cub, char *filepath);
+int			parse_texture_and_colors(t_texture *tx, int fd);
+int			parse_map(t_map *map, int fd);
+int			check_file_extension(char *filepath, char *extension);
+int			check_color(char **rgb);
+int			check_permitted_char(char *line);
+int			check_map(t_map *map);
+long long	color_str_to_long(char **rgb);
 
-void	print_error(char *custom_msg);
-t_cub	*parse_input(t_cub *cub, char *filepath);
-int check_file_extension(char *filepath, char *extension);
-// int	check_textures(t_texture *texture);
+/* ERRORS */
+int		print_error(char *custom_msg);
 
 #endif

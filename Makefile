@@ -65,7 +65,12 @@ GAME=		ray_casting.c\
 
 PRS_DIR=	./src/parse_input/
 PSR=		parse_input.c \
-			check_input.c
+			parse_input_textures_and_colors.c \
+			parse_input_map.c \
+			parse_utils.c \
+			check_input.c \
+			check_input_map.c
+			
 
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 
@@ -75,6 +80,11 @@ ERR=		print_error.c
 
 LIBFT_DIR=	./libft/
 LIBFT=		./libft/libft.a
+
+# mlx
+
+MLX_DIR=	./minilibx-linux
+MLX=		./minilibx-linux/libmlx.a
 
 # gnl
 
