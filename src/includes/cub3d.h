@@ -33,15 +33,14 @@ typedef struct s_texture
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
 	long long	floor;
 	long long	ceiling;
-} t_texture;
+}	t_texture;
 
 typedef struct s_map
 {
-	char	*path;
 	char 	**map; //two dimensional array
 	int		rows;
 	int		cols;
-} t_map;
+}	t_map;
 
 typedef struct s_player
 {
@@ -51,8 +50,8 @@ typedef struct s_player
     float           dirY; //parseo, dar vector
     int             a;
     int             walk;   //andar 0 parado, 1 para delante, -1 para atras
-    int             spin;   //girar 1 derecha, -1 izquierda
-}                   t_player;
+    int             spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
+}	t_player;
 
 typedef struct s_mlx
 {
@@ -72,10 +71,10 @@ typedef struct s_cub
 	t_texture	*textures;
 	t_player	*player;
 	int			fd;
-} t_cub ;
+}	t_cub ;
 
 /* PARSING */
-t_cub		*parse_input(t_cub *cub, char *filepath);
+int			parse_input(t_cub *cub, char *filepath);
 int			parse_texture_and_colors(t_texture *tx, int fd);
 int			parse_map(t_map *map, int fd);
 int			check_file_extension(char *filepath, char *extension);
@@ -86,5 +85,12 @@ long long	color_str_to_long(char **rgb);
 
 /* ERRORS */
 int		print_error(char *custom_msg);
+
+/* UTILS */
+int		free_cub(t_cub *cub);
+void	print_cub(t_cub *cub);
+void	print_player(t_player *pl);
+void	print_texture(t_texture *tx);
+void	print_map(t_map *map);
 
 #endif

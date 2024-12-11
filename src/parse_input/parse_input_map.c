@@ -11,14 +11,14 @@ static void	strip_line(char **src, size_t src_len, char c)
 		tmp[src_len] = '\0';
 }
 
-static int strjoin_free(char **src1, char **src2)
+static int strjoin_free(char **dst, char **s)
 {
 	char *tmp;
 	char *s1;
 	char *s2;
 
-	s1 = *src1;
-	s2 = *src2;
+	s1 = *dst;
+	s2 = *s;
 	tmp = ft_strdup(s1);
 	if (!tmp)
 		return (print_error(NULL));

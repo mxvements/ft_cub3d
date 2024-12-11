@@ -75,7 +75,9 @@ PSR=		parse_input.c \
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 
 
-
+UTILS_DIR=	./src/struct_utils/
+UTILS=		free_cub.c \
+			print_cub.c
 # libft
 
 LIBFT_DIR=	./libft/
@@ -104,7 +106,8 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(SRC:%.c=$(OBJ_DIR)%.o) \
 		$(GAME:%.c=$(OBJ_DIR)%.o) \
 		$(PSR:%.c=$(OBJ_DIR)%.o) \
-		$(ERR:%.c=$(OBJ_DIR)%.o)
+		$(ERR:%.c=$(OBJ_DIR)%.o) \
+		$(UTILS:%.c=$(OBJ_DIR)%.o)
 
 ###############################################################################
 
@@ -142,6 +145,11 @@ $(OBJ_DIR)%.o: $(PRS_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)%.o: $(ERR_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(UTILS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@

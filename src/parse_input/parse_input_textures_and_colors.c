@@ -22,7 +22,9 @@ static char	*get_prefix(int i)
 
 	return ((char *)prefix[i]);
 }
-
+/**
+ * TODO: check if the texture/color is already saved
+ */
 static int	save_texture(int j, char *line, t_texture *tx)
 {
 	char	*prefix;
