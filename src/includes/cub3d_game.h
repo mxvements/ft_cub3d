@@ -35,17 +35,6 @@ typedef struct	s_data_img {
 	int		endian;
 }				t_data_img;
 
-typedef struct s_player
-{
-	float			x;
-	float			y;
-	float			dirX;
-	float			dirY;
-	int				a;
-	int				wolk;	//andar 0 parado, 1 para delante, -1 para atras	
-	int				spin;   //girar 1 derecha, -1 izquierda
-}					t_player;
-
 typedef struct s_data
 {
 	void		*mlx;

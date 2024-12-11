@@ -50,13 +50,24 @@ typedef struct s_player
     float           dirX; //parseo, dar vector
     float           dirY; //parseo, dar vector
     int             a;
-    int             wolk;   //andar 0 parado, 1 para delante, -1 para atras
+    int             walk;   //andar 0 parado, 1 para delante, -1 para atras
     int             spin;   //girar 1 derecha, -1 izquierda
 }                   t_player;
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*mlx_win;
+	void	*img;
+	char	*img_addr;
+	int		bpp; //bits per pixel
+	int		line_len;
+	int		endian;
+}	t_mlx;
+
 typedef struct s_cub
 {
-	void		*mlx;
+	t_mlx		mlx; //pointer?
 	t_map 		*map;
 	t_texture	*textures;
 	t_player	*player;
