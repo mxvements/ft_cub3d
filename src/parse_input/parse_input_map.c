@@ -1,35 +1,5 @@
 #include "../includes/cub3d.h"
 
-static void	strip_line(char **src, size_t src_len, char c)
-{
-	int		i;
-	char 	*tmp;
-
-	i = -1;
-	tmp = *src;
-	while (--src_len >= 0 && tmp[src_len] == c)
-		tmp[src_len] = '\0';
-}
-
-static int strjoin_free(char **dst, char **s)
-{
-	char *tmp;
-	char *s1;
-	char *s2;
-
-	s1 = *dst;
-	s2 = *s;
-	tmp = ft_strdup(s1);
-	if (!tmp)
-		return (print_error(NULL));
-	free(s1);
-	s1 = ft_strjoin(tmp, s2);
-	if (!s1)
-		return (free(tmp), print_error(NULL));
-	free(tmp);
-	return (0);
-}
-
 /**
  * @brief Function to set all rows to max length of the map, filling with ' ' on
  * empty spaces
@@ -47,7 +17,7 @@ static int	normalize_map(t_map *map)
 	while (map->map[++i])
 	{
 		len = ft_strlen(map->map[i]);
-		strip_line(&(map->map[i]), len, '\n');
+		ft_strstrip(&(map->map[i]), len, '\n');
 		if (len == map->cols)
 			continue ;
 		padding_len = map->cols - len;
@@ -56,7 +26,7 @@ static int	normalize_map(t_map *map)
 			return (print_error(NULL));
 		padding[padding_len] = '\0';
 		ft_memset((void *)padding, ' ', padding_len);
-		if (strjoin_free(&(map->map[i]), &padding) < 0)
+		if (!ft_strjoin_free(&(map->map[i]), &padding))
 			return (-1);
 	}
 	return (0);

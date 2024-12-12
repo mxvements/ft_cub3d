@@ -1,7 +1,5 @@
 #include "../includes/cub3d.h"
 
-
-
 /**
  * Check map:
  * - should have the extension .cub
