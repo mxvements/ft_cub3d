@@ -33,10 +33,9 @@ static int strjoin_free(char **dst, char **s)
 /**
  * @brief Function to set all rows to max length of the map, filling with ' ' on
  * empty spaces
- *
+ * 
  * @return int
  */
-// TODO: borrar todos los saltos de linea que me matan
 static int	normalize_map(t_map *map)
 {
 	int		i;
@@ -49,8 +48,8 @@ static int	normalize_map(t_map *map)
 	{
 		len = ft_strlen(map->map[i]);
 		strip_line(&(map->map[i]), len, '\n');
-		// if (line_len == map->cols)
-		// 	continue ;
+		if (len == map->cols)
+			continue ;
 		padding_len = map->cols - len;
 		padding = (char *)ft_calloc(1, sizeof(char) * (map->cols - len + 1));
 		if (!padding)
@@ -59,9 +58,31 @@ static int	normalize_map(t_map *map)
 		ft_memset((void *)padding, ' ', padding_len);
 		if (strjoin_free(&(map->map[i]), &padding) < 0)
 			return (-1);
-		printf("line: [%s]\n", map->map[i]);
 	}
 	return (0);
+}
+
+static int	get_player(t_map *map, char *line, int row)
+{
+	char		*player;
+	const char	dir[4] = {'N', 'S', 'E', 'W'};
+	const int	vector[4][2] = {{-1,0}, {1,0}, {0,1}, {-1,0}};
+	int			i;
+
+	i = -1;
+	while (dir[++i])
+	{
+		player =  ft_strchr(line, dir[i]);
+		if (player)
+		{
+			map->player->x = row;
+			map->player->y = player - line; //check this
+			map->player->dirX = vector[i][0];
+			map->player->dirY = vector[i][1];
+			return (0);
+		}
+	}
+	return (-1);
 }
 
 static int get_map(t_map *map, int fd)
@@ -77,6 +98,7 @@ static int get_map(t_map *map, int fd)
 		tmp_len = check_permitted_char(tmp);
 		if (tmp_len < 0)
 			return (free(tmp), -1);
+		get_player(map, tmp, map->rows);
 		if ((int)tmp_len > map->cols)
 			map->cols = (int)tmp_len;
 		map->map = strarr_add(map->map, tmp);
@@ -105,7 +127,6 @@ int	parse_map(t_map *map, int fd)
 		return (print_error(NULL));
 	if (get_map(map, fd) < 0)
 		return (-1);
-	// printf("Map dims: [%d, %d]\n", map->rows, map->cols);
 	if (normalize_map(map) < 0)
 		return (-1);
 	if (check_map(map) < 0)

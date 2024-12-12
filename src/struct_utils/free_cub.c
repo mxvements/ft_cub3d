@@ -13,10 +13,15 @@
 // 	}
 // }
 
-static void free_map(t_map *map)
+void free_map(t_map *map)
 {
 	if (map->map)
 		strarr_freenull(&map->map); //TODO: revisar esta funcion
+	if (map->player)
+	{
+		free(map->player); //it just has floats and int
+		map->player = NULL;
+	}
 }
 
 static void free_texture(t_texture *texture)
@@ -42,11 +47,6 @@ int free_cub(t_cub *cub)
 		free_texture(cub->textures);
 		free(cub->textures);
 		cub->textures = NULL;
-	}
-	if (cub->player)
-	{
-		free(cub->player); //it just has floats and int
-		cub->player = NULL;
 	}
 	return (0);
 }

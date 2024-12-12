@@ -35,13 +35,6 @@ typedef struct s_texture
 	long long	ceiling;
 }	t_texture;
 
-typedef struct s_map
-{
-	char 	**map; //two dimensional array
-	int		rows;
-	int		cols;
-}	t_map;
-
 typedef struct s_player
 {
     float           x; //parseo (N.S.E.W)
@@ -52,6 +45,15 @@ typedef struct s_player
     int             walk;   //andar 0 parado, 1 para delante, -1 para atras
     int             spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
 }	t_player;
+
+typedef struct s_map
+{
+	char 		**map; //two dimensional array
+	t_player	*player;
+	int			rows;
+	int			cols;
+}	t_map;
+
 
 typedef struct s_mlx
 {
@@ -69,7 +71,6 @@ typedef struct s_cub
 	t_mlx		mlx; //pointer?
 	t_map 		*map;
 	t_texture	*textures;
-	t_player	*player;
 	int			fd;
 }	t_cub ;
 
@@ -88,6 +89,7 @@ int		print_error(char *custom_msg);
 
 /* UTILS */
 int		free_cub(t_cub *cub);
+void	free_map(t_map *map);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);

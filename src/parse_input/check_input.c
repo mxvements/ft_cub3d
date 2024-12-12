@@ -39,7 +39,7 @@ int	check_color(char **rgb)
  */
 int	check_permitted_char(char *line)
 {
-	const char	permitted[9] = {' ', '0', '1', '\n', 'N', 'E', 'S', 'W'};
+	const char	permitted[8] = {' ', '0', '1', '\n', 'N', 'E', 'S', 'W'};
 	int 		i;
 	int 		j;
 	int			flag;

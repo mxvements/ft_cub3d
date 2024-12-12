@@ -35,10 +35,7 @@ static int	save_texture(int j, char *line, t_texture *tx)
 	if (ft_strncmp(prefix, line, 2) != 0)
 		return (0);
 	if (check_file_extension(line, ".xpm\n") < 0)
-	{
-		print_error(err_msg);
-		return (-1);
-	}
+		return (print_error(err_msg));
 	tx->wall[j] = line;
 	// printf("side: %d\t filepath:%s\n", j, line); // LOG
 	return (0);
@@ -56,11 +53,10 @@ static int	save_color(int j, char *line, t_texture *tx)
 	if (ft_strncmp(prefix, line, 1) != 0)
 		return (0);
 	rgb = ft_split(line + 2, ',');
+	if (!rgb)
+		return (print_error(NULL));
 	if (check_color(rgb) < 0)
-	{
-		print_error(err_msg);
-		return (-1);
-	}
+		return (print_error(err_msg));
 	// printf("plane side: %d\tarray_len del rgb:%d\n", j, strarr_len(rgb)); // LOG
 	// strarr_print(rgb);                                                    // LOG
 	color = color_str_to_long(rgb);
