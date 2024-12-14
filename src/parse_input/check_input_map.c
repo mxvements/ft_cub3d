@@ -69,15 +69,18 @@ static int	check_map_by_vectors(int i, int j, t_map *map)
 		{
 			if (map->map[i][j] == ' '
 				&& map->map[i+ vectors[k][0]][j + vectors[k][1]] == '0')
-				return (print_error(ERR_MAP_SPC));
+				return (print_error("check_map_by_vectors", ERR_MAP_SPC));
 			if (map->map[i][j] == '0'
 				&& map->map[i+ vectors[k][0]][j + vectors[k][1]] == ' ')
-				return (print_error(ERR_MAP_0));
+				return (print_error("check_map_by_vectors", ERR_MAP_0));
 		}
 	}
 	return (0);
 }
 
+/**
+ * TODO: check if a player exists also 
+ */
 int	check_map(t_map *map)
 {
 	int	i;
@@ -89,11 +92,10 @@ int	check_map(t_map *map)
 		j = -1;
 		while (map->map[i][++j])
 		{
-			// first line and last lines check -> cannot have '0'
 			if (i == 0 || i == map->rows - 1)
 			{
 				if (map->map[i][j] == '0')
-					return (print_error(ERR_MAP_BOUNDS));
+					return (print_error("check_map", ERR_MAP_BOUNDS));
 			}
 			if (check_map_by_vectors(i, j, map) < 0)
 				return (-1);

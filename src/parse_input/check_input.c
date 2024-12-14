@@ -39,7 +39,7 @@ int	check_color(char **rgb)
  */
 int	check_permitted_char(char *line)
 {
-	const char	permitted[8] = {' ', '0', '1', '\n', 'N', 'E', 'S', 'W'};
+	const char	permitted[9] = {' ', '0', '1', '\n', '\t', 'N', 'E', 'S', 'W'};
 	int 		i;
 	int 		j;
 	int			flag;
@@ -61,9 +61,24 @@ int	check_permitted_char(char *line)
 		}
 		if (flag == 1)
 		{
-			printf("Error on %s, on idx: %d\n", line, i);
-			return (print_error(ERR_MAP_CHAR));
+			// printf("Error on %s, on idx: %d\n", line, i);
+			return (print_error("check_permitted_char", ERR_MAP_CHAR));
 		}
 	}
 	return (i);
+}
+
+int	is_texture_struct_full(t_texture *tx)
+{
+	int	i;
+
+	i = -1;
+	while (++i < WALL_SIDES)
+	{
+		if (tx->wall[i] == NULL || *tx->wall[i] == '\0')
+			return (0);
+	}
+	if (tx->ceiling == 0 || tx->floor == 0) //what if the colorss are 0
+		return (0);
+	return (1);
 }

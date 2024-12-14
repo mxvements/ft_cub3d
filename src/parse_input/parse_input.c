@@ -20,9 +20,7 @@ int	parse_input(t_cub *cub, char *filepath)
 	if (parse_texture_and_colors(texture, cub->fd) < 0)
 		return (-1);
 	if (parse_map(map, cub->fd) < 0)
-		return (-1); //TODO: return -1 in case of error, must handle it here
-	//just to check:
-	// printf("map length: %d\n", strarr_len(map->map));
+		return (-1); 
 	close(cub->fd);
 	return (0);
 }

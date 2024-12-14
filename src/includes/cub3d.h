@@ -18,7 +18,8 @@
 # include "colors.h"
 # include "error_msg.h"
 
-#define	WALL_SIDES	4
+# define	WALL_SIDES	4
+# define	DEBUG		1
 
 enum e_texure_index
 {
@@ -75,17 +76,21 @@ typedef struct s_cub
 }	t_cub ;
 
 /* PARSING */
-int			parse_input(t_cub *cub, char *filepath);
-int			parse_texture_and_colors(t_texture *tx, int fd);
-int			parse_map(t_map *map, int fd);
-int			check_file_extension(char *filepath, char *extension);
-int			check_color(char **rgb);
-int			check_permitted_char(char *line);
-int			check_map(t_map *map);
+int		parse_input(t_cub *cub, char *filepath);
+int		parse_texture_and_colors(t_texture *tx, int fd);
+int		parse_map(t_map *map, int fd);
+int		check_file_extension(char *filepath, char *extension);
+int		is_texture_struct_full(t_texture *tx);
+int		check_color(char **rgb);
+int		check_permitted_char(char *line);
+int		check_map(t_map *map);
+
+/* UTILS*/
 long long	color_str_to_long(char **rgb);
+char		*strtrim_gnl(int fd, char *trim);
 
 /* ERRORS */
-int		print_error(char *custom_msg);
+int		print_error(char *origin, char *custom_msg);
 
 /* UTILS */
 int		free_cub(t_cub *cub);

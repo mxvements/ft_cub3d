@@ -23,7 +23,7 @@ static int	normalize_map(t_map *map)
 		padding_len = map->cols - len;
 		padding = (char *)ft_calloc(1, sizeof(char) * (map->cols - len + 1));
 		if (!padding)
-			return (print_error(NULL));
+			return (print_error("normalize_map", NULL));
 		padding[padding_len] = '\0';
 		ft_memset((void *)padding, ' ', padding_len);
 		if (!ft_strjoin_free(&(map->map[i]), &padding))
@@ -62,9 +62,14 @@ static int get_map(t_map *map, int fd)
 
 	while (1)
 	{
-		tmp = get_next_line(fd);
+		tmp = strtrim_gnl(fd, "\t\n");
 		if (!tmp)
 			break ;
+		if (*tmp == '\0')
+		{
+			free(tmp);
+			continue ;
+		}
 		tmp_len = check_permitted_char(tmp);
 		if (tmp_len < 0)
 			return (free(tmp), -1);
@@ -73,7 +78,7 @@ static int get_map(t_map *map, int fd)
 			map->cols = (int)tmp_len;
 		map->map = strarr_add(map->map, tmp);
 		if (!map->map)
-			return (print_error(NULL));
+			return (print_error("get_map", NULL));
 		free(tmp);
 		map->rows++;
 	}
@@ -94,7 +99,7 @@ int	parse_map(t_map *map, int fd)
 {
 	map->map = (char **)ft_calloc(1, sizeof(char *));
 	if (!map->map)
-		return (print_error(NULL));
+		return (print_error("parse_map", NULL));
 	if (get_map(map, fd) < 0)
 		return (-1);
 	if (normalize_map(map) < 0)

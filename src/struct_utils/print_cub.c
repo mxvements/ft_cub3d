@@ -40,7 +40,7 @@ void print_texture(t_texture *tx)
 	printf("wall side textures:\n");
 	i = -1;
 	while (++i < WALL_SIDES && tx->wall[i] != 0)
-		printf("\t%s", tx->wall[i]);
+		printf("\t%s\n", tx->wall[i]);
 	if (tx->floor != 0)
 		printf("floor color:\t%lli\n", tx->floor);
 	if (tx->ceiling != 0)

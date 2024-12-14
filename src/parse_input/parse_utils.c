@@ -1,5 +1,24 @@
 #include "../includes/cub3d.h"
 
+char	*strtrim_gnl(int fd, char *trim)
+{
+	char	*gnl;
+	char	*line;
+
+	gnl = get_next_line(fd);
+	if (!gnl)
+	{
+		return (NULL);
+	}
+	if (!trim)
+		return (gnl);
+	line = ft_strtrim(gnl, trim);
+	free(gnl);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
 long long	color_str_to_long(char **rgb)
 {
 	long long	color;
@@ -11,6 +30,7 @@ long long	color_str_to_long(char **rgb)
 	i = -1;
 	while (rgb[++i] && --c >= 0)
 		color += ft_atoi(rgb[i]) << (8 * c);
+	printf("color_str_to_long: %lli\n", color);
 	return (color);
 }
 
