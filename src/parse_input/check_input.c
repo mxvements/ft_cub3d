@@ -15,14 +15,23 @@ int	check_file_extension(char *filepath, char *extension)
 			return (-1);
 		i++;
 	}
-	mlx_init();
 	return (0);
 }
 
 int	check_color(char **rgb)
 {
-	if (!rgb || strarr_len(rgb) != 3)
+	const int	arr_len = 3;
+	int			i;
+	int			tmp_col;
+	if (!rgb || strarr_len(rgb) != arr_len)
 		return (-1);
+	i = -1;
+	while (++i < arr_len && rgb[i])
+	{
+		tmp_col = ft_atoi(rgb[i]);
+		if (tmp_col < 0 || tmp_col > 255)
+			return (-1);
+	}
 	return (0);
 }
 
@@ -60,10 +69,7 @@ int	check_permitted_char(char *line)
 				flag = 1;
 		}
 		if (flag == 1)
-		{
-			// printf("Error on %s, on idx: %d\n", line, i);
 			return (print_error("check_permitted_char", ERR_MAP_CHAR));
-		}
 	}
 	return (i);
 }
@@ -78,7 +84,7 @@ int	is_texture_struct_full(t_texture *tx)
 		if (tx->wall[i] == NULL || *tx->wall[i] == '\0')
 			return (0);
 	}
-	if (tx->ceiling == 0 || tx->floor == 0) //what if the colorss are 0
+	if (tx->ceiling == -1 || tx->floor == -1) //what if the colorss are 0
 		return (0);
 	return (1);
 }

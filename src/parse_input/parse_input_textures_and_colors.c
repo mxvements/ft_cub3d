@@ -63,12 +63,12 @@ static int	save_color(int j, char *line, t_texture *tx)
 		return (print_error("save_color", NULL));
 	if (check_color(rgb) < 0)
 		return (print_error("save_color", err_msg));
-	
 	color = color_str_to_long(rgb);
 	if (j == 4)
 		tx->floor = color;
 	else
 		tx->ceiling = color;
+	strarr_freenull(&rgb);
 	return (0);
 }
 

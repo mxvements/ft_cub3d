@@ -155,7 +155,7 @@ $(OBJ_DIR)%.o: $(UTILS_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 sanitize: fclean $(NAME)
-	$(CC) $(CFLAGS) $(CFLAG_SAN) $(OBJ) $(LIBFT) $(MLX_LINUX) -o $(NAME)
+	$(CC) $(CFLAGS) $(CFLAG_SAN) $(OBJ) $(LIBFT) $(MLX) $(MLX_LINUX) -o $(NAME)
 
 clean:
 	@echo "$(ORANGE)[$(NAME)]	Cleaning libft...$(RESET_COLOR)"

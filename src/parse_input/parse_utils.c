@@ -30,7 +30,7 @@ long long	color_str_to_long(char **rgb)
 	i = -1;
 	while (rgb[++i] && --c >= 0)
 		color += ft_atoi(rgb[i]) << (8 * c);
-	printf("color_str_to_long: %lli\n", color);
+	// printf("color_str_to_long: %lli\n", color);
 	return (color);
 }
 

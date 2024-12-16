@@ -2,7 +2,7 @@
 WE ./path_to_the_west_texture.xpm
 
 SO ./path_to_the_south_texture.xpm
-C           200,   30,     0
+C          0,   0,     0
 EA ./path_to_the_east_texture.xpm
 F 220,100,0
 

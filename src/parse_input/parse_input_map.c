@@ -17,17 +17,18 @@ static int	normalize_map(t_map *map)
 	while (map->map[++i])
 	{
 		len = ft_strlen(map->map[i]);
-		ft_strstrip(&(map->map[i]), len, '\n');
 		if (len == map->cols)
 			continue ;
 		padding_len = map->cols - len;
-		padding = (char *)ft_calloc(1, sizeof(char) * (map->cols - len + 1));
+		padding = (char *)ft_calloc(1, sizeof(char) * (padding_len + 1));
 		if (!padding)
 			return (print_error("normalize_map", NULL));
 		padding[padding_len] = '\0';
 		ft_memset((void *)padding, ' ', padding_len);
-		if (!ft_strjoin_free(&(map->map[i]), &padding))
+		map->map[i] = ft_strjoin_free(&(map->map[i]), &padding);
+		if (!map->map[i])
 			return (-1);
+		free(padding);
 	}
 	return (0);
 }
@@ -97,9 +98,6 @@ static int get_map(t_map *map, int fd)
  */
 int	parse_map(t_map *map, int fd)
 {
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	if (!map->map)
-		return (print_error("parse_map", NULL));
 	if (get_map(map, fd) < 0)
 		return (-1);
 	if (normalize_map(map) < 0)

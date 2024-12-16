@@ -25,7 +25,7 @@ void print_map(t_map *map)
 	{
 		i = -1;
 		printf("map:\n");
-		while  (map->map[++i])
+		while (map->map[++i])
 			printf("%d:\t[%s]\n", i, map->map[i]);
 	}
 	if (map->player)
@@ -41,9 +41,9 @@ void print_texture(t_texture *tx)
 	i = -1;
 	while (++i < WALL_SIDES && tx->wall[i] != 0)
 		printf("\t%s\n", tx->wall[i]);
-	if (tx->floor != 0)
+	if (tx->floor != -1)
 		printf("floor color:\t%lli\n", tx->floor);
-	if (tx->ceiling != 0)
+	if (tx->ceiling != -1)
 		printf("ceiling color:\t%lli\n", tx->ceiling);
 }
 

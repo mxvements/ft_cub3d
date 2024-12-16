@@ -4,13 +4,18 @@ static int	init_map(t_map *map)
 {
 	map->player = (t_player *)ft_calloc(1, sizeof(t_player));
 	if (!map->player)
-		return (print_error("init_map", NULL)); 
+		return (print_error("init_map", NULL));
 	return (0);
+}
+
+static void init_texture(t_texture *tx)
+{
+	tx->floor = -1;
+	tx->ceiling = -1;
 }
 
 static int init_cub(t_cub *cub, char *filepath)
 {
-
 	cub->map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!cub->map)
 		return (print_error("init_cub", NULL));
@@ -22,12 +27,13 @@ static int init_cub(t_cub *cub, char *filepath)
 		free_cub(cub);
 		return (print_error("init_cub", NULL));
 	}
+	init_texture(cub->textures);
 	if (parse_input(cub, filepath) < 0)
 	{
 		free_cub(cub);
 		return (-1);
 	}
-	print_cub(cub);
+	print_cub(cub); //LOG
 	return (0);
 }
 
@@ -50,5 +56,6 @@ int main(int argc, char **argv)
 	if (init_cub(&cub, argv[1]) < 0)
 		return (1);
 	//edu deberia continuar su codigo aqui
+	free_cub(&cub);
 	return (0);
 }
