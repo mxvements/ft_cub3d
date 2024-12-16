@@ -1,6 +1,6 @@
 #include "../includes/cub3d.h"
 
-int	check_file_extension(char *filepath, char *extension)
+int	is_file_extension(char *filepath, char *extension)
 {
 	const int	ext_len = ft_strlen(extension);
 	const int	path_len = ft_strlen(filepath);
@@ -18,7 +18,7 @@ int	check_file_extension(char *filepath, char *extension)
 	return (0);
 }
 
-int	check_color(char **rgb)
+int	is_color(char **rgb)
 {
 	const int	arr_len = 3;
 	int			i;
@@ -46,7 +46,7 @@ int	check_color(char **rgb)
  * @param line 
  * @return int length evaluated
  */
-int	check_permitted_char(char *line)
+int	is_permitted_char(char *line)
 {
 	const char	permitted[9] = {' ', '0', '1', '\n', '\t', 'N', 'E', 'S', 'W'};
 	int 		i;
@@ -85,6 +85,13 @@ int	is_texture_struct_full(t_texture *tx)
 			return (0);
 	}
 	if (tx->ceiling == -1 || tx->floor == -1) //what if the colorss are 0
+		return (0);
+	return (1);
+}
+
+int	is_player(t_player *player)
+{
+	if (player->x == -1 || player->y == -1)
 		return (0);
 	return (1);
 }

@@ -10,8 +10,8 @@
 # define ERR_TXT_SOUTH "South texture should have '.xpm' extension"
 # define ERR_TXT_WEST "West texture should have '.xpm' extension"
 # define ERR_TXT_EAST "East texture should have '.xpm' extension"
-# define ERR_COL_F "Floor must be a color with 3 numbers"
-# define ERR_COL_C "Ceiling must be a color with 3 numbers"
+# define ERR_COL_F "Floor must be a color with 3 numbers in the range 0..255"
+# define ERR_COL_C "Ceiling must be a color with 3 numbers in the range 0..255"
 
 # define ERR_MAP_SPC "Wrong map, all ' ' should be surrounded by {'1',' '}"
 # define ERR_MAP_0 "Wrong map, all '0' should be surrounded by {'0','1'}"
@@ -20,5 +20,6 @@
 # define ERR_MAP_CHAR \
 	"Wront char, map should only contain {'0','1',' '} \
 	and the player position {'N','E','S','W'}"
+# define ERR_PL_MULT	"Wrong map, multiple players found."
 
 #endif

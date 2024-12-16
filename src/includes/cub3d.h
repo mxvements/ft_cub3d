@@ -79,10 +79,11 @@ typedef struct s_cub
 int		parse_input(t_cub *cub, char *filepath);
 int		parse_texture_and_colors(t_texture *tx, int fd);
 int		parse_map(t_map *map, int fd);
-int		check_file_extension(char *filepath, char *extension);
+int		is_file_extension(char *filepath, char *extension);
 int		is_texture_struct_full(t_texture *tx);
-int		check_color(char **rgb);
-int		check_permitted_char(char *line);
+int		is_player(t_player *player);
+int		is_color(char **rgb);
+int		is_permitted_char(char *line);
 int		check_map(t_map *map);
 
 /* UTILS*/

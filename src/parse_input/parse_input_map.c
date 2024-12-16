@@ -44,6 +44,8 @@ static int	get_player(t_map *map, char *line, int row)
 	while (dir[++i])
 	{
 		player =  ft_strchr(line, dir[i]);
+		if (player && is_player(map->player) == 1)
+			return (print_error("get_player", ERR_PL_MULT));
 		if (player)
 		{
 			map->player->x = row;
@@ -53,7 +55,7 @@ static int	get_player(t_map *map, char *line, int row)
 			return (0);
 		}
 	}
-	return (-1);
+	return (1);
 }
 
 static int get_map(t_map *map, int fd)
@@ -71,10 +73,11 @@ static int get_map(t_map *map, int fd)
 			free(tmp);
 			continue ;
 		}
-		tmp_len = check_permitted_char(tmp);
+		tmp_len = is_permitted_char(tmp);
 		if (tmp_len < 0)
 			return (free(tmp), -1);
-		get_player(map, tmp, map->rows);
+		if (get_player(map, tmp, map->rows) < 0)
+			return (-1);
 		if ((int)tmp_len > map->cols)
 			map->cols = (int)tmp_len;
 		map->map = strarr_add(map->map, tmp);

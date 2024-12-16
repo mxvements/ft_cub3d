@@ -5,6 +5,8 @@ static int	init_map(t_map *map)
 	map->player = (t_player *)ft_calloc(1, sizeof(t_player));
 	if (!map->player)
 		return (print_error("init_map", NULL));
+	map->player->x = -1;
+	map->player->y = -1;
 	return (0);
 }
 
@@ -50,8 +52,11 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		print_error("main", ERR_USE);
-	if (check_file_extension(argv[1], ".cub") < 0)
+	if (is_file_extension(argv[1], ".cub") < 0)
+	{
 		print_error("main", ERR_CUB);
+		return (1);
+	}
 	ft_memset(&cub, 0, sizeof(t_cub));
 	if (init_cub(&cub, argv[1]) < 0)
 		return (1);

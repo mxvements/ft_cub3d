@@ -35,7 +35,7 @@ static int	save_texture(int j, char *line, t_texture *tx)
 	prefix = get_prefix(j);
 	if (ft_strncmp(prefix, line, 2) != 0)
 		return (0);
-	if (check_file_extension(line, ".xpm") < 0)
+	if (is_file_extension(line, ".xpm") < 0)
 		return (print_error("save_texture", err_msg));
 	filename = ft_strtrim(line + 2, "\t ");
 	if (!filename)
@@ -44,9 +44,6 @@ static int	save_texture(int j, char *line, t_texture *tx)
 	return (0);
 }
 
-/**
- * TODO: check for 0,0,0
- */
 static int	save_color(int j, char *line, t_texture *tx)
 {
 	char		*prefix;
@@ -61,7 +58,7 @@ static int	save_color(int j, char *line, t_texture *tx)
 	rgb = ft_split(line + 2, ',');
 	if (!rgb)
 		return (print_error("save_color", NULL));
-	if (check_color(rgb) < 0)
+	if (is_color(rgb) < 0)
 		return (print_error("save_color", err_msg));
 	color = color_str_to_long(rgb);
 	if (j == 4)
