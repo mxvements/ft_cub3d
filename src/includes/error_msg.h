@@ -13,6 +13,8 @@
 # define ERR_COL_F "Floor must be a color with 3 numbers in the range 0..255"
 # define ERR_COL_C "Ceiling must be a color with 3 numbers in the range 0..255"
 
+# define ERR_MAP_END "EOF must end with empty lines or the last line of the map. \
+	Single line with ascii found."
 # define ERR_MAP_SPC "Wrong map, all ' ' should be surrounded by {'1',' '}"
 # define ERR_MAP_0 "Wrong map, all '0' should be surrounded by {'0','1'}"
 # define ERR_MAP_BOUNDS \

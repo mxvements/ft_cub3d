@@ -101,4 +101,7 @@ void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
 void	print_map(t_map *map);
 
+/* PARSING TEST */
+int	parse_test(void);
+
 #endif

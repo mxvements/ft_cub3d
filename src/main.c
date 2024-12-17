@@ -52,6 +52,10 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		print_error("main", ERR_USE);
+	// parsing test multiple maps
+	if (ft_strncmp(argv[1],"test\0",5) == 0)
+		return (parse_test());
+	
 	if (is_file_extension(argv[1], ".cub") < 0)
 	{
 		print_error("main", ERR_CUB);

@@ -64,13 +64,15 @@ GAME=		ray_casting.c\
 			adicional.c
 
 PRS_DIR=	./src/parse_input/
-PSR=		parse_input.c \
+PRS=		parse_input.c \
 			parse_input_textures_and_colors.c \
 			parse_input_map.c \
 			parse_utils.c \
 			check_input.c \
 			check_input_map.c
 			
+PRS_T_DIR=	./src/parse_test/
+PRS_T=		parse_test.c
 
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 
@@ -105,7 +107,8 @@ OBJ_DIR=	./obj/
 OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(SRC:%.c=$(OBJ_DIR)%.o) \
 		$(GAME:%.c=$(OBJ_DIR)%.o) \
-		$(PSR:%.c=$(OBJ_DIR)%.o) \
+		$(PRS:%.c=$(OBJ_DIR)%.o) \
+		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
 		$(UTILS:%.c=$(OBJ_DIR)%.o)
 
@@ -138,8 +141,12 @@ $(OBJ_DIR)%.o: $(GAME_DIR)%.c
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
-
 $(OBJ_DIR)%.o: $(PRS_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(PRS_T_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
