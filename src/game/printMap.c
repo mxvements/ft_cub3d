@@ -35,7 +35,7 @@ void	mapok(char **res, t_data *data, int i, int j)
 		// mlx_put_image_to_window(data->mlx, data->win, data->img->img, 0, 0);
 		
 		mlx_put_image_to_window(data->mlx, data->win,
-			data->map->img_arena, j * data->size, i * data->size);
+			data->map->img_arena, (j * (data->size/4)) , (i * (data->size/4))+(7 * data->size)); // entre 4, porque imagen es 4 veces menor que el tañamo de ventana, y se multiplica 7,5 para que centre abajo, aunque seria 7,5 para se exactos
 	}
 	if (res[i][j] == '1')
 	{
@@ -46,7 +46,7 @@ void	mapok(char **res, t_data *data, int i, int j)
 		// 	/* code */
 		// }
 
-		mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, j * data->size, i * data->size);
+		mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, (j * (data->size/4)),(i * (data->size/4))+(7 * data->size));
 		
 	}
 	if (res[i][j] == 'P')
@@ -57,18 +57,18 @@ void	mapok(char **res, t_data *data, int i, int j)
 		// 	/* code */
 		// }
 		mlx_put_image_to_window(data->mlx, data->win,
-			data->map->img_people, j * data->size, i * data->size);
+			data->map->img_people, (j * (data->size/4)),(i * (data->size/4))+(7 * data->size));
 }
 
 void	ini(t_data *data)
 {
 	int	img_size[2];
 
-	img_size[0] = 128;
-	img_size[1] = 128;
-	data->map->path_pared = "./textures/pared.xpm";
-	data->map->path_arena = "./textures/arena.xpm";
-	data->map->path_aladin = "./textures/aladin.xpm";
+	img_size[0] = 32;
+	img_size[1] = 32;
+	data->map->path_pared = "./textures/pared_mini.xpm";
+	data->map->path_arena = "./textures/suelo_mini.xpm";
+	data->map->path_aladin = "./textures/pato_mini.xpm";
 	data->map->img_pared = mlx_xpm_file_to_image(data->mlx,
 			data->map->path_pared, &img_size[0], &img_size[1]);
 	data->map->img_arena = mlx_xpm_file_to_image(data->mlx,

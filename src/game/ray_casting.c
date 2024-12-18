@@ -8,12 +8,12 @@ void ray(t_data *data)
         float cameraX = 2 * x / (float)data->x_max - 1; // Coordenada X en el espacio de la cámara
         float rayDirX = data->player->dirX + cameraX;       // Dirección del rayo en X
         float rayDirY = data->player->dirY;                 // Dirección del rayo en Y
-        printf("valor de ray dir -> %f .\n", rayDirY);
+        // printf("valor de ray dir -> %f .\n", rayDirY);
 
         // Posición inicial en la cuadrícula del mapa
         int mapX = (int)data->player->x;
         int mapY = (int)data->player->y;
-	    printf("jugador x->%d, y->%d\n", mapX, mapY);
+	    // printf("jugador x->%d, y->%d\n", mapX, mapY);
 
 
         // Distancia del rayo en ambas direcciones
@@ -37,11 +37,11 @@ void ray(t_data *data)
 
         if (rayDirY < 0) {
             stepY = -1;
-            printf("datay -> %f , mapaY -> %d , deltaDistY -> %f .\n", data->player->y, mapY, deltaDistY);
+            // printf("datay -> %f , mapaY -> %d , deltaDistY -> %f .\n", data->player->y, mapY, deltaDistY);
             sideDistY = (data->player->y - mapY) * deltaDistY;
         } else {
             stepY = 1;
-            printf("datay -> %f , mapaY -> %d , deltaDistY -> %f .\n", data->player->y, mapY, deltaDistY);
+            // printf("datay -> %f , mapaY -> %d , deltaDistY -> %f .\n", data->player->y, mapY, deltaDistY);
             sideDistY = (mapY + 1.0 - data->player->y) * deltaDistY;
         }
 
@@ -52,8 +52,8 @@ void ray(t_data *data)
 
         while (hit == 0) {
             // Saltar a la siguiente celda en el eje X o Y
-            printf("sideDis y-> %f.\n", sideDistY);
-            printf("sideDis x-> %f.\n", sideDistX);
+            // printf("sideDis y-> %f.\n", sideDistY);
+            // printf("sideDis x-> %f.\n", sideDistX);
             if (sideDistX < sideDistY) {
                 sideDistX += deltaDistX;
                 mapX += stepX;
@@ -63,7 +63,7 @@ void ray(t_data *data)
                 mapY += stepY;
                 side = 1;
             }
-	        printf("map aqui-> %d y %d.\n", mapX, mapY);
+	        // printf("map aqui-> %d y %d.\n", mapX, mapY);
 
             // Verificar si el rayo ha alcanzado una pared
             if (data->map->map2d[mapX][mapY] == '1') 

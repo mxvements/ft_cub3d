@@ -73,7 +73,7 @@ static void cube_init(t_data *data)
 	// player->a = 0;
 	/* player->x = 2.0;
 	player->y = 8.0; */
-	player->dirX = 0.5;
+	player->dirX = 2.0; //ahora mismo apunta para abajo x5 y0
 	player->dirY = 0.0;
 	data->player = player;
 	positionPlayer(data);
