@@ -75,6 +75,10 @@ typedef struct s_cub
 	int			fd;
 }	t_cub ;
 
+
+
+int	init_cub_game(char *filepath);
+
 /* PARSING */
 int		parse_input(t_cub *cub, char *filepath);
 int		parse_texture_and_colors(t_texture *tx, int fd);

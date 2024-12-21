@@ -1,6 +1,6 @@
 #include "includes/cub3d.h"
 
-static int	init_map(t_map *map)
+static int	init_map_struct(t_map *map)
 {
 	map->player = (t_player *)ft_calloc(1, sizeof(t_player));
 	if (!map->player)
@@ -10,18 +10,18 @@ static int	init_map(t_map *map)
 	return (0);
 }
 
-static void init_texture(t_texture *tx)
+static void init_texture_struct(t_texture *tx)
 {
 	tx->floor = -1;
 	tx->ceiling = -1;
 }
 
-static int init_cub(t_cub *cub, char *filepath)
+static int init_cub_struct(t_cub *cub)
 {
 	cub->map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!cub->map)
 		return (print_error("init_cub", NULL));
-	if (init_map(cub->map) < 0)
+	if (init_map_struct(cub->map) < 0)
 		return (-1);
 	cub->textures = (t_texture *)ft_calloc(1, sizeof(t_texture));
 	if (!cub->textures)
@@ -29,16 +29,36 @@ static int init_cub(t_cub *cub, char *filepath)
 		free_cub(cub);
 		return (print_error("init_cub", NULL));
 	}
-	init_texture(cub->textures);
-	if (parse_input(cub, filepath) < 0)
-	{
-		free_cub(cub);
-		return (-1);
-	}
-	print_cub(cub); //LOG
+	init_texture_struct(cub->textures);
+	// if (parse_input(cub, filepath) < 0)
+	// {
+	// 	free_cub(cub);
+	// 	return (-1);
+	// }
+	// print_cub(cub); //LOG
 	return (0);
 }
 
+int	init_cub_game(char *filepath)
+{
+	t_cub	cub;
+
+	if (is_file_extension(filepath, ".cub") < 0)
+		return (print_error("main", ERR_CUB));
+	ft_memset(&cub, 0, sizeof(t_cub));
+	if (init_cub_struct(&cub) < 0)
+		return (-1);
+	if (parse_input(&cub, filepath) < 0)
+	{
+		free_cub(&cub);
+		return (-1);
+	}
+	print_cub(&cub); //LOG
+	//Edu part here .. start engine
+	//end
+	free_cub(&cub);
+	return (0);
+}
 
 /**
  * CUB3D
@@ -48,23 +68,13 @@ static int init_cub(t_cub *cub, char *filepath)
  */
 int main(int argc, char **argv)
 {
-	t_cub	cub;
-
 	if (argc != 2)
 		print_error("main", ERR_USE);
 	// parsing test multiple maps
-	if (ft_strncmp(argv[1],"test\0",5) == 0)
+	if (ft_strncmp(argv[1],"test\0", 5) == 0)
 		return (parse_test());
 	
-	if (is_file_extension(argv[1], ".cub") < 0)
-	{
-		print_error("main", ERR_CUB);
+	if (init_cub_game(argv[1]) < 0)
 		return (1);
-	}
-	ft_memset(&cub, 0, sizeof(t_cub));
-	if (init_cub(&cub, argv[1]) < 0)
-		return (1);
-	//edu deberia continuar su codigo aqui
-	free_cub(&cub);
 	return (0);
 }
