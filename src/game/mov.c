@@ -19,8 +19,8 @@ static void	mov_plus(t_cub *data, char **res, int x, int y)
 					res[i][j] = '0';
 					i += x;
 					j += y;
-					data->player->x = i;
-					data->player->y = j;
+					data->map->player->x = i;
+					data->map->player->y = j;
 					res[i][j] = 'P';
 				}
 			}
@@ -77,8 +77,8 @@ void positionPlayer(t_cub *data)
 		{
 			if (res[i][j] == 'P')
 			{
-				data->player->x = i;
-				data->player->y = j;
+				data->map->player->x = i;
+				data->map->player->y = j;
 			}
 			j++;
 		}

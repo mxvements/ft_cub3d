@@ -139,6 +139,7 @@ int	parse_map(t_map *map, int fd)
 	//all lines the same length, add padding
 	if (normalize_map(map) < 0)
 		return (-1);
+	map->size = PIXEL_SIZE;
 	//checks the symbols, {0,1,_}
 	if (check_map(map) < 0)
 		return (-1);

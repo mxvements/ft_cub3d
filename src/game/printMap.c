@@ -34,8 +34,8 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		// }
 		// mlx_put_image_to_window(data->mlx, data->win, data->img->img, 0, 0);
 		
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->map->img_arena, (j * (data->map->size/4)) , (i * (data->map->size/4))+(7 * data->map->size)); // entre 4, porque imagen es 4 veces menor que el tañamo de ventana, y se multiplica 7,5 para que centre abajo, aunque seria 7,5 para se exactos
+		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+			data->minimap->img_floor, (j * (data->map->size/4)) , (i * (data->map->size/4))+(7 * data->map->size)); // entre 4, porque imagen es 4 veces menor que el tañamo de ventana, y se multiplica 7,5 para que centre abajo, aunque seria 7,5 para se exactos
 	}
 	if (res[i][j] == '1')
 	{
@@ -46,7 +46,7 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		// 	/* code */
 		// }
 
-		mlx_put_image_to_window(data->mlx, data->win, data->map->img_pared, (j * (data->map->size/4)),(i * (data->map->size/4))+(7 * data->map->size));
+		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->img_wall, (j * (data->map->size/4)),(i * (data->map->size/4))+(7 * data->map->size));
 		
 	}
 	if (res[i][j] == 'P')
@@ -56,32 +56,35 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		// 	x++;
 		// 	/* code */
 		// }
-		mlx_put_image_to_window(data->mlx, data->win,
-			data->map->img_people, (j * (data->map->size/4)),(i * (data->map->size/4))+(7 * data->map->size));
+		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+			data->minimap->img_player, (j * (data->map->size/4)),(i * (data->map->size/4))+(7 * data->map->size));
 }
 
-void	ini(t_cub *data)
+void	init_minimap(t_cub *data)
 {
+	t_minimap *minimap;
+
+	minimap = data->minimap;
 	int	img_size[2];
 
 	img_size[0] = 32;
 	img_size[1] = 32;
-	data->map->path_pared = "./textures/pared_mini.xpm";
-	data->map->path_arena = "./textures/suelo_mini.xpm";
-	data->map->path_aladin = "./textures/pato_mini.xpm";
-	data->map->img_pared = mlx_xpm_file_to_image(data->mlx,
-			data->map->path_pared, &img_size[0], &img_size[1]);
-	data->map->img_arena = mlx_xpm_file_to_image(data->mlx,
-			data->map->path_arena, &img_size[0], &img_size[1]);
-	data->map->img_people = mlx_xpm_file_to_image(data->mlx,
-			data->map->path_aladin, &img_size[0], &img_size[1]);
+	minimap->path_wall = "./textures/pared_mini.xpm";
+	minimap->path_floor = "./textures/suelo_mini.xpm";
+	minimap->path_player = "./textures/pato_mini.xpm";
+	minimap->img_wall = mlx_xpm_file_to_image(data->mlx->mlx, minimap->path_wall, 
+			&img_size[0], &img_size[1]);
+	minimap->img_floor = mlx_xpm_file_to_image(data->mlx->mlx, minimap->path_floor, 
+			&img_size[0], &img_size[1]);
+	minimap->img_player = mlx_xpm_file_to_image(data->mlx->mlx, minimap->path_player,
+			&img_size[0], &img_size[1]);
 
 }
 
-void	print_map(t_cub *data, t_map *map)
+void	render_map(t_cub *data, t_map *map)
 {
 	// t_cub_img	img;
-	mlx_clear_window(data->mlx, data->win);
+	mlx_clear_window(data->mlx->mlx, data->mlx->win);
 	// img.img = mlx_new_image(data->mlx, 1920, 1080);
 	// data->img->img = img.img;
 	// data->img->addr = mlx_get_cub_addr(img.img, &img.bits_per_pixel, &img.line_length,

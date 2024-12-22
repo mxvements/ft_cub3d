@@ -20,6 +20,10 @@
 
 # define	WALL_SIDES	4
 # define	DEBUG		1
+# define	PIXEL_SIZE	128
+# define	IMG_SIZE	10
+# define	WIN_HEIGHT	540
+# define 	WIN_WIDTH	860
 
 enum e_texure_index
 {
@@ -51,21 +55,16 @@ typedef struct s_texture
 	long long	ceiling;
 } t_texture;
 
-typedef struct s_map
+typedef struct s_minimap
 {
-	char	*path;
-	char	*map1d; //de edu para borrar cuando tengamos parseo
-	char 	**map; //two dimensional array
-	int		rows;
-	int		cols;
-	int		size;
-	void	*img_pared;
-	void	*img_arena;
-	void	*img_people;
-	char	*path_pared;
-	char	*path_arena;
-	char	*path_aladin;
-} t_map;
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_player;
+	char	*path_wall;
+	char	*path_floor;
+	char	*path_player;
+
+}	t_minimap;
 
 typedef struct s_player
 {
@@ -84,13 +83,15 @@ typedef struct s_map
 	t_player	*player;
 	int			rows;
 	int			cols;
+	int		size;
+
 }	t_map;
 
 
 typedef struct s_mlx
 {
 	void	*mlx;
-	void	*mlx_win;
+	void	*win;
 	void	*img;
 	char	*img_addr;
 	int		bpp; //bits per pixel
@@ -100,10 +101,10 @@ typedef struct s_mlx
 
 typedef struct s_cub
 {
-	void		*mlx;
-	void		*win;
+	t_mlx		*mlx;
 	int			count;
 	t_map 		*map;
+	t_minimap	*minimap;
 	t_texture	*textures;
 	int			fd;
 }	t_cub ;
@@ -111,6 +112,7 @@ typedef struct s_cub
 
 
 int	init_cub_game(char *filepath);
+void init_mlx(t_cub *cub);
 
 /* PARSING */
 int		parse_input(t_cub *cub, char *filepath);
@@ -136,7 +138,7 @@ void	free_map(t_map *map);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
-// void	print_map(t_map *map);
+void	print_map(t_map *map);
 
 /* PARSING TEST */
 int	parse_test(void);
@@ -148,8 +150,8 @@ void    testprintMap(char **map); //remove
 void	ray(t_cub *data);
 void	insect_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
-void	print_map(t_cub *mlx, t_map *map);
-void	ini(t_cub *data);
+void	render_map(t_cub *mlx, t_map *map);
+void	init_minimap(t_cub *data);
 int		del_data(t_cub *data);
 void	move(t_cub *data, int x, int y);
 char	*read_map(char *s);

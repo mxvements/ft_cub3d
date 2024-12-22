@@ -13,3 +13,7 @@ mxvements' libft and gnl
 + Remove a submodule: git submodule deinit <path-to-submodule>, git rm <path-to-submodule>, rm -rf <path-to-submodule>
 
 <!-- https://lodev.org/cgtutor/raycasting.html -->
+
+
+## Resources
++ https://github.com/mcombeau/cub3D

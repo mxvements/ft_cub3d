@@ -55,6 +55,7 @@ int	init_cub_game(char *filepath)
 	}
 	print_cub(&cub); //LOG
 	//Edu part here .. start engine
+	init_mlx(&cub);
 	//end
 	free_cub(&cub);
 	return (0);
