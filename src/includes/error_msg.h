@@ -6,12 +6,14 @@
 # define ERR_FD "Error reading input file"
 # define ERR_TXT "All textures should have '.xpm' extension"
 
+# define ERR_TXT_MISSING "Missing XPM: any of the textures for the wall orientations"
+# define ERR_COL_MISSING "Missing RGB: ceiling and/or floor colors"
 # define ERR_TXT_NORTH "North texture should have '.xpm' extension"
 # define ERR_TXT_SOUTH "South texture should have '.xpm' extension"
 # define ERR_TXT_WEST "West texture should have '.xpm' extension"
 # define ERR_TXT_EAST "East texture should have '.xpm' extension"
-# define ERR_COL_F "Floor must be a color with 3 numbers in the range 0..255"
-# define ERR_COL_C "Ceiling must be a color with 3 numbers in the range 0..255"
+# define ERR_COL_F "Invalid/Incomplete RGB: Floor must be a color with 3 numbers in the range 0..255"
+# define ERR_COL_C "Invalid/Incomplete RGB: Ceiling must be a color with 3 numbers in the range 0..255"
 
 # define ERR_MAP_END "EOF must end with empty lines or the last line of the map. \
 	Single line with ascii found."

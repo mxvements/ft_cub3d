@@ -69,6 +69,20 @@ static int	save_color(int j, char *line, t_texture *tx)
 	return (0);
 }
 
+static int check_texture_eof(t_texture *tx)
+{
+	int	i;
+	i = -1;
+	while (++i < WALL_SIDES)
+	{
+		if (tx->wall[i] == NULL || *tx->wall[i] == '\0')
+			return (print_error("check_texture_eof", ERR_TXT_MISSING));
+	}
+	if (tx->ceiling == -1 || tx->floor == -1)
+ 		return (print_error("check_texture_eof", ERR_COL_MISSING));
+	return (0);
+}
+
 int	parse_texture_and_colors(t_texture *tx, int fd)
 {
 	char	*line;
@@ -80,7 +94,7 @@ int	parse_texture_and_colors(t_texture *tx, int fd)
 			break ;
 		line = strtrim_gnl(fd, "\t\n ");
 		if (!line)
-			return (print_error("parse_texture_and_colors", NULL));
+			return (check_texture_eof(tx));
 		i = -1;
 		while (++i < WALL_SIDES + 2 && *line != '\0')
 		{

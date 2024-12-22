@@ -100,7 +100,7 @@ static int	get_map(t_map *map, int fd)
  * @param fd file to read
  * @return int, end status, 0 for OK, -1 for error
  */
-static int	check_eof(int fd)
+static int	check_map_eof(int fd)
 {
 	char	*line;
 
@@ -134,7 +134,7 @@ int	parse_map(t_map *map, int fd)
 	if (get_map(map, fd) < 0)
 		return (-1);
 	// check if there are more lines in the file
-	if (check_eof(fd) < 0)
+	if (check_map_eof(fd) < 0)
 		return (-1);
 	//all lines the same length, add padding
 	if (normalize_map(map) < 0)

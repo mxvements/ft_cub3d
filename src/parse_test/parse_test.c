@@ -9,16 +9,7 @@
 // 	char *fp30 = "./scenes/bad/wall_none.cub";
 // }
 
-// static int test_textures(void)
-// {
-// 	char *fp19 = "./scenes/bad/textures_dir.cub";
-// 	char *fp20 = "./scenes/bad/textures_duplicates.cub";
-// 	char *fp21 = "./scenes/bad/textures_forbidden.cub";
-// 	char *fp22 = "./scenes/bad/textures_invalid.cub";
-// 	char *fp23 = "./scenes/bad/textures_missing.cub";
-// 	char *fp24 = "./scenes/bad/textures_none.cub";
-// 	char *fp25 = "./scenes/bad/textures_not_xpm.cub";
-// }
+
 
 // static int test_player(void)
 // {
@@ -57,6 +48,7 @@ static int test_colors(void)
 	} ;
 
 	i = -1;
+	printf(ROSE"++++++++++++++++++++ bad colors ++++++++++++++++++++\n"RESET);
 	while (++i < 5)
 	{
 		if (init_cub_game((char *)files[i]) < 0)
@@ -65,15 +57,39 @@ static int test_colors(void)
 			printf(GREEN"OK\n"RESET);
 		}
 	}
-
 	return (0);
+}
 
+static int test_textures(void)
+{
+	int			i;
+	const char *files[7] = {
+		"./scenes/bad/textures_dir.cub",
+		"./scenes/bad/textures_duplicates.cub",
+		"./scenes/bad/textures_forbidden.cub",
+		"./scenes/bad/textures_invalid.cub",
+		"./scenes/bad/textures_missing.cub",
+		"./scenes/bad/textures_none.cub",
+		"./scenes/bad/textures_not_xpm.cub"
+	} ;
+	i = -1;
+	printf(ROSE"++++++++++++++++++++ bad textures ++++++++++++++++++++\n"RESET);
+	while (++i < 7)
+	{
+		if (init_cub_game((char *)files[i]) < 0)
+		{
+			printf("%s - ", files[i]);
+			printf(GREEN"OK\n"RESET);
+		}
+	}
+	return (0);
 }
 
 int	parse_test(void)
 {
-	printf("TEST!\n");
+	printf(ROSE"++++++++++++++++++++ TEST! ++++++++++++++++++++\n\n"RESET);
 	test_colors();
+	test_textures();
 
 	
 	return (0);

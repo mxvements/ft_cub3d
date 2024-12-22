@@ -84,7 +84,7 @@ int	is_texture_struct_full(t_texture *tx)
 		if (tx->wall[i] == NULL || *tx->wall[i] == '\0')
 			return (0);
 	}
-	if (tx->ceiling == -1 || tx->floor == -1) //what if the colorss are 0
+	if (tx->ceiling == -1 || tx->floor == -1)
 		return (0);
 	return (1);
 }
