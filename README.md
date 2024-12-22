@@ -17,3 +17,4 @@ mxvements' libft and gnl
 
 ## Resources
 + https://github.com/mcombeau/cub3D
++ https://github.com/Saxsori/ray-cast
