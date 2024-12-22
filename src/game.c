@@ -1,15 +1,15 @@
 
-#include "includes/cub3d_game.h"
+#include "includes/cub3d.h"
 
 
-static int	close_win(t_data *data)
+static int	close_win(t_cub *data)
 {
 	mlx_destroy_window(data->mlx, data->win);
 	free(data);
 	exit(1);
 }
 
-static int	ft_hook_key(int key, t_data *data)
+static int	ft_hook_key(int key, t_cub *data)
 {
 	
 	if (key == key_ESC)
@@ -17,7 +17,7 @@ static int	ft_hook_key(int key, t_data *data)
 	if (key == key_A || key == key_LEFT)
 	{
 		move(data, 0, -1);
-		print_map_game(data, data->map);
+		print_map(data, data->map);
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
 		// dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
@@ -28,14 +28,14 @@ static int	ft_hook_key(int key, t_data *data)
 	if (key == key_S || key == key_DOWN)
 	{
 		move(data, 1, 0);
-		print_map_game(data, data->map);
+		print_map(data, data->map);
 		// if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
     	// if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
 	}
 	if (key == key_D || key == key_RIGHT)
 	{
 		move(data, 0, 1);
-		print_map_game(data, data->map);
+		print_map(data, data->map);
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
 		// dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
@@ -46,7 +46,7 @@ static int	ft_hook_key(int key, t_data *data)
 	if (key == key_W || key == key_UP)
 	{
 		move(data, -1, 0);
-		print_map_game(data, data->map);
+		print_map(data, data->map);
 		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
       	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
@@ -55,7 +55,7 @@ static int	ft_hook_key(int key, t_data *data)
 	return (0);
 }
 
-static void cube_init(t_data *data)
+static void cube_init(t_cub *data)
 {
 	t_player *player;
 	// double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
@@ -63,9 +63,9 @@ static void cube_init(t_data *data)
 	// double time = 0; //time of current frame
 	// double oldTime = 0; //time of previous frame
 
-	data->size = 128; // cada cuadrado, centro seria 64x64
-	data->x_max = 10 * data->size; //10 x 128
-	data->y_max = data->x_max;
+	data->map->size = 128; // cada cuadrado, centro seria 64x64
+	data->map->cols = 10 * data->map->size; //10 x 128
+	data->map->rows = data->map->cols;
 	
 	player = malloc(sizeof(t_player));
 	// player->x = (5 * data->size) + (data->size / 2);
@@ -92,39 +92,39 @@ static void cube_init(t_data *data)
     // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 }
 
-int	del_data(t_data *data)
+int	del_data(t_cub *data)
 {
 	data->count++;
 	if (data->count % 10000 == 0)
 	{
 		data->count = 0;
-		print_map_game(data, data->map);
+		print_map(data, data->map);
 	}
 	return (0);
 }
 
 static void cube(char *map)
 {
-	t_data		*data;
-	t_map_game	*maps;
+	t_cub		*data;
+	t_map		*maps;
 	char		**res;
 
-	data = malloc(sizeof(t_data));
+	data = malloc(sizeof(t_cub));
 	maps = malloc(sizeof(t_map));
 	data->map = maps;
-	maps->map = map;
-	res = ft_split(maps->map, '\n');
-	maps->map2d = res;
-	data->steps = 3; //velocidad de avance
-	data->sp_spin =3 *(3.14/180); //velocidad de giro
+	maps->map1d = map;
+	res = ft_split(maps->map1d, '\n');
+	maps->map = res;
+	// data->steps = 3; //velocidad de avance
+	// data->sp_spin =3 *(3.14/180); //velocidad de giro
 	cube_init(data);
 	data->mlx = mlx_init();
-	printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
-	data->win = mlx_new_window(data->mlx, data->x_max, data->y_max, "prueba");
+	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
+	data->win = mlx_new_window(data->mlx, data->map->cols, data->map->rows, "prueba");
 	ini(data);
 	data->count = 0;
 	
-	print_map_game(data, data->map);
+	print_map(data, data->map);
 	mlx_key_hook(data->win, ft_hook_key, data);
 	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
 	// mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");

@@ -1,11 +1,11 @@
 
-#include "../includes/cub3d_game.h"
+#include "../includes/cub3d.h"
 
-void ray(t_data *data)
+void ray(t_cub *data)
 {
-    for (int x = 0; x < data->x_max; x++) {
+    for (int x = 0; x < data->map->cols; x++) {
         // Calcular el ángulo del rayo para cada columna en la pantalla
-        float cameraX = 2 * x / (float)data->x_max - 1; // Coordenada X en el espacio de la cámara
+        float cameraX = 2 * x / (float)data->map->cols - 1; // Coordenada X en el espacio de la cámara
         float rayDirX = data->player->dirX + cameraX;       // Dirección del rayo en X
         float rayDirY = data->player->dirY;                 // Dirección del rayo en Y
         // printf("valor de ray dir -> %f .\n", rayDirY);
@@ -66,7 +66,7 @@ void ray(t_data *data)
 	        // printf("map aqui-> %d y %d.\n", mapX, mapY);
 
             // Verificar si el rayo ha alcanzado una pared
-            if (data->map->map2d[mapX][mapY] == '1') 
+            if (data->map->map[mapX][mapY] == '1') 
                 hit = 1;
         }
 
