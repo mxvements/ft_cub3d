@@ -22,8 +22,8 @@
 # define	DEBUG		1
 # define	PIXEL_SIZE	128
 # define	IMG_SIZE	10
-# define	WIN_HEIGHT	540
-# define 	WIN_WIDTH	860
+# define	WIN_HEIGHT	1080
+# define 	WIN_WIDTH	1920
 
 enum e_texure_index
 {
@@ -83,8 +83,7 @@ typedef struct s_map
 	t_player	*player;
 	int			rows;
 	int			cols;
-	int		size;
-
+	int			size;
 }	t_map;
 
 
@@ -101,8 +100,8 @@ typedef struct s_mlx
 
 typedef struct s_cub
 {
-	t_mlx		*mlx;
 	int			count;
+	t_mlx		*mlx;
 	t_map 		*map;
 	t_minimap	*minimap;
 	t_texture	*textures;
@@ -147,12 +146,12 @@ int	parse_test(void);
 void    testprintMap(char **map); //remove
 
 /* game */
-void	ray(t_cub *data);
+// void	ray(t_cub *data);
 void	insect_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
 void	render_map(t_cub *mlx, t_map *map);
 void	init_minimap(t_cub *data);
-int		del_data(t_cub *data);
+// int		del_data(t_cub *data);
 void	move(t_cub *data, int x, int y);
 char	*read_map(char *s);
 void	positionPlayer(t_cub *data);

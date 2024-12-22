@@ -35,7 +35,7 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		// mlx_put_image_to_window(data->mlx, data->win, data->img->img, 0, 0);
 		
 		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-			data->minimap->img_floor, (j * (data->map->size/4)) , (i * (data->map->size/4))+(7 * data->map->size)); // entre 4, porque imagen es 4 veces menor que el tañamo de ventana, y se multiplica 7,5 para que centre abajo, aunque seria 7,5 para se exactos
+			data->minimap->img_floor, (j * (data->map->size/4)) , (i * (data->map->size/4))+(6 * data->map->size)); // entre 4, porque imagen es 4 veces menor que el tañamo de ventana, y se multiplica 7,5 para que centre abajo, aunque seria 7,5 para se exactos
 	}
 	if (res[i][j] == '1')
 	{
@@ -45,8 +45,7 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		// 	x++;
 		// 	/* code */
 		// }
-
-		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->img_wall, (j * (data->map->size/4)),(i * (data->map->size/4))+(7 * data->map->size));
+		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->img_wall, (j * (data->map->size/4)),(i * (data->map->size/4))+(6 * data->map->size));
 		
 	}
 	if (res[i][j] == 'P')
@@ -57,14 +56,15 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		// 	/* code */
 		// }
 		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-			data->minimap->img_player, (j * (data->map->size/4)),(i * (data->map->size/4))+(7 * data->map->size));
+			data->minimap->img_player, (j * (data->map->size/4)),(i * (data->map->size/4))+(6 * data->map->size));
 }
 
 void	init_minimap(t_cub *data)
 {
 	t_minimap *minimap;
 
-	minimap = data->minimap;
+	minimap = malloc(sizeof(t_minimap));
+
 	int	img_size[2];
 
 	img_size[0] = 32;
@@ -79,6 +79,7 @@ void	init_minimap(t_cub *data)
 	minimap->img_player = mlx_xpm_file_to_image(data->mlx->mlx, minimap->path_player,
 			&img_size[0], &img_size[1]);
 
+	data->minimap = minimap;
 }
 
 void	render_map(t_cub *data, t_map *map)
