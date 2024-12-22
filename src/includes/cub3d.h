@@ -29,12 +29,43 @@ enum e_texure_index
 	EAST	// 3
 } ; 
 
+enum {
+	key_W=119,
+	key_A=97,
+	key_S=115,
+	key_D=100,
+	key_LEFT=65361,
+	key_DOWN=65364,
+	key_RIGHT=65363,
+	key_UP=65362,
+	key_SPACE=32,
+	key_R=114,
+	key_ESC = 65307
+};
+
+
 typedef struct s_texture
 {
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
 	long long	floor;
 	long long	ceiling;
-}	t_texture;
+} t_texture;
+
+typedef struct s_map
+{
+	char	*path;
+	char	*map1d; //de edu para borrar cuando tengamos parseo
+	char 	**map; //two dimensional array
+	int		rows;
+	int		cols;
+	int		size;
+	void	*img_pared;
+	void	*img_arena;
+	void	*img_people;
+	char	*path_pared;
+	char	*path_arena;
+	char	*path_aladin;
+} t_map;
 
 typedef struct s_player
 {
@@ -69,7 +100,9 @@ typedef struct s_mlx
 
 typedef struct s_cub
 {
-	t_mlx		mlx; //pointer?
+	void		*mlx;
+	void		*win;
+	int			count;
 	t_map 		*map;
 	t_texture	*textures;
 	int			fd;
@@ -103,9 +136,24 @@ void	free_map(t_map *map);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
-void	print_map(t_map *map);
+// void	print_map(t_map *map);
 
 /* PARSING TEST */
 int	parse_test(void);
+
+/* develop */
+void    testprintMap(char **map); //remove
+
+/* game */
+void	ray(t_cub *data);
+void	insect_img(t_cub *data, t_map *map);
+void	mapok(char **res, t_cub *data, int i, int j);
+void	print_map(t_cub *mlx, t_map *map);
+void	ini(t_cub *data);
+int		del_data(t_cub *data);
+void	move(t_cub *data, int x, int y);
+char	*read_map(char *s);
+void	positionPlayer(t_cub *data);
+
 
 #endif

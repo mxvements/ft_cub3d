@@ -1,7 +1,7 @@
 
-#include "../includes/cub3d_game.h"
+#include "../includes/cub3d.h"
 
-static void	mov_plus(t_data *data, char **res, int x, int y)
+static void	mov_plus(t_cub *data, char **res, int x, int y)
 {
 	int i;
 	int	j;
@@ -30,13 +30,13 @@ static void	mov_plus(t_data *data, char **res, int x, int y)
 	}
 }
 
-void move(t_data *data, int x, int y)
+void move(t_cub *data, int x, int y)
 {
 	printf("se esta moviendo.\n");
 	char	**res;
-	res = data->map->map2d;
+	res = data->map->map;
 	mov_plus(data, res, x, y);
-	data->map->map2d = res;
+	data->map->map = res;
 }
 
 char	*read_map(char *s)
@@ -62,14 +62,14 @@ char	*read_map(char *s)
 	return (close(fd), res);
 }
 
-void positionPlayer(t_data *data)
+void positionPlayer(t_cub *data)
 {
 	int		i;
 	int		j;
 	char	**res;
 
 	i = 0;
-	res = data->map->map2d;
+	res = data->map->map;
 	while (res[i])
 	{
 		j = 0;
