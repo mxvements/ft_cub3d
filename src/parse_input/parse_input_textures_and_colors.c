@@ -99,9 +99,9 @@ int	parse_texture_and_colors(t_texture *tx, int fd)
 		while (++i < WALL_SIDES + 2 && *line != '\0')
 		{
 			if (i < WALL_SIDES && save_texture(i, line, tx) < 0)
-				return (-1);
+				return (free(line), line = NULL, -1);
 			else if (i >= WALL_SIDES && save_color(i, line, tx) < 0)
-				return (-1);
+				return (free(line), line = NULL, -1);
 		}
 		free(line);
 	}

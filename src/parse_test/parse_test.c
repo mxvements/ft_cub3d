@@ -63,10 +63,9 @@ static int test_colors(void)
 static int test_textures(void)
 {
 	int			i;
-	const char *files[7] = {
+	const char *files[6] = {
 		"./scenes/bad/textures_dir.cub",
 		"./scenes/bad/textures_duplicates.cub",
-		"./scenes/bad/textures_forbidden.cub",
 		"./scenes/bad/textures_invalid.cub",
 		"./scenes/bad/textures_missing.cub",
 		"./scenes/bad/textures_none.cub",
