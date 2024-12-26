@@ -7,6 +7,7 @@
 # define ERR_TXT "All textures should have '.xpm' extension"
 
 # define ERR_TXT_MISSING "Missing XPM: any of the textures for the wall orientations"
+# define ERR_TXT_DUPL "Duplicate XPM: duplicate textures on the file"
 # define ERR_COL_MISSING "Missing RGB: ceiling and/or floor colors"
 # define ERR_TXT_NORTH "North texture should have '.xpm' extension"
 # define ERR_TXT_SOUTH "South texture should have '.xpm' extension"

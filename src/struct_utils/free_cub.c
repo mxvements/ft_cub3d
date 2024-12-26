@@ -26,11 +26,14 @@ void free_map(t_map *map)
 
 static void free_texture(t_texture *texture)
 {
-	int	i ;
-
-	i = -1;
-	while (++i < WALL_SIDES && texture->wall[i] != 0)
-		ft_freenull(&texture->wall[i]);
+	if (texture->wall[NORTH])
+		ft_freenull(&texture->wall[NORTH]);
+	if (texture->wall[SOUTH])
+		ft_freenull(&texture->wall[SOUTH]);
+	if (texture->wall[EAST])
+		ft_freenull(&texture->wall[EAST]);
+	if (texture->wall[WEST])
+		ft_freenull(&texture->wall[WEST]);
 }
 
 /* cub is never mallocked, we just need to free the nested structs */

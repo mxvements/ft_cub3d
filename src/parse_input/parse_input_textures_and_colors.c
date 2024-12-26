@@ -40,6 +40,11 @@ static int	save_texture(int j, char *line, t_texture *tx)
 	filename = ft_strtrim(line + 2, "\t ");
 	if (!filename)
 		return (print_error("save_texture", NULL));
+	if (tx->wall[j])
+	{
+		free(filename);
+		return (print_error("save_texture", ERR_TXT_DUPL));
+	}
 	tx->wall[j] = filename;
 	return (0);
 }
@@ -59,7 +64,7 @@ static int	save_color(int j, char *line, t_texture *tx)
 	if (!rgb)
 		return (print_error("save_color", NULL));
 	if (is_color(rgb) < 0)
-		return (print_error("save_color", err_msg));
+		return (strarr_freenull(&rgb), print_error("save_color", err_msg));
 	color = color_str_to_long(rgb);
 	if (j == 4)
 		tx->floor = color;
@@ -95,6 +100,8 @@ int	parse_texture_and_colors(t_texture *tx, int fd)
 		line = strtrim_gnl(fd, "\t\n ");
 		if (!line)
 			return (check_texture_eof(tx));
+		if (line && (*line == '0' || *line == '1'))
+			return (free(line), check_texture_eof(tx));
 		i = -1;
 		while (++i < WALL_SIDES + 2 && *line != '\0')
 		{
