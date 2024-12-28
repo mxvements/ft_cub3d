@@ -63,7 +63,6 @@ typedef struct s_minimap
 	char	*path_wall;
 	char	*path_floor;
 	char	*path_player;
-
 }	t_minimap;
 
 typedef struct s_player
@@ -120,6 +119,7 @@ int		parse_map(t_map *map, int fd);
 int		is_file_extension(char *filepath, char *extension);
 int		is_texture_struct_full(t_texture *tx);
 int		is_player(t_player *player);
+int		is_player_on_edge(t_map *map, t_player *player);
 int		is_color(char **rgb);
 int		is_permitted_char(char *line);
 int		check_map(t_map *map);
@@ -127,6 +127,7 @@ int		check_map(t_map *map);
 /* UTILS*/
 long long	color_str_to_long(char **rgb);
 char		*strtrim_gnl(int fd, char *trim);
+void		clean_gnl(int fd);
 
 /* ERRORS */
 int		print_error(char *origin, char *custom_msg);

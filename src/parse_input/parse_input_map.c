@@ -79,7 +79,7 @@ static int	get_map(t_map *map, int fd)
 		if (tmp_len < 0)
 			return (free(tmp), -1);
 		if (get_player(map, tmp, map->rows) < 0)
-			return (-1);
+			return (free(tmp), -1);
 		if ((int)tmp_len > map->cols)
 			map->cols = (int)tmp_len;
 		map->map = strarr_add(map->map, tmp);
@@ -100,7 +100,7 @@ static int	get_map(t_map *map, int fd)
  * @param fd file to read
  * @return int, end status, 0 for OK, -1 for error
  */
-static int	check_eof(int fd)
+static int	check_map_eof(int fd)
 {
 	char	*line;
 
@@ -133,14 +133,17 @@ int	parse_map(t_map *map, int fd)
 {
 	if (get_map(map, fd) < 0)
 		return (-1);
-	// check if there are more lines in the file
-	if (check_eof(fd) < 0)
+	if (!map->map)
+		return (print_error("parse_map", ERR_MAP_MISSING));
+	if (is_player(map->player) == 0)
+		return (print_error("parse_map", ERR_PL_MISSING));
+	if (is_player_on_edge(map, map->player) < 0)
 		return (-1);
-	//all lines the same length, add padding
+	if (check_map_eof(fd) < 0)
+		return (-1);
 	if (normalize_map(map) < 0)
 		return (-1);
 	map->size = PIXEL_SIZE;
-	//checks the symbols, {0,1,_}
 	if (check_map(map) < 0)
 		return (-1);
 	return (0);

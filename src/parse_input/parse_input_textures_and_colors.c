@@ -40,6 +40,11 @@ static int	save_texture(int j, char *line, t_texture *tx)
 	filename = ft_strtrim(line + 2, "\t ");
 	if (!filename)
 		return (print_error("save_texture", NULL));
+	if (tx->wall[j])
+	{
+		free(filename);
+		return (print_error("save_texture", ERR_TXT_DUPL));
+	}
 	tx->wall[j] = filename;
 	return (0);
 }
@@ -55,17 +60,31 @@ static int	save_color(int j, char *line, t_texture *tx)
 	prefix = get_prefix(j);
 	if (ft_strncmp(prefix, line, 1) != 0)
 		return (0);
-	rgb = ft_split(line + 2, ',');
+	rgb = ft_split(line + 1, ',');
 	if (!rgb)
 		return (print_error("save_color", NULL));
 	if (is_color(rgb) < 0)
-		return (print_error("save_color", err_msg));
+		return (strarr_freenull(&rgb), print_error("save_color", err_msg));
 	color = color_str_to_long(rgb);
+	strarr_freenull(&rgb);
 	if (j == 4)
 		tx->floor = color;
-	else
+	else if (j == 5)
 		tx->ceiling = color;
-	strarr_freenull(&rgb);
+	return (0);
+}
+
+static int check_texture_eof(t_texture *tx)
+{
+	int	i;
+	i = -1;
+	while (++i < WALL_SIDES)
+	{
+		if (tx->wall[i] == NULL || *tx->wall[i] == '\0')
+			return (print_error("check_texture_eof", ERR_TXT_MISSING));
+	}
+	if (tx->ceiling == -1 || tx->floor == -1)
+ 		return (print_error("check_texture_eof", ERR_COL_MISSING));
 	return (0);
 }
 
@@ -80,14 +99,16 @@ int	parse_texture_and_colors(t_texture *tx, int fd)
 			break ;
 		line = strtrim_gnl(fd, "\t\n ");
 		if (!line)
-			return (print_error("parse_texture_and_colors", NULL));
+			return (check_texture_eof(tx));
+		if (line && (*line == '0' || *line == '1'))
+			return (free(line), check_texture_eof(tx));
 		i = -1;
 		while (++i < WALL_SIDES + 2 && *line != '\0')
 		{
 			if (i < WALL_SIDES && save_texture(i, line, tx) < 0)
-				return (-1);
+				return (free(line), line = NULL, -1);
 			else if (i >= WALL_SIDES && save_color(i, line, tx) < 0)
-				return (-1);
+				return (free(line), line = NULL, -1);
 		}
 		free(line);
 	}
