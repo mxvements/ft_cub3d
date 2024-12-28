@@ -1,4 +1,3 @@
-# Cub3D
 
 ## git submodules
 codam's minilibx
@@ -12,3 +11,10 @@ mxvements' libft and gnl
 + Update submodules to latest commit: git submodule update --remote
 + Clone with submodules: git clone --recurse-submodules <repository-url>
 + Remove a submodule: git submodule deinit <path-to-submodule>, git rm <path-to-submodule>, rm -rf <path-to-submodule>
+
+<!-- https://lodev.org/cgtutor/raycasting.html -->
+
+
+## Resources
++ https://github.com/mcombeau/cub3D
++ https://github.com/Saxsori/ray-cast
