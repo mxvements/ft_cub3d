@@ -13,18 +13,18 @@
 // 	}
 // }
 
-void free_map(t_map *map)
+void	free_map(t_map *map)
 {
 	if (map->map)
-		strarr_freenull(&map->map); //TODO: revisar esta funcion
+		strarr_freenull(&map->map); // TODO: revisar esta funcion
 	if (map->player)
 	{
-		free(map->player); //it just has floats and int
+		free(map->player); // it just has floats and int
 		map->player = NULL;
 	}
 }
 
-static void free_texture(t_texture *texture)
+static void	free_texture(t_texture *texture)
 {
 	if (texture->wall[NORTH])
 		ft_freenull(&texture->wall[NORTH]);
@@ -37,7 +37,7 @@ static void free_texture(t_texture *texture)
 }
 
 /* cub is never mallocked, we just need to free the nested structs */
-int free_cub(t_cub *cub)
+int	free_cub(t_cub *cub)
 {
 	if (cub->map)
 	{
@@ -52,4 +52,23 @@ int free_cub(t_cub *cub)
 		cub->textures = NULL;
 	}
 	return (0);
+}
+
+/**
+ * @brief Clean the static variable inside the call of get_next_line
+ * This is necessary in oorder not to get 'still reachable' leaks when we have
+ * an error mid-file reading.
+ * Call this function always before closing the fd
+ * @param fd 
+ */
+void	clean_gnl(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
 }

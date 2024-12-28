@@ -4,7 +4,7 @@
 void print_player(t_player *pl)
 {
 	printf(YLLW"[player struct]\n"RESET);
-	if (pl->x != 0 && pl->y != 0)
+	if (pl->x != -1 && pl->y != -1)
 		printf("player position (x, y): (%f, %f)\n", pl->x, pl->y);
 	if (pl->dirX != 0 || pl->dirY != 0)
 		printf("player direction (x, y): (%f, %f)\n", pl->dirX, pl->dirY);

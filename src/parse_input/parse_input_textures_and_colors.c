@@ -60,17 +60,17 @@ static int	save_color(int j, char *line, t_texture *tx)
 	prefix = get_prefix(j);
 	if (ft_strncmp(prefix, line, 1) != 0)
 		return (0);
-	rgb = ft_split(line + 2, ',');
+	rgb = ft_split(line + 1, ',');
 	if (!rgb)
 		return (print_error("save_color", NULL));
 	if (is_color(rgb) < 0)
 		return (strarr_freenull(&rgb), print_error("save_color", err_msg));
 	color = color_str_to_long(rgb);
+	strarr_freenull(&rgb);
 	if (j == 4)
 		tx->floor = color;
-	else
+	else if (j == 5)
 		tx->ceiling = color;
-	strarr_freenull(&rgb);
 	return (0);
 }
 

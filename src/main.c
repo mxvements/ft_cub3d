@@ -50,6 +50,7 @@ int	init_cub_game(char *filepath)
 		return (-1);
 	if (parse_input(&cub, filepath) < 0)
 	{
+		
 		free_cub(&cub);
 		return (-1);
 	}

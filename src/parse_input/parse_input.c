@@ -19,14 +19,17 @@ int	parse_input(t_cub *cub, char *filepath)
 		return (-1);
 	if (parse_texture_and_colors(texture, cub->fd) < 0)
 	{
+		clean_gnl(cub->fd);
 		close(cub->fd);
 		return (-1);
 	}
 	if (parse_map(map, cub->fd) < 0)
 	{
+		clean_gnl(cub->fd);
 		close(cub->fd); //TODO: si da error con el mapa a medias, no libero bien
 		return (-1); 
 	}
+	clean_gnl(cub->fd);
 	close(cub->fd);
 	return (0);
 }
