@@ -51,7 +51,7 @@ static int	ft_hook_key(int key, t_cub *data)
 		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
       	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
-	// ray(data);
+	ray(data);
 	/* printf("jugador x->%f, y->%f\n", data->player->x, data->player->y); */
 	return (0);
 }

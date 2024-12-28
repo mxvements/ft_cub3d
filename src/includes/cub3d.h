@@ -146,7 +146,7 @@ int	parse_test(void);
 void    testprintMap(char **map); //remove
 
 /* game */
-// void	ray(t_cub *data);
+void	ray(t_cub *data);
 void	insect_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
 void	render_map(t_cub *mlx, t_map *map);

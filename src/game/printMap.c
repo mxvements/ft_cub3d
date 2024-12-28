@@ -48,7 +48,7 @@ void	mapok(char **res, t_cub *data, int i, int j)
 		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->img_wall, (j * (data->map->size/4)),(i * (data->map->size/4))+(6 * data->map->size));
 		
 	}
-	if (res[i][j] == 'P')
+	if (res[i][j] == 'N' || res[i][j] == 'S' ||res[i][j] == 'W' || res[i][j] == 'W')
 		// while (x < data->size)
 		// {
 		// 	mlx_pixel_put(data->mlx, data->win, (i*data->size)+x, (j*data->size)+x, 0xFF00FF);
