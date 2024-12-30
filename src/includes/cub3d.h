@@ -123,6 +123,7 @@ int		is_player(t_player *player);
 int		is_player_on_edge(t_map *map, t_player *player);
 int		is_color(char **rgb);
 int		is_permitted_char(char *line);
+int		is_map_eof(int fd);
 int		check_map(t_map *map);
 
 /* UTILS*/

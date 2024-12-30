@@ -36,45 +36,6 @@ int	is_color(char **rgb)
 	return (0);
 }
 
-/**
- * @brief Function that takes the line to append to the map and checks if all
- * the chars contained are permitted by the program:
- *
- * + chars of map:		' ', '0', '1','\n'
- *
- * + chars  of player:	'N','E','S','W'
- *
- * @param line
- * @return int length evaluated
- */
-int	is_permitted_char(char *line)
-{
-	const char	permitted[9] = {' ', '0', '1', '\n', '\t', 'N', 'E', 'S', 'W'};
-	int			i;
-	int			j;
-	int			flag;
-
-	i = -1;
-	flag = 0;
-	while (line[++i])
-	{
-		j = -1;
-		while (permitted[++j])
-		{
-			if (line[i] == permitted[j])
-			{
-				flag = 0;
-				break ;
-			}
-			if (line[i] != permitted[j])
-				flag = 1;
-		}
-		if (flag == 1)
-			return (print_error("check_permitted_char", ERR_MAP_CHAR));
-	}
-	return (i);
-}
-
 int	is_texture_struct_full(t_texture *tx)
 {
 	int	i;

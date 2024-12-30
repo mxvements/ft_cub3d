@@ -55,54 +55,6 @@ static int	ft_hook_key(int key, t_cub *data)
 	return (0);
 }
 
-// static void cube_init(t_cub *data)
-// {
-// 	t_player *player;
-// 	// double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
-
-// // 	// double time = 0; //time of current frame
-// // 	// double oldTime = 0; //time of previous frame
-
-// 	// data->map->size = 128; // cada cuadrado, centro seria 64x64
-// 	// data->map->cols = 10 * data->map->size; //10 x 128 
-// 	// data->map->rows = data->map->cols;
-	
-// 	// player = malloc(sizeof(t_player));
-// 	// player->x = (5 * data->size) + (data->size / 2);
-// 	// player->y = (8 * data->size) + (data->size / 2);
-// 	// player->a = 0;
-// 	/* player->x = 2.0;
-// 	player->y = 8.0; */
-// 	// player->dirX = 2.0; //ahora mismo apunta para abajo x5 y0
-// 	// player->dirY = 0.0;
-// 	// data->player = player;
-// 	// positionPlayer(data);
-// 	// printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
-	
-
-// // 	// oldTime = time;
-// //     // time = getTicks();
-// //     // double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-// //     // print(1.0 / frameTime); //FPS counter
-// //     // redraw();
-// //     // cls();
-
-// //     //speed modifiers
-// //     // double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-// //     // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
-// }
-
-// int	del_data(t_cub *data)
-// {
-// 	data->count++;
-// 	if (data->count % 10000 == 0)
-// 	{
-// 		data->count = 0;
-// 		print_map(data, data->map);
-// 	}
-// 	return (0);
-// }
-
 void init_mlx(t_cub *cub)
 {
 	t_mlx	*mlx;
@@ -131,24 +83,3 @@ void init_mlx(t_cub *cub)
 	//mlx_loop_hook(data->mlx, del, data);  //añadir para efectos 
 	mlx_loop(mlx->mlx);
 }
-
-// int	main(int argc, char *argv[])
-// {
-// 	char *map;
-
-// 	if(argc > 3)
-// 	{
-// 		printf("Error de parametros\n");
-// 		return (0);
-// 	}
-// 	printf("en el programa con -> %s\n", argv[1]);
-// 	map = read_map(argv[1]);
-// 	if (map == NULL)
-// 	{
-// 		write(1, "ERROR\n", 6);
-// 		return (0);
-// 	}
-// 	cube(map);
-// 	return (1);
-// }
-
