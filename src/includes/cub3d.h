@@ -17,6 +17,7 @@
 # include "../../minilibx-linux/mlx.h"
 # include "colors.h"
 # include "error_msg.h"
+# include "textures.h"
 
 # define	WALL_SIDES	4
 # define	DEBUG		1
@@ -89,7 +90,7 @@ typedef struct s_map
 
 typedef struct s_mlx
 {
-	void	*mlx;
+	void	*mlx_ptr;
 	void	*win;
 	void	*img;
 	char	*img_addr;
@@ -150,7 +151,7 @@ void    testprintMap(char **map); //remove
 
 /* game */
 void	ray(t_cub *data);
-void	insect_img(t_cub *data, t_map *map);
+void	insert_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
 void	render_map(t_cub *mlx, t_map *map);
 void	init_minimap(t_cub *data);

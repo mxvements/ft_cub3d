@@ -4,7 +4,7 @@
 
 static int	close_win(t_cub *data)
 {
-	mlx_destroy_window(data->mlx->mlx, data->mlx->win);
+	mlx_destroy_window(data->mlx->mlx_ptr, data->mlx->win);
 	free(data);
 	exit(1);
 }
@@ -57,29 +57,17 @@ static int	ft_hook_key(int key, t_cub *data)
 
 void init_mlx(t_cub *cub)
 {
-	t_mlx	*mlx;
-
-	// data = malloc(sizeof(t_cub));
-	// maps = malloc(sizeof(t_map));
-	// data->map = maps;
-	// maps->map1d = map;
-	// res = ft_split(maps->map1d, '\n');
-	// maps->map = res;
-	// data->steps = 3; //velocidad de avance
-	// data->sp_spin =3 *(3.14/180); //velocidad de giro
-	// cube_init(data);
-	cub->mlx->mlx = mlx_init();
-	mlx = cub->mlx;
-	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
-	mlx->win = mlx_new_window(mlx->mlx, WIN_WIDTH, WIN_HEIGHT, "prueba");
+	cub->mlx = ft_calloc(1, sizeof(t_mlx));
+	if (!cub->mlx)
+		return ;//Error
+	cub->mlx->mlx_ptr = mlx_init();
+	cub->mlx->win = mlx_new_window(cub->mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "prueba");
 	init_minimap(cub);
-	// data->count = 0;
-	
 	render_map(cub, cub->map);
-	mlx_key_hook(mlx->win, ft_hook_key, cub);
+	mlx_key_hook(cub->mlx->win, ft_hook_key, cub);
 	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
 	// mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");
-	mlx_hook(mlx->win, 17, 0, close_win, cub);
+	mlx_hook(cub->mlx->win, 17, 0, close_win, cub);
 	//mlx_loop_hook(data->mlx, del, data);  //añadir para efectos 
-	mlx_loop(mlx->mlx);
+	mlx_loop(cub->mlx->mlx_ptr);
 }
