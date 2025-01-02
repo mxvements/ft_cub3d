@@ -12,7 +12,7 @@ static void	mov_plus(t_cub *data, char **res, int x, int y)
 		j = 0;
 		while (res[i][j])
 		{
-			if (res[i][j] == 'P')
+			if (res[i][j] == 'N' || res[i][j] == 'S' ||res[i][j] == 'W' || res[i][j] == 'W')
 			{
 				if (res[i + x][j + y] != '1')
 				{
@@ -21,7 +21,7 @@ static void	mov_plus(t_cub *data, char **res, int x, int y)
 					j += y;
 					data->map->player->x = i;
 					data->map->player->y = j;
-					res[i][j] = 'P';
+					res[i][j] = 'N';
 				}
 			}
 			j++;
