@@ -81,6 +81,9 @@ ERR=		print_error.c
 UTILS_DIR=	./src/struct_utils/
 UTILS=		free_cub.c \
 			print_cub.c
+
+MINIMAP_DIR=	./src/minimap/
+MINIMAP=		init_minimap.c
 # libft
 
 LIBFT_DIR=	./libft/
@@ -111,7 +114,8 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
-		$(UTILS:%.c=$(OBJ_DIR)%.o)
+		$(UTILS:%.c=$(OBJ_DIR)%.o) \
+		$(MINIMAP:%.c=$(MINIMAP_DIR)%.o) 
 
 ###############################################################################
 
@@ -158,6 +162,11 @@ $(OBJ_DIR)%.o: $(ERR_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)%.o: $(UTILS_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(MINIMAP_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@

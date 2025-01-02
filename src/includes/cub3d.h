@@ -111,7 +111,7 @@ typedef struct s_cub
 
 
 int	init_cub_game(char *filepath);
-void init_mlx(t_cub *cub);
+int init_mlx(t_cub *cub);
 
 /* PARSING */
 int		parse_input(t_cub *cub, char *filepath);
@@ -153,11 +153,12 @@ void	ray(t_cub *data);
 void	insert_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
 void	render_map(t_cub *mlx, t_map *map);
-void	init_minimap(t_cub *data);
 // int		del_data(t_cub *data);
 void	move(t_cub *data, int x, int y);
 char	*read_map(char *s);
 void	positionPlayer(t_cub *data);
 
+/* MINIMAP*/
+int	init_minimap(t_cub *cub);
 
 #endif
