@@ -18,10 +18,11 @@
 # include "colors.h"
 # include "error_msg.h"
 # include "textures.h"
+# include "linux_keys.h"
 
 # define	WALL_SIDES	4
 # define	DEBUG		1
-# define	PIXEL_SIZE	128
+# define	PIXEL_SIZE	128 // ¿que es esto?
 # define	IMG_SIZE	10
 # define	WIN_HEIGHT	1080
 # define 	WIN_WIDTH	1920
@@ -33,21 +34,6 @@ enum e_texure_index
 	WEST,	// 2
 	EAST	// 3
 } ; 
-
-enum {
-	key_W=119,
-	key_A=97,
-	key_S=115,
-	key_D=100,
-	key_LEFT=65361,
-	key_DOWN=65364,
-	key_RIGHT=65363,
-	key_UP=65362,
-	key_SPACE=32,
-	key_R=114,
-	key_ESC = 65307
-};
-
 
 typedef struct s_texture
 {
@@ -61,9 +47,11 @@ typedef struct s_minimap
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_player;
+	void	*img_void;
 	char	*path_wall;
 	char	*path_floor;
 	char	*path_player;
+	char	*path_void;
 }	t_minimap;
 
 typedef struct s_player
@@ -159,6 +147,7 @@ char	*read_map(char *s);
 void	positionPlayer(t_cub *data);
 
 /* MINIMAP*/
-int	init_minimap(t_cub *cub);
+int	add_minimap(t_cub *cub);
+int	render_minimap(t_cub *cub);
 
 #endif

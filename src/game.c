@@ -13,12 +13,13 @@ static int	close_win(t_cub *data)
 static int	ft_hook_key(int key, t_cub *cub)
 {
 	
-	if (key == key_ESC)
+	if (key == KEY_ESC)
 		close_win(cub);
-	if (key == key_A || key == key_LEFT)
+	if (key == KEY_A || key == KEY_LEFT)
 	{
 		move(cub, 0, -1);
 		render_map(cub, cub->map);
+
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
 		// dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
@@ -26,17 +27,19 @@ static int	ft_hook_key(int key, t_cub *cub)
 		// planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
 		// planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
 	}
-	if (key == key_S || key == key_DOWN)
+	if (key == KEY_S || key == KEY_DOWN)
 	{
 		move(cub, 1, 0);
 		render_map(cub, cub->map);
+
 		// if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
     	// if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
 	}
-	if (key == key_D || key == key_RIGHT)
+	if (key == KEY_D || key == KEY_RIGHT)
 	{
 		move(cub, 0, 1);
 		render_map(cub, cub->map);
+
 		// double oldDirX = dirX;
 		// dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
 		// dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
@@ -44,14 +47,15 @@ static int	ft_hook_key(int key, t_cub *cub)
 		// planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
 		// planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 	}
-	if (key == key_W || key == key_UP)
+	if (key == KEY_W || key == KEY_UP)
 	{
 		move(cub, -1, 0);
 		render_map(cub, cub->map);
+
 		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
       	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
 	}
-	ray(cub);
+	// ray(cub);
 	/* printf("jugador x->%f, y->%f\n", data->player->x, data->player->y); */
 	return (0);
 }
@@ -67,8 +71,8 @@ int init_mlx(t_cub *cub)
 	mlx->mlx_ptr = mlx_init();
 	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
 	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "main-window");
-	init_minimap(cub);
-	render_map(cub, cub->map);
+	add_minimap(cub);
+	// render_map(cub, cub->map);
 	mlx_key_hook(mlx->win, ft_hook_key, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);
 	mlx_loop(mlx->mlx_ptr);

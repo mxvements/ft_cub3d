@@ -1,0 +1,25 @@
+/* XPM */
+static char *redcirclewallbw_16px1735932865[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 3 1 ",
+"  c white",
+". c black",
+"X c red",
+/* pixels */
+"       .        ",
+"  . . ..   . . .",
+" . . XXXXXX . . ",
+"...XXXXXXXXXX...",
+"   XXXXXXXXXX   ",
+". XXXXXXXXXXXX. ",
+" .XXXXXXXXXXXX .",
+"..XXXXXXXXXXXX..",
+"  XXXXXXXXXXXX  ",
+"  XXXXXXXXXXXX .",
+" .XXXXXXXXXXXX. ",
+"...XXXXXXXXXX...",
+"   XXXXXXXXXX   ",
+". .. XXXXXX.  . ",
+" . . . . . . . .",
+"................"
+};

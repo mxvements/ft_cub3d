@@ -106,7 +106,7 @@ MLX=		./minilibx-linux/libmlx_Linux.a
 ###############################################################################
 
 # objs
-
+# mirar vpath
 OBJ_DIR=	./obj/
 OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(SRC:%.c=$(OBJ_DIR)%.o) \
@@ -115,7 +115,7 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
 		$(UTILS:%.c=$(OBJ_DIR)%.o) \
-		$(MINIMAP:%.c=$(MINIMAP_DIR)%.o) 
+		$(MINIMAP:%.c=$(OBJ_DIR)%.o) 
 
 ###############################################################################
 
