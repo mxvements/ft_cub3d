@@ -65,6 +65,15 @@ typedef struct s_minimap
 	char	*path_player;
 }	t_minimap;
 
+typedef struct s_img
+{
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+}	t_img;
+
 typedef struct s_player
 {
     float           x; //parseo (N.S.E.W)

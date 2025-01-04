@@ -61,7 +61,9 @@ GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
 			mov.c\
 			printMap.c\
-			adicional.c
+			adicional.c\
+			render.c\
+			init.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \
