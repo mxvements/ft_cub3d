@@ -83,7 +83,8 @@ UTILS=		free_cub.c \
 			print_cub.c
 
 MINIMAP_DIR=	./src/minimap/
-MINIMAP=		init_minimap.c
+MINIMAP=		add_minimap.c \
+				init_minimap.c
 # libft
 
 LIBFT_DIR=	./libft/

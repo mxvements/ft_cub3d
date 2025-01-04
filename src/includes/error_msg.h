@@ -45,4 +45,7 @@
 # define ERR_PL_MISSING "Wrong map, Missing player."
 # define ERR_PL_EDGE "Wrong map, Player on edge wall."
 
+/* MINIMAp */
+# define ERR_MINI_IMG	"Error initializing xpm file to image"
+
 #endif

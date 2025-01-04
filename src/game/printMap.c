@@ -72,5 +72,5 @@ void	render_map(t_cub *cub, t_map *map)
 {
 	(void)map;
 	mlx_clear_window(cub->mlx->mlx_ptr, cub->mlx->win);
-	render_minimap(cub);
+	minimap_render(cub);
 }

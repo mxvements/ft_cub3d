@@ -148,6 +148,7 @@ void	positionPlayer(t_cub *data);
 
 /* MINIMAP*/
 int	add_minimap(t_cub *cub);
-int	render_minimap(t_cub *cub);
+int	minimap_init(t_cub *cub);
+int	minimap_render(t_cub *cub);
 
 #endif
