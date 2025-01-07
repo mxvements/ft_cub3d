@@ -26,7 +26,7 @@ static char	*ft_concat(char *first, ...)
 		// printf("current: %s\n", current);
 		tmp = ft_strdup(rslt);
 		if (!tmp)
-			return (NULL);
+			return (free(rslt),NULL);
 		free(rslt);
 		rslt = ft_strjoin(tmp, current);
 		if (!rslt)
@@ -40,11 +40,19 @@ static char	*ft_concat(char *first, ...)
 
 static char	*get_player_pos_str(t_player *player)
 {
-	const char	*x = ft_itoa(player->x);
-	const char	*y = ft_itoa(player->y);
+	char	*x;
+	char	*y;
 	char		*rslt;
 
-	rslt = ft_concat("PLAYER AT: [", x, ",", y, "]");
+	x = ft_itoa(player->x);
+	if (!x)
+		return (NULL);
+	y = ft_itoa(player->y);
+	if (!y)
+		return (free(x), NULL);
+	rslt = ft_concat("PLAYER AT: [", x, ",", y, "]", NULL);
+	free(x);
+	free(y);
 	if (!rslt)
 		return (NULL);
 	// printf("concat result: %s\n", rslt);
@@ -53,11 +61,19 @@ static char	*get_player_pos_str(t_player *player)
 
 static char	*get_player_dir_str(t_player *player)
 {
-	const char	*x = ft_itoa((int)player->dirX);
-	const char	*y = ft_itoa((int)player->dirY);
+	char	*x;
+	char	*y;
 	char		*rslt;
 
-	rslt = ft_concat("VECTOR : [", x, ",", y, "]");
+	x = ft_itoa(player->dirX);
+	if (!x)
+		return (NULL);
+	y = ft_itoa(player->dirY);
+	if (!y)
+		return (free(x), NULL);
+	rslt = ft_concat("VECTOR: [", x, ",", y, "]", NULL);
+	free(x);
+	free(y);
 	if (!rslt)
 		return (NULL);
 	// printf("concat result: %s\n", rslt);

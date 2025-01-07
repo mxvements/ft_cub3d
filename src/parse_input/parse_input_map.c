@@ -57,7 +57,7 @@ static int	get_player(t_map *map, char *line, int row)
 	int			i;
 
 	i = -1;
-	while (dir[++i])
+	while (++i < 4)
 	{
 		player = ft_strchr(line, dir[i]);
 		if (player && is_player(map->player) == 1)

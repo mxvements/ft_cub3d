@@ -27,6 +27,8 @@
 # define	WIN_HEIGHT	1080
 # define 	WIN_WIDTH	1920
 
+# define PI 3.14159265359
+
 enum e_texure_index
 {
 	NORTH,	// 0
@@ -56,13 +58,13 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-    float           x; //parseo (N.S.E.W)
-    float           y; //parseo (N)
-    float           dirX; //parseo, dar vector
-    float           dirY; //parseo, dar vector
-    int             a;
-    int             walk;   //andar 0 parado, 1 para delante, -1 para atras
-    int             spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
+    float	x; //parseo (N.S.E.W)
+    float	y; //parseo (N)
+    float	dirX; //parseo, dar vector
+    float	dirY; //parseo, dar vector
+    int  	a;
+    int  	walk;   //andar 0 parado, 1 para delante, -1 para atras
+    int  	spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
 }	t_player;
 
 typedef struct s_map
