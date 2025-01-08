@@ -6,10 +6,12 @@ void print_player(t_player *pl)
 	printf(YLLW"[player struct]\n"RESET);
 	if (pl->x != -1 && pl->y != -1)
 		printf("player position (x, y): (%f, %f)\n", pl->x, pl->y);
+	// if (pl->angle)
+	// 	printf("player angle in rads: (%f)\n", pl->angle);
 	if (pl->dirX != 0 || pl->dirY != 0)
 		printf("player direction (x, y): (%f, %f)\n", pl->dirX, pl->dirY);
-	if (pl->walk != 0)
-		printf("walk direction (-1 or 0 or 1): (%d)\n", pl->walk);
+	if (pl->walk[0] != 0 && pl->walk[1] != 0)
+		printf("walk direction: (%d, %d)\n", pl->walk[0], pl->walk[1]);
 	if (pl->spin != 0)
 		printf("spin dir (1=cw, -1=ccw): (%d)\n", pl->spin);
 }

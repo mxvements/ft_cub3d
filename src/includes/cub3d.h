@@ -21,11 +21,13 @@
 # include "linux_keys.h"
 
 # define	WALL_SIDES	4
-# define	DEBUG		1
+# define	DEBUG		1 //for the print_error 
 # define	PIXEL_SIZE	128 // ¿que es esto?
 # define	IMG_SIZE	10
 # define	WIN_HEIGHT	1080
 # define 	WIN_WIDTH	1920
+# define 	MINIMAP_TILE_SIZE	16
+
 
 # define PI 3.14159265359
 
@@ -46,6 +48,7 @@ typedef struct s_texture
 
 typedef struct s_minimap
 {
+	float	start_x; //start of the drawing of the map in the img
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_player;
@@ -58,12 +61,13 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-    float	x; //parseo (N.S.E.W)
-    float	y; //parseo (N)
+    float	x; //parseo (N.S.E.W), posicion en el mapa
+    float	y; //parseo (N), posicion en el mapa
+	// float angle;
     float	dirX; //parseo, dar vector
     float	dirY; //parseo, dar vector
     int  	a;
-    int  	walk;   //andar 0 parado, 1 para delante, -1 para atras
+    int  	walk[2]; 
     int  	spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
 }	t_player;
 
@@ -131,6 +135,7 @@ void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
 void	print_map(t_map *map);
+char	*ft_concat(char *first, ...); //at add_minimap.c
 
 /* PARSING TEST */
 int	parse_test(void);
@@ -142,9 +147,9 @@ void    testprintMap(char **map); //remove
 void	ray(t_cub *data);
 void	insert_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
-void	render_map(t_cub *mlx, t_map *map);
+void	render(t_cub *mlx, t_map *map);
 // int		del_data(t_cub *data);
-void	move(t_cub *data, int x, int y);
+void	move(t_cub *data);
 char	*read_map(char *s);
 void	positionPlayer(t_cub *data);
 

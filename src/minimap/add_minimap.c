@@ -1,15 +1,7 @@
 #include "../includes/cub3d.h"
 
-static void	put_img_to_win(t_cub *cub, void *img, int i, int j)
-{
-	const int	minimap_start_height = WIN_HEIGHT - cub->map->rows
-			* MINIMAP_IMG_SIZE_Y;
-
-	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, img, (j
-			* MINIMAP_IMG_SIZE_X), (i * MINIMAP_IMG_SIZE_Y
-			+ minimap_start_height));
-}
-static char	*ft_concat(char *first, ...)
+// util function, to add to libft
+char	*ft_concat(char *first, ...)
 {
 	va_list	vargs;
 	char	*current;
@@ -26,7 +18,7 @@ static char	*ft_concat(char *first, ...)
 		// printf("current: %s\n", current);
 		tmp = ft_strdup(rslt);
 		if (!tmp)
-			return (free(rslt),NULL);
+			return (free(rslt), NULL);
 		free(rslt);
 		rslt = ft_strjoin(tmp, current);
 		if (!rslt)
@@ -38,90 +30,42 @@ static char	*ft_concat(char *first, ...)
 	return (rslt);
 }
 
-static char	*get_player_pos_str(t_player *player)
+static void	*set_img(t_cub *cub, char **set_path, char *path, void *set_img)
 {
-	char	*x;
-	char	*y;
-	char		*rslt;
+	int	img_size[2];
 
-	x = ft_itoa(player->x);
-	if (!x)
+	img_size[0] = MINIMAP_TILE_SIZE;
+	img_size[1] = MINIMAP_TILE_SIZE;
+	*set_path = ft_strdup(path);
+	if (!*set_path)
 		return (NULL);
-	y = ft_itoa(player->y);
-	if (!y)
-		return (free(x), NULL);
-	rslt = ft_concat("PLAYER AT: [", x, ",", y, "]", NULL);
-	free(x);
-	free(y);
-	if (!rslt)
-		return (NULL);
-	// printf("concat result: %s\n", rslt);
-	return (rslt);
+	set_img = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, *set_path, &img_size[0],
+			&img_size[1]);
+	return (set_img);
 }
 
-static char	*get_player_dir_str(t_player *player)
+int	minimap_init(t_cub *cub)
 {
-	char	*x;
-	char	*y;
-	char		*rslt;
+	t_minimap	*mini;
 
-	x = ft_itoa(player->dirX);
-	if (!x)
-		return (NULL);
-	y = ft_itoa(player->dirY);
-	if (!y)
-		return (free(x), NULL);
-	rslt = ft_concat("VECTOR: [", x, ",", y, "]", NULL);
-	free(x);
-	free(y);
-	if (!rslt)
-		return (NULL);
-	// printf("concat result: %s\n", rslt);
-	return (rslt);
-}
-static void	put_str_to_win(t_cub *cub)
-{
-	const int	minimap_start_height = WIN_HEIGHT - cub->map->rows
-			* MINIMAP_IMG_SIZE_Y;
-	const char	*str_position = get_player_pos_str(cub->map->player);
-	const char	*str_vector = get_player_dir_str(cub->map->player);
-
-	if (!str_position || !str_vector)
-		return ;
-	print_player(cub->map->player);
-	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
-		+ 16, 0xFF1100, (char *)str_position);
-	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
-		+ 32, 0xFF1100, (char *)str_vector);
-}
-
-int	minimap_render(t_cub *cub)
-{
-	int		i;
-	int		j;
-	char	**map;
-
-	map = cub->map->map;
-	i = -1;
-	while (map[++i])
-	{
-		j = -1;
-		while (map[i][++j])
-		{
-			if (map[i][j] == ' ')
-				put_img_to_win(cub, cub->minimap->img_void, i, j);
-			else if (map[i][j] == '1')
-				put_img_to_win(cub, cub->minimap->img_wall, i, j);
-			else if (map[i][j] == '0')
-				put_img_to_win(cub, cub->minimap->img_floor, i, j);
-			else if (map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'S'
-				|| map[i][j] == 'W')
-				put_img_to_win(cub, cub->minimap->img_player, i, j);
-			else
-				return (print_error("render_minimap", ERR_MAP_CHAR));
-		}
-	}
-	put_str_to_win(cub);
+	cub->minimap = ft_calloc(1, sizeof(t_minimap));
+	if (!cub->minimap)
+		return (print_error("init_minimap", NULL));
+	mini = cub->minimap;
+	mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_TILE_SIZE;
+	mini->img_floor = set_img(cub, &mini->path_floor, MINI_F, mini->img_floor);
+	if (!mini->img_floor)
+		return (print_error("init_minimap", ERR_MINI_IMG));
+	mini->img_wall = set_img(cub, &mini->path_wall, MINI_W, mini->img_wall);
+	if (!mini->img_wall)
+		return (print_error("init_minimap", ERR_MINI_IMG));
+	mini->img_player = set_img(cub, &mini->path_player, MINI_PLF,
+			mini->img_player);
+	if (!mini->img_player)
+		return (print_error("init_minimap", ERR_MINI_IMG));
+	mini->img_void = set_img(cub, &mini->path_void, MINI_V, mini->img_void);
+	if (!mini->img_void)
+		return (print_error("init_minimap", ERR_MINI_IMG));
 	return (0);
 }
 
@@ -129,7 +73,7 @@ int	add_minimap(t_cub *cub)
 {
 	if (minimap_init(cub) < 0)
 		return (-1);
-	if (minimap_render(cub) < 0)
-		return (-1);
+	// if (minimap_render(cub) < 0)
+	// 	return (-1);
 	return (0);
 }

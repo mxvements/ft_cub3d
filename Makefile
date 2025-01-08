@@ -59,8 +59,8 @@ SRC=		main.c\
 
 GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
-			mov.c\
-			printMap.c\
+			move.c\
+			render.c\
 			adicional.c
 
 PRS_DIR=	./src/parse_input/
@@ -84,7 +84,7 @@ UTILS=		free_cub.c \
 
 MINIMAP_DIR=	./src/minimap/
 MINIMAP=		add_minimap.c \
-				init_minimap.c
+				render_minimap.c
 # libft
 
 LIBFT_DIR=	./libft/

@@ -54,6 +54,7 @@ static int	get_player(t_map *map, char *line, int row)
 	char		*player;
 	const char	dir[4] = {'N', 'S', 'E', 'W'};
 	const int	vector[4][2] = {{-1, 0}, {1, 0}, {0, 1}, {-1, 0}};
+	// const float	angle[4] = {(PI / 2), ((3 * PI) / 2), 0, PI};
 	int			i;
 
 	i = -1;
@@ -66,6 +67,7 @@ static int	get_player(t_map *map, char *line, int row)
 		{
 			map->player->x = row;
 			map->player->y = player - line;
+			// map->player->angle = angle[i];
 			map->player->dirX = vector[i][0];
 			map->player->dirY = vector[i][1];
 			return (0);
