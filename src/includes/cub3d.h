@@ -148,14 +148,16 @@ void	ray(t_cub *data);
 void	insert_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
 void	render(t_cub *mlx, t_map *map);
+int 	init_engine(t_cub *cub);
 // int		del_data(t_cub *data);
 void	move(t_cub *data);
 char	*read_map(char *s);
 void	positionPlayer(t_cub *data);
 
 /* MINIMAP*/
-int	add_minimap(t_cub *cub);
-int	minimap_init(t_cub *cub);
-int	minimap_render(t_cub *cub);
+// int	add_minimap(t_cub *cub);
+int		minimap_init(t_cub *cub);
+int		minimap_render(t_cub *cub);
+void	minimap_put_str(t_cub *cub);
 
 #endif

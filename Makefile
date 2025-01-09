@@ -35,7 +35,7 @@
 
 CC=			cc
 NAME=		cub3D
-CFLAGS=		-Wall -Wextra -Werror -g3
+CFLAGS=		-Wall -Wextra  -g3
 CFLAG_SAN=	-fsanitize=address
 MLX_LINUX=	-Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 
@@ -83,8 +83,9 @@ UTILS=		free_cub.c \
 			print_cub.c
 
 MINIMAP_DIR=	./src/minimap/
-MINIMAP=		add_minimap.c \
-				render_minimap.c
+MINIMAP=		minimap_init.c \
+				minimap_render.c \
+				minimap_put_str.c
 # libft
 
 LIBFT_DIR=	./libft/

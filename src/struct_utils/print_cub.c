@@ -49,6 +49,31 @@ void print_texture(t_texture *tx)
 		printf("ceiling color:\t%lli\n", tx->ceiling);
 }
 
+void print_minimap(t_minimap *minimap)
+{
+	printf(YLLW"[minimap struct]\n"RESET);
+	if (minimap->start_x != 0)
+		printf("start row position minimap: %d\n", minimap->start_x);
+		
+	if (minimap->path_wall)
+		printf("path_wall: %s\n", minimap->path_wall);
+	if (minimap->path_void)
+		printf("path_void: %s\n", minimap->path_void);
+	if (minimap->path_player)
+		printf("path_player: %s\n", minimap->path_player);
+	if (minimap->path_floor)
+		printf("path_floor: %s\n", minimap->path_floor);
+
+	if (minimap->img_wall)
+		printf("img_wall: %p\n", minimap->img_wall);
+	if (minimap->img_void)
+		printf("img_void: %p\n", minimap->img_void);
+	if (minimap->img_player)
+		printf("img_player: %p\n", minimap->img_player);
+	if (minimap->img_floor)
+		printf("img_floor: %p\n", minimap->img_floor);	
+}
+
 void	print_cub(t_cub *cub)
 {
 	printf(YLLW"[cub status]\n"RESET);
@@ -58,5 +83,7 @@ void	print_cub(t_cub *cub)
 		print_map(cub->map);
 	if (cub->textures)
 		print_texture(cub->textures);
+	if (cub->minimap)
+		print_minimap(cub->minimap);
 	
 }

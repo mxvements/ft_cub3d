@@ -49,15 +49,28 @@ static int	key_press(int key, t_cub *cub)
 static int render_loop(t_cub *cub)
 {	
 	//move settings? to recalculate after key_press
-	print_player(cub->map->player);
+	print_player(cub);
 
-	move(cub);
+	// move(cub);
 	//RENDER/DRAW everything
 	render(cub, cub->map);
 	//RAYCASTING
 	// ray(cub);
 	return (0);
 } 
+
+int init_engine(t_cub *cub)
+{
+	t_mlx	*mlx;
+
+	mlx = cub->mlx;
+	mlx_key_hook(mlx->win, key_press, cub);
+	mlx_hook(mlx->win, 17, 0, close_win, cub);
+	mlx_loop_hook(mlx->mlx_ptr, render_loop, cub);
+	mlx_loop(mlx->mlx_ptr);
+	return (0);
+}
+
 int init_mlx(t_cub *cub)
 {
 	t_mlx	*mlx;
@@ -80,16 +93,5 @@ int init_mlx(t_cub *cub)
 			&mlx->endian);
 	if (!mlx->img_addr)
 		return (print_error("init-mlx", NULL));
-
-	add_minimap(cub);
-
-	// render(cub, cub->map);
-	
-
-	// render_map(cub, cub->map);
-	mlx_key_hook(mlx->win, key_press, cub);
-	mlx_hook(mlx->win, 17, 0, close_win, cub);
-	mlx_loop_hook(mlx->mlx_ptr, render_loop, &cub);
-	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }

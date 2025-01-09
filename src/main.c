@@ -49,14 +49,14 @@ int	init_cub_game(char *filepath)
 	if (init_cub_struct(&cub) < 0)
 		return (-1);
 	if (parse_input(&cub, filepath) < 0)
-	{
-		
-		free_cub(&cub);
-		return (-1);
-	}
+		return (free_cub(&cub), -1);
+	if (minimap_init(&cub) < 0)
+		return (free_cub(&cub), -1);
+	if (init_mlx(&cub) < 0)
+		return (free_cub(&cub), -1);
 	print_cub(&cub); //LOG
-	//Edu part here .. start engine
-	init_mlx(&cub);
+	//start engine
+	init_engine(&cub);
 	//end
 	free_cub(&cub);
 	return (0);
