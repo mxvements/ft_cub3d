@@ -82,6 +82,7 @@ typedef struct s_player
 typedef struct s_map
 {
 	char 		**map; //two dimensional array
+	char		old_position;
 	t_player	*player;
 	int			rows;
 	int			cols;

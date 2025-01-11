@@ -5,9 +5,13 @@ void update_map(t_cub *cub, char player_char, float new_pos[2])
 {
 	t_player	*player;
 	player = cub->map->player;
-
-		//update map with new positions
-	cub->map->map[(int)player->x][(int)player->y] = '0';
+	
+	//cambiar el espacio por muro en bonus, poner variable
+	if (cub->map->map[(int)new_pos[0]][(int)new_pos[1]] == ' ')
+		return ;
+	//update map with new positions
+	cub->map->map[(int)player->x][(int)player->y] = cub->map->old_position;
+	cub->map->old_position = cub->map->map[(int)new_pos[0]][(int)new_pos[1]];
 	cub->map->map[(int)new_pos[0]][(int)new_pos[1]] = player_char;
 	// update player position
 	player->x = (int)new_pos[0];
