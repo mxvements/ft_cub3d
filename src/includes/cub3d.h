@@ -174,10 +174,12 @@ int		minimap_set_img(t_cub *cub);
 
 
 /* DRAW */
-void	put_pixel(int row, int col, int color, t_cub *cub);
+void	put_pixel(int col, int row, int color, t_cub *cub);
 void	put_square(int row, int col, int size, int color, t_cub *cub);
-void	put_axis(t_cub *cub, int color);
+void	minimap_put_axis(t_cub *cub, int color);
+void	minimap_put_player(t_cub *cub, int color);
 void	put_line(t_player *player, t_cub *game, float start_x, int i,
 		int color);
-void put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
+void 	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
+void	put_camera(t_cub *cub);
 #endif

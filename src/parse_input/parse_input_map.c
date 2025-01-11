@@ -67,7 +67,7 @@ static int	get_player(t_map *map, char *line, int row)
 		{
 			map->player->x = row;
 			map->player->y = player - line;
-			map->player->angle = 0; //angle[i];
+			map->player->angle = PI; //angle[i];
 			map->player->dirX = vector[i][0];
 			map->player->dirY = vector[i][1];
 			return (0);

@@ -12,17 +12,17 @@ int	minimap_set_img(t_cub *cub)
 			&img_size[0], &img_size[1]);
 	if (!mini->img_floor)
 		return (print_error("set_img", ERR_MINI_IMG));
-	mini->img_player = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_PLF,
+	mini->img_player = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_F,
 			&img_size[0], &img_size[1]);
-	if (!mini->img_floor)
+	if (!mini->img_player)
 		return (print_error("set_img", ERR_MINI_IMG));
 	mini->img_void = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_V,
 			&img_size[0], &img_size[1]);
-	if (!mini->img_floor)
+	if (!mini->img_void)
 		return (print_error("set_img", ERR_MINI_IMG));
 	mini->img_wall = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_W,
 			&img_size[0], &img_size[1]);
-	if (!mini->img_floor)
+	if (!mini->img_wall)
 		return (print_error("set_img", ERR_MINI_IMG));
 	print_minimap(mini);
 	return (0);

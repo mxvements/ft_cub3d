@@ -9,43 +9,6 @@ static int	close_win(t_cub *data)
 	exit(1);
 }
 
-
-
-// static int	key_touch(int keycode, t_cub *cub)
-// {
-// 	t_player *player;
-// 	player = cub->map->player;
-// 	if (keycode == KEY_ESC)
-// 		close_win(cub);
-// 	// //move
-// 	// if (key == KEY_A) //move left
-// 	// {
-// 	// 	player->walk[0] = 0; //TODO: this should have sin/cos of angle
-// 	// 	player->walk[1] = -1;
-// 	// 	// move(cub, 0, -1);
-// 	// }
-// 	// if (key == KEY_S)
-// 	// {
-// 	// 	player->walk[0] = 1;
-// 	// 	player->walk[1] = 0;
-// 	// 	// move(cub, 1, 0);
-// 	// }
-// 	// if (key == KEY_D)
-// 	// {
-// 	// 	player->walk[0] = 0;
-// 	// 	player->walk[1] = 1;
-// 	// 	// move(cub, 0, 1);
-// 	// }
-// 	// if (key == KEY_W)
-// 	// {
-// 	// 	player->walk[0] = -1;
-// 	// 	player->walk[1] = 0;
-// 	// 	// move(cub, -1, 0);
-// 	// }
-// 	// //TODO: rotation, review move to add sin/cos of angle
-// 	return (0);
-// }
-
 static int	key_press(int keycode, t_cub *cub)
 {
 	t_player	*player;
@@ -103,8 +66,11 @@ static int	render_loop(t_cub *cub)
 	move(cub);
 	// RENDER/DRAW everything
 	render(cub, cub->map);
-	put_axis(cub, 0xFF0000);
+	put_camera(cub);
+	minimap_put_player(cub, 0xFF0000);
+	minimap_put_axis(cub, 0xFF0000);
 	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img,0, 0);
+	minimap_put_str(cub);
 	// RAYCASTING
 	// ray(cub);
 	return (0);

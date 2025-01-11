@@ -47,7 +47,7 @@ static char	*get_player_pos_str(t_player *player)
 	free(y);
 	if (!rslt)
 		return (NULL);
-	// printf("concat result: %s\n", rslt);
+	// printf("playe dir: %s\n", rslt);
 	return (rslt);
 }
 
@@ -68,7 +68,7 @@ static char	*get_player_dir_str(t_player *player)
 	free(y);
 	if (!rslt)
 		return (NULL);
-	// printf("concat result: %s\n", rslt);
+	// printf("playe dir: %s\n", rslt);
 	return (rslt);
 }
 

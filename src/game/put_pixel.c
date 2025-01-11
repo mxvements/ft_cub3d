@@ -1,12 +1,12 @@
 #include "../includes/cub3d.h"
 
-void	put_pixel(int row, int col, int color, t_cub *cub)
+void	put_pixel(int col, int row, int color, t_cub *cub)
 {
 	int	index;
 
-	if (row >= WIN_WIDTH || col >= WIN_HEIGHT || row < 0 || col < 0)
+	if (col >= WIN_WIDTH || row >= WIN_HEIGHT || row < 0 || col < 0)
 		return ;
-	index = (col * cub->mlx->line_len) + (row * cub->mlx->bpp / 8);
+	index = (row * cub->mlx->line_len) + (col * cub->mlx->bpp / 8);
 	cub->mlx->img_addr[index] = color & 0xFF;             // blue channel
 	cub->mlx->img_addr[index + 1] = (color >> 8) & 0xFF;  // green channel
 	cub->mlx->img_addr[index + 2] = (color >> 16) & 0xFF; // red channel
