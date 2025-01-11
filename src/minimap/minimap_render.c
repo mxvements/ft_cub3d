@@ -1,5 +1,33 @@
 #include "../includes/cub3d.h"
 
+int	minimap_set_img(t_cub *cub)
+{
+	t_minimap	*mini;
+	int			img_size[2];
+
+	mini = cub->minimap;
+	img_size[0] = MINIMAP_TILE_SIZE;
+	img_size[1] = MINIMAP_TILE_SIZE;
+	mini->img_floor = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_F,
+			&img_size[0], &img_size[1]);
+	if (!mini->img_floor)
+		return (print_error("set_img", ERR_MINI_IMG));
+	mini->img_player = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_PLF,
+			&img_size[0], &img_size[1]);
+	if (!mini->img_floor)
+		return (print_error("set_img", ERR_MINI_IMG));
+	mini->img_void = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_V,
+			&img_size[0], &img_size[1]);
+	if (!mini->img_floor)
+		return (print_error("set_img", ERR_MINI_IMG));
+	mini->img_wall = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_W,
+			&img_size[0], &img_size[1]);
+	if (!mini->img_floor)
+		return (print_error("set_img", ERR_MINI_IMG));
+	print_minimap(mini);
+	return (0);
+}
+
 static void	minimap_put_img_to_win(t_cub *cub, void *img, int i, int j)
 {
 	const int	minimap_start_height = cub->minimap->start_x;
@@ -9,40 +37,14 @@ static void	minimap_put_img_to_win(t_cub *cub, void *img, int i, int j)
 			+ minimap_start_height));
 }
 
-static int	minimap_set_img(t_cub *cub)
-{
-	t_minimap	*mini;
-	int			img_size[2];
-
-	mini = cub->minimap;
-	img_size[0] = MINIMAP_TILE_SIZE;
-	img_size[1] = MINIMAP_TILE_SIZE;
-	mini->img_floor = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, mini->path_floor,
-			&img_size[0], &img_size[1]);
-	if (mini->img_floor)
-		return (print_error("set_img", ERR_MINI_IMG));
-	mini->img_player = mlx_xpm_file_to_image(cub->mlx->mlx_ptr,
-			mini->path_player, &img_size[0], &img_size[1]);
-	if (mini->img_floor)
-		return (print_error("set_img", ERR_MINI_IMG));
-	mini->img_void = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, mini->path_void,
-			&img_size[0], &img_size[1]);
-	if (mini->img_floor)
-		return (print_error("set_img", ERR_MINI_IMG));
-	mini->img_wall = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, mini->path_wall,
-			&img_size[0], &img_size[1]);
-	if (mini->img_floor)
-		return (print_error("set_img", ERR_MINI_IMG));
-	return (0);
-}
-
 int	minimap_render(t_cub *cub)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	minimap_set_img(cub);
+	// if (minimap_set_img(cub) < 0)
+	// 	return ((-1));
 	while (cub->map->map[++i])
 	{
 		j = -1;

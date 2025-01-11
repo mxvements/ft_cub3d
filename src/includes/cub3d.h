@@ -17,7 +17,7 @@
 # include "../../minilibx-linux/mlx.h"
 # include "colors.h"
 # include "error_msg.h"
-# include "textures.h"
+# include "minimap.h"
 # include "linux_keys.h"
 
 # define	WALL_SIDES	4
@@ -46,6 +46,15 @@ typedef struct s_texture
 	long long	ceiling;
 } t_texture;
 
+typedef struct s_move_keys
+{
+	int key_up;
+    int key_down;
+    int key_left;
+    int key_right;
+    int left_rotate;
+    int right_rotate;
+} t_move_keys;
 typedef struct s_minimap
 {
 	float	start_x; //start of the drawing of the map in the img
@@ -53,19 +62,18 @@ typedef struct s_minimap
 	void	*img_floor;
 	void	*img_player;
 	void	*img_void;
-	char	*path_wall;
-	char	*path_floor;
-	char	*path_player;
-	char	*path_void;
 }	t_minimap;
 
 typedef struct s_player
 {
     float	x; //parseo (N.S.E.W), posicion en el mapa
     float	y; //parseo (N), posicion en el mapa
-	// float angle;
+	float	angle;
+	t_move_keys	move_keys;
+
     float	dirX; //parseo, dar vector
     float	dirY; //parseo, dar vector
+
     int  	a;
     int  	walk[2]; 
     int  	spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
@@ -134,6 +142,7 @@ void	free_map(t_map *map);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
+void	print_minimap(t_minimap *minimap);
 void	print_map(t_map *map);
 char	*ft_concat(char *first, ...); //at add_minimap.c
 
@@ -159,5 +168,6 @@ void	positionPlayer(t_cub *data);
 int		minimap_init(t_cub *cub);
 int		minimap_render(t_cub *cub);
 void	minimap_put_str(t_cub *cub);
+int		minimap_set_img(t_cub *cub);
 
 #endif

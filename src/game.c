@@ -1,7 +1,6 @@
 
 #include "includes/cub3d.h"
 
-
 static int	close_win(t_cub *data)
 {
 	mlx_destroy_window(data->mlx->mlx_ptr, data->mlx->win);
@@ -10,68 +9,130 @@ static int	close_win(t_cub *data)
 	exit(1);
 }
 
-static int	key_press(int key, t_cub *cub)
+void	put_pixel(int x, int y, int color, t_cub *cub)
 {
-	t_player *player;
+	int	index;
+
+	if (x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
+		return ;
+	index = (y * cub->mlx->line_len) + (x * cub->mlx->bpp / 8);
+	cub->mlx->img_addr[index] = color & 0xFF;             // blue channel
+	cub->mlx->img_addr[index + 1] = (color >> 8) & 0xFF;  // green channel
+	cub->mlx->img_addr[index + 2] = (color >> 16) & 0xFF; // red channel
+}
+
+// static int	key_touch(int keycode, t_cub *cub)
+// {
+// 	t_player *player;
+// 	player = cub->map->player;
+// 	if (keycode == KEY_ESC)
+// 		close_win(cub);
+// 	// //move
+// 	// if (key == KEY_A) //move left
+// 	// {
+// 	// 	player->walk[0] = 0; //TODO: this should have sin/cos of angle
+// 	// 	player->walk[1] = -1;
+// 	// 	// move(cub, 0, -1);
+// 	// }
+// 	// if (key == KEY_S)
+// 	// {
+// 	// 	player->walk[0] = 1;
+// 	// 	player->walk[1] = 0;
+// 	// 	// move(cub, 1, 0);
+// 	// }
+// 	// if (key == KEY_D)
+// 	// {
+// 	// 	player->walk[0] = 0;
+// 	// 	player->walk[1] = 1;
+// 	// 	// move(cub, 0, 1);
+// 	// }
+// 	// if (key == KEY_W)
+// 	// {
+// 	// 	player->walk[0] = -1;
+// 	// 	player->walk[1] = 0;
+// 	// 	// move(cub, -1, 0);
+// 	// }
+// 	// //TODO: rotation, review move to add sin/cos of angle
+// 	return (0);
+// }
+
+static int	key_press(int keycode, t_cub *cub)
+{
+	t_player	*player;
 
 	player = cub->map->player;
-	if (key == KEY_ESC)
+	if (keycode == KEY_W)
+		player->move_keys.key_up = 1;
+	if (keycode == KEY_A)
+		player->move_keys.key_left = 1;
+	if (keycode == KEY_S)
+		player->move_keys.key_down = 1;
+	if (keycode == KEY_D)
+		player->move_keys.key_right = 1;
+	if (keycode == KEY_LEFT)
+		player->move_keys.left_rotate = 1;
+	if (keycode == KEY_RIGHT)
+		player->move_keys.right_rotate = 1;
+	if (keycode == KEY_ESC)
 		close_win(cub);
-	//move
-	if (key == KEY_A) //move left
-	{
-		player->walk[0] = 0; //TODO: this should have sin/cos of angle
-		player->walk[1] = -1;
-		// move(cub, 0, -1);
-	}
-	if (key == KEY_S)
-	{
-		player->walk[0] = 1;
-		player->walk[1] = 0;
-		// move(cub, 1, 0);
-	}
-	if (key == KEY_D)
-	{
-		player->walk[0] = 0;
-		player->walk[1] = 1;
-		// move(cub, 0, 1);
-	}
-	if (key == KEY_W)
-	{
-		player->walk[0] = -1;
-		player->walk[1] = 0;
-		// move(cub, -1, 0);
-	}
-	//TODO: rotation, review move to add sin/cos of angle
 	return (0);
 }
 
-static int render_loop(t_cub *cub)
-{	
-	//move settings? to recalculate after key_press
-	print_player(cub);
+static int	key_release(int keycode, t_cub *cub)
+{
+	t_player	*player;
 
-	// move(cub);
-	//RENDER/DRAW everything
+	player = cub->map->player;
+	if (keycode == KEY_W)
+		player->move_keys.key_up = 0;
+	if (keycode == KEY_A)
+		player->move_keys.key_left = 0;
+	if (keycode == KEY_S)
+		player->move_keys.key_down = 0;
+	if (keycode == KEY_D)
+		player->move_keys.key_right = 0;
+	if (keycode == KEY_LEFT)
+		player->move_keys.left_rotate = 0;
+	if (keycode == KEY_RIGHT)
+		player->move_keys.right_rotate = 0;
+	if (keycode == KEY_ESC)
+		close_win(cub);
+	return (0);
+}
+static void	clean_img(t_cub *game)
+{
+	for (int i = 0; i < WIN_HEIGHT; i++)
+		for (int j = 0; j < WIN_WIDTH; j++)
+			put_pixel(j, i, 0x00, game);
+}
+
+static int	render_loop(t_cub *cub)
+{
+	// move settings? to recalculate after key_press
+	move(cub);
+	clean_img(cub);
+	// RENDER/DRAW everything
 	render(cub, cub->map);
-	//RAYCASTING
+	// RAYCASTING
 	// ray(cub);
 	return (0);
-} 
+}
 
-int init_engine(t_cub *cub)
+int	init_engine(t_cub *cub)
 {
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	mlx_key_hook(mlx->win, key_press, cub);
+	// mlx_key_hook(mlx->win, key_touch, cub);
+	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
+	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);
 	mlx_loop_hook(mlx->mlx_ptr, render_loop, cub);
 	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }
 
-int init_mlx(t_cub *cub)
+int	init_mlx(t_cub *cub)
 {
 	t_mlx	*mlx;
 
@@ -83,7 +144,8 @@ int init_mlx(t_cub *cub)
 	if (!mlx->mlx_ptr)
 		return (print_error("init-mlx", NULL));
 	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
-	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "main-window");
+	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
+			"main-window");
 	if (!mlx->win)
 		return (print_error("init-mlx", NULL));
 	mlx->img = mlx_new_image(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);

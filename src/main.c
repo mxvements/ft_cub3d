@@ -55,6 +55,9 @@ int	init_cub_game(char *filepath)
 	if (init_mlx(&cub) < 0)
 		return (free_cub(&cub), -1);
 	print_cub(&cub); //LOG
+	//add images after initializing mlx
+	if (minimap_set_img(&cub) < 0)
+		return (free_cub(&cub), -1);
 	//start engine
 	init_engine(&cub);
 	//end

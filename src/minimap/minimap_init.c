@@ -26,17 +26,17 @@ int	minimap_init(t_cub *cub)
 	return (0);
 }*/
 
-static int	add_path(char **set_path, char *path)
-{
-	int	img_size[2];
+// static int	add_path(char **set_path, char *path)
+// {
+// 	int	img_size[2];
 
-	img_size[0] = MINIMAP_TILE_SIZE;
-	img_size[1] = MINIMAP_TILE_SIZE;
-	*set_path = ft_strdup(path);
-	if (!*set_path)
-		return (print_error("add_path", NULL));
-	return (0);
-}
+// 	img_size[0] = MINIMAP_TILE_SIZE;
+// 	img_size[1] = MINIMAP_TILE_SIZE;
+// 	*set_path = ft_strdup(path);
+// 	if (!*set_path)
+// 		return (print_error("add_path", NULL));
+// 	return (0);
+// }
 
 int	minimap_init(t_cub *cub)
 {
@@ -48,14 +48,14 @@ int	minimap_init(t_cub *cub)
 	mini = cub->minimap;
 	mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_TILE_SIZE;
 
-	if (add_path(&mini->path_floor, MINI_F) < 0)
-		return (-1);
-	if (add_path(&mini->path_wall, MINI_W) < 0)
-		return (-1);
-	if (add_path(&mini->path_player, MINI_PLF) < 0)
-		return (-1);
-	if (add_path(&mini->path_void, MINI_V) < 0)
-		return (-1);
+	// if (add_path(&mini->path_floor, MINI_F) < 0)
+	// 	return (-1);
+	// if (add_path(&mini->path_wall, MINI_W) < 0)
+	// 	return (-1);
+	// if (add_path(&mini->path_player, MINI_PLF) < 0)
+	// 	return (-1);
+	// if (add_path(&mini->path_void, MINI_V) < 0)
+	// 	return (-1);
 	
 	return (0);
 }
