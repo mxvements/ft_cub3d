@@ -9,17 +9,7 @@ static int	close_win(t_cub *data)
 	exit(1);
 }
 
-void	put_pixel(int x, int y, int color, t_cub *cub)
-{
-	int	index;
 
-	if (x >= WIN_WIDTH || y >= WIN_HEIGHT || x < 0 || y < 0)
-		return ;
-	index = (y * cub->mlx->line_len) + (x * cub->mlx->bpp / 8);
-	cub->mlx->img_addr[index] = color & 0xFF;             // blue channel
-	cub->mlx->img_addr[index + 1] = (color >> 8) & 0xFF;  // green channel
-	cub->mlx->img_addr[index + 2] = (color >> 16) & 0xFF; // red channel
-}
 
 // static int	key_touch(int keycode, t_cub *cub)
 // {
@@ -109,10 +99,12 @@ static void	clean_img(t_cub *game)
 static int	render_loop(t_cub *cub)
 {
 	// move settings? to recalculate after key_press
-	move(cub);
 	clean_img(cub);
+	move(cub);
 	// RENDER/DRAW everything
 	render(cub, cub->map);
+	put_axis(cub, 0xFF0000);
+	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img,0, 0);
 	// RAYCASTING
 	// ray(cub);
 	return (0);

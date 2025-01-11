@@ -24,9 +24,10 @@
 # define	DEBUG		1 //for the print_error 
 # define	PIXEL_SIZE	128 // ¿que es esto?
 # define	IMG_SIZE	10
-# define	WIN_HEIGHT	1080
-# define 	WIN_WIDTH	1920
+# define	WIN_HEIGHT	540
+# define 	WIN_WIDTH	960
 # define 	MINIMAP_TILE_SIZE	16
+# define	TILE_SIZE 32
 
 
 # define PI 3.14159265359
@@ -171,4 +172,12 @@ int		minimap_render(t_cub *cub);
 void	minimap_put_str(t_cub *cub);
 int		minimap_set_img(t_cub *cub);
 
+
+/* DRAW */
+void	put_pixel(int row, int col, int color, t_cub *cub);
+void	put_square(int row, int col, int size, int color, t_cub *cub);
+void	put_axis(t_cub *cub, int color);
+void	put_line(t_player *player, t_cub *game, float start_x, int i,
+		int color);
+void put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
 #endif

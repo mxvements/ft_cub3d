@@ -71,8 +71,7 @@ void	move(t_cub *cub)
 	{
 		new_pos[0] += speed * (float)cos(player->angle + PI / 2);
 		new_pos[1] += speed * (float)sin(player->angle + PI / 2);
-		printf("new pos: (%f, %f)\n", new_pos[0], new_pos[1]);
+		// printf("new pos: (%f, %f)\n", new_pos[0], new_pos[1]);
 		update_map(cub, player_char, new_pos);
-
 	}
 }

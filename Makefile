@@ -61,7 +61,10 @@ GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
 			move.c\
 			render.c\
-			adicional.c
+			adicional.c \
+			put_line.c \
+			put_pixel.c \
+			put_square.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \
@@ -86,6 +89,8 @@ MINIMAP_DIR=	./src/minimap/
 MINIMAP=		minimap_init.c \
 				minimap_render.c \
 				minimap_put_str.c
+
+
 # libft
 
 LIBFT_DIR=	./libft/
@@ -117,7 +122,8 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
 		$(UTILS:%.c=$(OBJ_DIR)%.o) \
-		$(MINIMAP:%.c=$(OBJ_DIR)%.o) 
+		$(MINIMAP:%.c=$(OBJ_DIR)%.o)
+
 
 ###############################################################################
 
