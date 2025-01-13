@@ -1,5 +1,6 @@
 #include "../includes/cub3d.h"
 
+//imprime las primeras 10 rows del mapa
 void    testprintMap(char **map)
 {
     int	i;

@@ -1,11 +1,13 @@
 #include "../includes/cub3d.h"
 
 /**
- * Check map:
- * - should have the extension .cub
- * - textures should have extension .xpm
- * - floor and ceiling should be colors (hex numbers)
- * - map -> all 0 should be surrounded by 0 or 1, all spaces should be surrounded by 1
+ * @brief main function to parse input from filepath to t_cub structures
+ * The parsing has two parts: parse_texture_and_colors (first part of the file),
+ * and parse_map. In case of error, file must be close and gnl must be cleaned
+ * (it has static memory allocation) 
+ * @param cub (t_cub *) main context structure of the project 
+ * @param filepath (char *) argument referencing the file with the main data
+ * @return int, status error: 0: ok, -1: parsing/initialiation error
  */
 int	parse_input(t_cub *cub, char *filepath)
 {
@@ -26,7 +28,7 @@ int	parse_input(t_cub *cub, char *filepath)
 	if (parse_map(map, cub->fd) < 0)
 	{
 		clean_gnl(cub->fd);
-		close(cub->fd); //TODO: si da error con el mapa a medias, no libero bien
+		close(cub->fd);
 		return (-1); 
 	}
 	clean_gnl(cub->fd);

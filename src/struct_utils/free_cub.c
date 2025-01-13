@@ -1,18 +1,5 @@
 #include "../includes/cub3d.h"
 
-/** TODO: add to libft */
-// void ft_strarr_free(char ***s)
-// {
-// 	char **arr_s;
-
-// 	arr_s = *s;
-// 	while (*arr_s)
-// 	{
-// 		ft_freenull(*arr_s);
-// 		arr_s++;
-// 	}
-// }
-
 void	free_map(t_map *map)
 {
 	if (map->map)

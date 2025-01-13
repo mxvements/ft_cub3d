@@ -59,18 +59,20 @@ SRC=		main.c\
 
 GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
-			mov.c\
-			printMap.c\
-			adicional.c\
+			move.c\
 			render.c\
-			init.c
+			adicional.c \
+			put_line.c \
+			put_pixel.c \
+			put_square.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \
 			parse_input_textures_and_colors.c \
 			parse_input_map.c \
 			parse_utils.c \
-			check_input.c \
+			check_input_textures_and_colors.c \
+			check_input_map_map.c \
 			check_input_map.c
 			
 PRS_T_DIR=	./src/parse_test/
@@ -82,6 +84,13 @@ ERR=		print_error.c
 UTILS_DIR=	./src/struct_utils/
 UTILS=		free_cub.c \
 			print_cub.c
+
+MINIMAP_DIR=	./src/minimap/
+MINIMAP=		minimap_init.c \
+				minimap_render.c \
+				minimap_put_str.c
+
+
 # libft
 
 LIBFT_DIR=	./libft/
@@ -104,7 +113,7 @@ MLX=		./minilibx-linux/libmlx_Linux.a
 ###############################################################################
 
 # objs
-
+# mirar vpath
 OBJ_DIR=	./obj/
 OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(SRC:%.c=$(OBJ_DIR)%.o) \
@@ -112,7 +121,9 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
-		$(UTILS:%.c=$(OBJ_DIR)%.o)
+		$(UTILS:%.c=$(OBJ_DIR)%.o) \
+		$(MINIMAP:%.c=$(OBJ_DIR)%.o)
+
 
 ###############################################################################
 
@@ -159,6 +170,11 @@ $(OBJ_DIR)%.o: $(ERR_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)%.o: $(UTILS_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(MINIMAP_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
