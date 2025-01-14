@@ -55,7 +55,7 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	// FOV on minimap
 	while (!touch_wall(ray_col, ray_row, cub))
 	{
-		put_pixel((int)ray_col, (int)ray_row, color, cub);
+		put_pixel((int)ray_col, (int)ray_row, 0xAA6666, cub);
 		ray_row += cos_angle;
 		ray_col += sin_angle;
 	}
@@ -70,7 +70,7 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	while (end_row > start_row)
 	{
 		//hay que controlar que no dibuje encima del minimapa
-		put_pixel(i, end_row, 255, cub);
+		put_pixel(i, end_row, color, cub);
 		end_row--;
 	}
 }
@@ -110,7 +110,7 @@ void	put_camera(t_cub *cub)
 	screen_col_idx = WIN_WIDTH;
 	while (screen_col_idx > 0) //i < (cub->map->cols * MINIMAP_TILE_SIZE)
 	{
-		put_line(player, cub, start_angle, screen_col_idx, 0xAA6666);
+		put_line(player, cub, start_angle, screen_col_idx, 255);
 		start_angle += fraction;
 		screen_col_idx--;
 	}
