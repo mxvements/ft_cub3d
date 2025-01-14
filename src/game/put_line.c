@@ -17,16 +17,30 @@ int	touch_wall(float pcol, float prow, t_cub *cub)
 		return (1);
 	return (0);
 }
+static float	distance(float row2, float row1, float col2, float col1, t_cub *cub)
+{
+	float	delta_row;
+	float	delta_col;
+	float	distance;
 
+	delta_row = row2 - row1;
+	delta_col = col2 - col1;
+	distance = sqrt(delta_row * delta_row + delta_col * delta_col);
+	float angle = atan2(delta_col, delta_row)- cub->map->player->angle;
+	//this distances has a fisheye effect this fix
+	float fix_distance = distance * cos(angle);
+	return (fix_distance);
+}
 void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 {
 	float	cos_angle;
 	float	sin_angle;
 	float	ray_row;
 	float	ray_col;
+
 	// float	dist;
 	// float	wall_height;
-	// int		start_y;
+	// int		start_col;
 	// int		end;
 
 	cos_angle = cos(angle);
@@ -37,20 +51,21 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	// FOV on minimap
 	while (!touch_wall(ray_col, ray_row, cub))
 	{
+		
 		put_pixel((int)ray_col, (int)ray_row, color, cub);
 		ray_row += cos_angle;
 		ray_col += sin_angle;
 	}
-	// //perspective
-	// dist = distance(ray_x, player->x, ray_y, player->y, game);
+	//perspective
+	// dist = distance(ray_row, player->x, ray_col, player->y, cub);
 	// wall_height = (TILE_SIZE / dist) * (WIN_WIDTH / 2);
-	// start_y = (WIN_HEIGHT - wall_height) / 2;
-	// end = start_y + wall_height;
-	// while (start_y < end)
+	// start_col = (WIN_HEIGHT - wall_height) / 2;
+	// end = start_col + wall_height;
+	// while (start_col < end)
 	// {
 	// 	if (DEBUG == 1)
-	// 		put_pixel(i, start_y, 255, game);
-	// 	start_y++;
+	// 		put_pixel(start_col, i, 255, cub);
+	// 	start_col++;
 	// }
 }
 
@@ -70,6 +85,7 @@ void	minimap_put_axis(t_cub *cub, int color)
 	sin_angle = sin(player->angle);
 	while (!touch_wall(ray_col, ray_row, cub))
 	{
+
 		put_pixel((int)ray_col, (int)ray_row, color, cub);
 		ray_row += cos_angle;
 		ray_col += sin_angle;
