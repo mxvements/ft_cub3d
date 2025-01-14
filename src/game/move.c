@@ -41,9 +41,9 @@ void	move(t_cub *cub)
 	new_pos[1] = player->y;
 	// rotate
 	if (player->move_keys.left_rotate)
-		player->angle -= angle_speed;
-	if (player->move_keys.right_rotate)
 		player->angle += angle_speed;
+	if (player->move_keys.right_rotate)
+		player->angle -= angle_speed;
 	if (player->angle >= 2 * PI)
 		player->angle -= 2 * PI;
 	else if (player->angle < 0)
