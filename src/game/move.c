@@ -1,15 +1,23 @@
 
 #include "../includes/cub3d.h"
 
-
 void	update_map(t_cub *cub, char player_char, float new_pos[2])
 {
 	t_player	*player;
 
 	player = cub->map->player;
+	// print_map(cub->map);	
+	//BUG
 	// cambiar el espacio por muro en bonus, poner variable
-	if (cub->map->map[(int)new_pos[0]][(int)new_pos[1]] == ' ')
+	if (cub->map->map[(int)round(new_pos[0])][(int)round(new_pos[1])] == ' ')
 		return ;
+	// printf("player position: (%f, %f)\n", new_pos[0], new_pos[1]);
+	// printf("old position: (%f, %f)\n", player->x, player->y);
+	// printf("map position: (%d, %d)\n", (int)new_pos[0], (int)new_pos[1]);
+	if ((int)round(new_pos[0]) >= (cub->map->rows - 0.5) || (int)round(new_pos[0]) <= 0
+		|| (int)round(new_pos[1]) >= (cub->map->cols - 0.5) || (int)round(new_pos[1]) <= 0)
+		return ;
+
 	// update map with new positions
 	cub->map->map[(int)player->x][(int)player->y] = cub->map->old_position;
 	cub->map->old_position = cub->map->map[(int)new_pos[0]][(int)new_pos[1]];
@@ -26,21 +34,20 @@ void	move(t_cub *cub)
 	float		angle_speed;
 	float		new_pos[2];
 
-	speed = 0.5;
-	angle_speed = PI / 16;
+	speed = 0.1;
+	angle_speed = PI / 32;
 	player = cub->map->player;
 	new_pos[0] = player->x;
 	new_pos[1] = player->y;
 	// rotate
 	if (player->move_keys.left_rotate)
-		player->angle -= angle_speed;
-	if (player->move_keys.right_rotate)
 		player->angle += angle_speed;
+	if (player->move_keys.right_rotate)
+		player->angle -= angle_speed;
 	if (player->angle >= 2 * PI)
 		player->angle -= 2 * PI;
 	else if (player->angle < 0)
 		player->angle += 2 * PI;
-
 	// move
 	if (player->move_keys.key_up)
 	{
