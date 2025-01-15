@@ -1,5 +1,6 @@
 #include "../includes/cub3d.h"
 
+
 int	touch_wall(float pcol, float prow, t_cub *cub)
 {
 	int	j;
@@ -30,7 +31,7 @@ static float	distance(float row2, float row1, float col2, float col1, t_cub *cub
 	//this distances has a fisheye effect this fix
 	float angle = atan2(delta_col, delta_row)- cub->map->player->angle; //POSIBLE BUG
 	float fix_distance = abs(distance * cos(angle));
-	printf("dist: %f, fixed: %f\n", distance, fix_distance);
+	// printf("dist: %f, fixed: %f\n", distance, fix_distance);
 	return (fix_distance);
 }
 void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
@@ -45,8 +46,8 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 
 	float	dist;
 	float	wall_height;
-	int		start_row;
-	int		end_row;
+	float	start_row;
+	float	end_row;
 
 	cos_angle = cos(angle);
 	sin_angle = sin(angle);
@@ -61,17 +62,15 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	}
 	//perspective
 	dist = distance(ray_row, player_row, ray_col, player_col, cub);
-	wall_height = (WIN_HEIGHT * 10) / dist; // * (WIN_WIDTH / 2);  //WALL_SIZE
-	// start_row = (WIN_HEIGHT - wall_height) / 2;
-	// end_row = start_row + wall_height;
-	// printf("dist, start: %f\n", dist);
+	wall_height = ((WIN_HEIGHT * 16) / (float)dist);
 	start_row = ((WIN_HEIGHT - wall_height) / 2);
 	end_row = (start_row + wall_height);
-	while (end_row > start_row)
+	int y = end_row;
+	while (y >= start_row)
 	{
-		//hay que controlar que no dibuje encima del minimapa
-		put_pixel(i, end_row, color, cub);
-		end_row--;
+		// antialiasing
+		put_pixel(i, y, color, cub);
+		y--;
 	}
 }
 
