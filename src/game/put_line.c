@@ -33,23 +33,16 @@ static float	distance(float row2, float row1, float col2, float col1, t_cub *cub
 	printf("dist: %f, fixed: %f\n", distance, fix_distance);
 	return (fix_distance);
 }
-void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
+
+static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin_angle, int color)
 {
-	float	cos_angle;
-	float	sin_angle;
+
+	float	ray_row;
+	float	ray_col;
 	const float player_row = player->x * MINIMAP_TILE_SIZE + cub->minimap->start_x
 		+ MINIMAP_TILE_SIZE / 2;
 	const float player_col  = player->y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
-	float	ray_row;
-	float	ray_col;
 
-	float	dist;
-	float	wall_height;
-	int		start_row;
-	int		end_row;
-
-	cos_angle = cos(angle);
-	sin_angle = sin(angle);
 	ray_row = (float)player_row;
 	ray_col = (float)player_col;
 	// FOV on minimap
@@ -60,7 +53,25 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 		ray_col += sin_angle;
 	}
 	//perspective
-	dist = distance(ray_row, player_row, ray_col, player_col, cub);
+	return distance(ray_row, player_row, ray_col, player_col, cub);	
+	
+}
+
+
+
+void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
+{
+	float	cos_angle;
+	float	sin_angle;
+
+	float	dist;
+	float	wall_height;
+	int		start_row;
+	int		end_row;
+
+	cos_angle = cos(angle);
+	sin_angle = sin(angle);
+	dist = whileTouch(player, cub, cos_angle, sin_angle, color);
 	wall_height = (WIN_HEIGHT * 10) / dist; // * (WIN_WIDTH / 2);  //WALL_SIZE
 	// start_row = (WIN_HEIGHT - wall_height) / 2;
 	// end_row = start_row + wall_height;

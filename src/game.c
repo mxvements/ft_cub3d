@@ -71,8 +71,6 @@ static int	render_loop(t_cub *cub)
 	minimap_put_axis(cub, 0xFF0000);
 	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img,0, 0);
 	minimap_put_str(cub);
-	// RAYCASTING
-	// ray(cub);
 	return (0);
 }
 
@@ -81,7 +79,6 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	// mlx_key_hook(mlx->win, key_touch, cub);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);
@@ -101,7 +98,6 @@ int	init_mlx(t_cub *cub)
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
 		return (print_error("init-mlx", NULL));
-	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
 	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
 			"main-window");
 	if (!mlx->win)
