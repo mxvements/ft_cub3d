@@ -30,7 +30,7 @@ static float	distance(float row2, float row1, float col2, float col1, t_cub *cub
 	// printf("Player Position: (%f, %f), Ray Hit: (%f, %f), Distance: %f\n", row1, col1, row2, col2, distance);
 	//this distances has a fisheye effect this fix
 	float angle = atan2(delta_col, delta_row)- cub->map->player->angle; //POSIBLE BUG
-	float fix_distance = abs(distance * cos(angle));
+	float fix_distance = fabs(distance * cos(angle));
 	// printf("dist: %f, fixed: %f\n", distance, fix_distance);
 	return (fix_distance);
 }
@@ -38,9 +38,9 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 {
 	float	cos_angle;
 	float	sin_angle;
-	const float player_row = player->x * MINIMAP_TILE_SIZE + cub->minimap->start_x
+	const float player_row = player->map_x * MINIMAP_TILE_SIZE + cub->minimap->start_x
 		+ MINIMAP_TILE_SIZE / 2;
-	const float player_col  = player->y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
+	const float player_col  = player->map_y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
 	float	ray_row;
 	float	ray_col;
 
@@ -83,9 +83,9 @@ void	minimap_put_axis(t_cub *cub, int color)
 	float		sin_angle;
 
 	player = cub->map->player;
-	ray_row = player->x * MINIMAP_TILE_SIZE + cub->minimap->start_x
+	ray_row = player->map_x * MINIMAP_TILE_SIZE + cub->minimap->start_x
 		+ MINIMAP_TILE_SIZE / 2;
-	ray_col = player->y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
+	ray_col = player->map_y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
 	cos_angle = cos(player->angle);
 	sin_angle = sin(player->angle);
 	while (!touch_wall(ray_col, ray_row, cub))

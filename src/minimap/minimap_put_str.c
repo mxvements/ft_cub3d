@@ -36,10 +36,10 @@ static char	*get_player_pos_str(t_player *player)
 	char	*y;
 	char	*rslt;
 
-	x = ft_itoa(player->x);
+	x = ft_itoa(player->map_x);
 	if (!x)
 		return (NULL);
-	y = ft_itoa(player->y);
+	y = ft_itoa(player->map_y);
 	if (!y)
 		return (free(x), NULL);
 	rslt = ft_concat("PLAYER AT: [", x, ",", y, "]", NULL);
@@ -57,10 +57,10 @@ static char	*get_player_dir_str(t_player *player)
 	char	*y;
 	char	*rslt;
 
-	x = ft_itoa(player->dirX);
+	x = ft_itoa(roundl(cos(player->angle)));
 	if (!x)
 		return (NULL);
-	y = ft_itoa(player->dirY);
+	y = ft_itoa(roundf(sin(player->angle)));
 	if (!y)
 		return (free(x), NULL);
 	rslt = ft_concat("VECTOR: [", x, ",", y, "]", NULL);

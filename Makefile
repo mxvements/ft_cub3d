@@ -61,7 +61,6 @@ GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
 			move.c\
 			render.c\
-			adicional.c \
 			put_line.c \
 			put_pixel.c \
 			put_square.c

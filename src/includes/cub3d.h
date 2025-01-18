@@ -67,17 +67,10 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-    float	x; //parseo (N.S.E.W), posicion en el mapa
-    float	y; //parseo (N), posicion en el mapa
+    float	map_x;
+    float	map_y;
 	float	angle;
 	t_move_keys	move_keys;
-
-    float	dirX; //parseo, dar vector
-    float	dirY; //parseo, dar vector
-
-    int  	a;
-    int  	walk[2]; 
-    int  	spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
 }	t_player;
 
 typedef struct s_map
@@ -90,7 +83,6 @@ typedef struct s_map
 	int			size;
 }	t_map;
 
-
 typedef struct s_mlx
 {
 	void	*mlx_ptr;
@@ -102,6 +94,14 @@ typedef struct s_mlx
 	int		endian;
 }	t_mlx;
 
+typedef struct s_options
+{
+	int		wall_col;
+	int		show_minimap;
+	float	move_speed;
+	float	rotate_speed;
+} t_options;
+
 typedef struct s_cub
 {
 	int			count;
@@ -109,6 +109,7 @@ typedef struct s_cub
 	t_map 		*map;
 	t_minimap	*minimap;
 	t_texture	*textures;
+	t_options	options;
 	int			fd;
 }	t_cub ;
 
@@ -146,13 +147,11 @@ void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
 void	print_minimap(t_minimap *minimap);
 void	print_map(t_map *map);
+void	print_options(t_options *options);
 char	*ft_concat(char *first, ...); //at add_minimap.c
 
 /* PARSING TEST */
 int	parse_test(void);
-
-/* develop */
-void    testprintMap(char **map); //remove
 
 /* game */
 void	ray(t_cub *data);
@@ -161,7 +160,7 @@ void	mapok(char **res, t_cub *data, int i, int j);
 void	render(t_cub *mlx, t_map *map);
 int 	init_engine(t_cub *cub);
 // int		del_data(t_cub *data);
-void	move(t_cub *data);
+void	move_and_rotate(t_cub *data);
 char	*read_map(char *s);
 void	positionPlayer(t_cub *data);
 

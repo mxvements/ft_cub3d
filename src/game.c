@@ -9,6 +9,19 @@ static int	close_win(t_cub *data)
 	exit(1);
 }
 
+static int	show_options(t_cub *cub)
+{
+	printf(LGREEN "[CUB3D OPTIONS]\n" RESET);
+	printf(LGREEN "+ Change options status with the following keys:\n" RESET);
+	printf(LGREEN "  +  show status on console\t (space tab)\n" RESET);
+	printf(LGREEN "  +  show game info on console\t (i)\n" RESET);
+	printf(LGREEN "  +  wall collisions\t\t (F1)\n" RESET);
+	printf(LGREEN "  +  show/hide minimap\t\t (F2)\n" RESET);
+	printf(LGREEN "  +  move speed\t\t\t (F3/F4 -/+)\n" RESET);
+	printf(LGREEN "  +  rotate speed\t\t (F5/F6 -/+)\n" RESET);
+	return (0);
+}
+
 static int	key_press(int keycode, t_cub *cub)
 {
 	t_player	*player;
@@ -50,26 +63,36 @@ static int	key_release(int keycode, t_cub *cub)
 		player->move_keys.right_rotate = 0;
 	if (keycode == KEY_ESC)
 		close_win(cub);
+	if (keycode == KEY_O)
+		show_options(cub);
+	if (keycode == KEY_i)
+		print_cub(cub);
+	if (keycode == KEY_SP)
+		print_options(&cub->options);
 	return (0);
 }
-static void	clean_img(t_cub *game)
+
+static void	clean_img(t_cub *cub)
 {
 	for (int i = 0; i < WIN_HEIGHT; i++)
 		for (int j = 0; j < WIN_WIDTH; j++)
-			put_pixel(j, i, 0x00, game);
+			put_pixel(j, i, 0x00, cub);
 }
 
 static int	render_loop(t_cub *cub)
 {
+	t_mlx	*mlx;
+
+	mlx = cub->mlx;
 	// move settings? to recalculate after key_press
 	clean_img(cub);
-	move(cub);
+	move_and_rotate(cub);
 	// RENDER/DRAW everything
 	render(cub, cub->map);
 	put_camera(cub);
 	minimap_put_player(cub, 0xFF0000);
 	minimap_put_axis(cub, 0xFF0000);
-	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img,0, 0);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
 	minimap_put_str(cub);
 	// RAYCASTING
 	// ray(cub);
@@ -81,7 +104,6 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	// mlx_key_hook(mlx->win, key_touch, cub);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);
