@@ -35,7 +35,7 @@
 
 CC=			cc
 NAME=		cub3D
-CFLAGS=		-Wall -Wextra -Werror -g3
+CFLAGS=		-Wall -Wextra -g3
 CFLAG_SAN=	-fsanitize=address
 MLX_LINUX=	-Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 

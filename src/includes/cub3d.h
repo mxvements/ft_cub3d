@@ -65,14 +65,14 @@ typedef struct s_minimap
 	void	*img_void;
 }	t_minimap;
 
-typedef struct s_img
+/* typedef struct s_img
 {
 	void	*img;
 	int		*addr;
 	int		pixel_bits;
 	int		size_line;
 	int		endian;
-}	t_img;
+}	t_img; */
 
 typedef struct s_player
 {
