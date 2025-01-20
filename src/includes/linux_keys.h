@@ -33,9 +33,9 @@
 # define KEY_SP			XK_space
 # define KEY_F1			XK_F1
 # define KEY_F2			XK_F2
-# define KEY_F3			XK_F3
-# define KEY_F4			XK_F4
-# define KEY_F5			XK_F5
-# define KEY_F6			XK_F6
+# define KEY_F3			269025098
+# define KEY_F4			269025099
+# define KEY_F5			269025030
+# define KEY_F6			269025029
 
 #endif

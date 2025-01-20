@@ -29,7 +29,6 @@
 # define 	MINIMAP_TILE_SIZE	16
 # define	TILE_SIZE 32
 
-
 # define PI 3.14159265359
 
 enum e_texure_index
@@ -56,6 +55,7 @@ typedef struct s_move_keys
     int left_rotate;
     int right_rotate;
 } t_move_keys;
+
 typedef struct s_minimap
 {
 	float	start_x; //start of the drawing of the map in the img
@@ -147,7 +147,7 @@ void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
 void	print_minimap(t_minimap *minimap);
 void	print_map(t_map *map);
-void	print_options(t_options *options);
+void	print_options_status(t_options *options);
 char	*ft_concat(char *first, ...); //at add_minimap.c
 
 /* PARSING TEST */

@@ -23,6 +23,18 @@ static void	free_texture(t_texture *texture)
 		ft_freenull(&texture->wall[WEST]);
 }
 
+static void free_minimap(t_minimap *minimap)
+{
+	if (minimap->img_wall)
+		free(minimap->img_wall);
+	if (minimap->img_floor)
+		free(minimap->img_floor);
+	if (minimap->img_player)
+		free(minimap->img_player);
+	if (minimap->img_void)
+		free(minimap->img_void);
+}
+
 /* cub is never mallocked, we just need to free the nested structs */
 int	free_cub(t_cub *cub)
 {
@@ -37,6 +49,12 @@ int	free_cub(t_cub *cub)
 		free_texture(cub->textures);
 		free(cub->textures);
 		cub->textures = NULL;
+	}
+	if (cub->minimap)
+	{
+		free_minimap(cub->minimap);
+		free(cub->minimap);
+		cub->minimap = NULL;
 	}
 	return (0);
 }

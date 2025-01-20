@@ -22,11 +22,13 @@ static void	update_map(t_cub *cub, char player_char, float new_pos[2])
 	player->map_y = (float)new_pos[1];
 }
 
-static void	rotate(t_player *player)
+static void	rotate(t_cub *cub)
 {
+	t_player *player;
 	float	angle_speed;
 
-	angle_speed = PI / 32;
+	player = cub->map->player;
+	angle_speed = cub->options.rotate_speed;
 	if (player->move_keys.left_rotate)
 		player->angle += angle_speed;
 	if (player->move_keys.right_rotate)
@@ -42,7 +44,7 @@ static void	move(t_cub *cub, float p[2], float move_x, float move_y)
 	t_player	*player;
 	float		speed;
 
-	speed = 0.1;
+	speed = cub->options.move_speed;
 	player = cub->map->player;
 	p[0] += speed * move_x;
 	p[1] += speed * move_y;
@@ -57,7 +59,7 @@ void	move_and_rotate(t_cub *cub)
 	player = cub->map->player;
 	new_pos[0] = player->map_x;
 	new_pos[1] = player->map_y;
-	rotate(player);
+	rotate(cub);
 	if (player->move_keys.key_up)
 		move(cub, new_pos, (float)cos(player->angle),
 			(float)sin(player->angle));
