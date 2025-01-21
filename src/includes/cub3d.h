@@ -141,7 +141,7 @@ int		print_error(char *origin, char *custom_msg);
 
 /* UTILS */
 int		free_cub(t_cub *cub);
-void	free_map(t_map *map);
+void	free_map(void *data);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);

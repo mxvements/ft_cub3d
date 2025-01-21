@@ -36,12 +36,13 @@ static void	change_rotate_speed(int keycode, t_cub *cub)
 		cub->options.rotate_speed);
 }
 
-static int	close_win(t_cub *data)
+static int	close_win(t_cub *cub)
 {
-	mlx_destroy_window(data->mlx->mlx_ptr, data->mlx->win);
-	printf("FINISH GAME\n");
-	free_cub(data);
-	exit(1);
+	free_cub(cub);
+	printf(ORANGE"\n*****************\n");
+    printf("*  FINISH GAME  *\n");
+    printf("*****************\n" RESET);
+	exit(0);
 }
 
 static int	print_key_options(t_cub *cub)
@@ -145,6 +146,10 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
+	printf(LGREEN"\n****************\n");
+    printf("*  START GAME  *\n");
+    printf("****************\n" RESET);
+	print_key_options(cub);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);
