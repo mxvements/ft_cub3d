@@ -56,7 +56,8 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	// FOV on minimap
 	while (!touch_wall(ray_col, ray_row, cub))
 	{
-		put_pixel((int)ray_col, (int)ray_row, 0xAA6666, cub);
+		if (cub->options.show_minimap == 1)
+			put_pixel((int)ray_col, (int)ray_row, 0xAA6666, cub);
 		ray_row += cos_angle;
 		ray_col += sin_angle;
 	}

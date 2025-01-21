@@ -24,18 +24,17 @@ int	minimap_set_img(t_cub *cub)
 			&img_size[0], &img_size[1]);
 	if (!mini->img_wall)
 		return (print_error("set_img", ERR_MINI_IMG));
-	print_minimap(mini);
+	// print_minimap(mini);
 	return (0);
 }
 
-static void	minimap_put_img_to_win(t_cub *cub, void *img, int i, int j)
-{
-	const int	minimap_start_height = cub->minimap->start_x;
-
-	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, img, (j
-			* MINIMAP_TILE_SIZE), (i * MINIMAP_TILE_SIZE
-			+ minimap_start_height));
-}
+// static void	minimap_put_img_to_win(t_cub *cub, void *img, int i, int j)
+// {
+// 	const int	minimap_start_height = cub->minimap->start_x;
+// 	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, img, (j
+// 			* MINIMAP_TILE_SIZE), (i * MINIMAP_TILE_SIZE
+// 			+ minimap_start_height));
+// }
 
 int minimap_render(t_cub *cub)
 {

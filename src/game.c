@@ -86,6 +86,7 @@ static int	key_release(int keycode, t_cub *cub)
 {
 	t_player	*player;
 
+	// printf("key %d\n", keycode);
 	player = cub->map->player;
 	if (keycode == KEY_W)
 		player->move_keys.key_up = 0;
@@ -107,18 +108,32 @@ static int	key_release(int keycode, t_cub *cub)
 		print_cub(cub);
 	if (keycode == KEY_SP)
 		print_options_status(&cub->options);
+	if (keycode ==  KEY_F2)
+	{
+		if (cub->options.show_minimap == 0)
+			cub->options.show_minimap = 1;
+		else
+			cub->options.show_minimap = 0;
+	}
 	if (keycode == KEY_F3 || keycode == KEY_F4)
 		change_move_speed(keycode, cub);
 	if (keycode == KEY_F5 || keycode == KEY_F6)
 		change_rotate_speed(keycode, cub);
 	return (0);
 }
-// TODO: change to while
+
 static void	clean_img(t_cub *cub)
 {
-	for (int i = 0; i < WIN_HEIGHT; i++)
-		for (int j = 0; j < WIN_WIDTH; j++)
+	int	i;
+	int j;
+
+	i = -1;
+	while (++i < WIN_HEIGHT)
+	{
+		j = -1;
+		while (++j < WIN_WIDTH)
 			put_pixel(j, i, 0x00, cub);
+	}
 }
 
 static int	render_loop(t_cub *cub)
@@ -130,12 +145,17 @@ static int	render_loop(t_cub *cub)
 	clean_img(cub);
 	move_and_rotate(cub);
 	// RENDER/DRAW everything
-	render(cub, cub->map);
-	put_camera(cub);
-	minimap_put_player(cub, 0xFF0000);
-	minimap_put_axis(cub, 0xFF0000);
+	// render(cub, cub->map);
+	if (cub->options.show_minimap == 1)
+	{
+		minimap_render(cub);
+		minimap_put_player(cub, 0xFF0000);
+		minimap_put_axis(cub, 0xFF0000);
+	}
+	put_camera(cub); //puts rays in minimap and draws perspective
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
-	minimap_put_str(cub);
+	if (cub->options.show_minimap == 1)
+		minimap_put_str(cub);
 	// RAYCASTING
 	// ray(cub);
 	return (0);
