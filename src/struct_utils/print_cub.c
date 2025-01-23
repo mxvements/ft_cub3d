@@ -56,14 +56,6 @@ void	print_minimap(t_minimap *minimap)
 	if (minimap->img_floor)
 		printf("img_floor: %p\n", minimap->img_floor);
 }
-void print_options_status(t_options *options)
-{
-	printf(YLLW "\n[options status]\n" RESET);
-	printf("wall collisions\t %d\n", options->wall_col);
-	printf("show minimap\t %d\n", options->show_minimap);
-	printf("move speed\t %f\n", options->move_speed);
-	printf("rotate speed\t %f\n", options->rotate_speed);
-}
 
 void	print_cub(t_cub *cub)
 {
