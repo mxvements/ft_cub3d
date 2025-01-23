@@ -64,7 +64,8 @@ GAME=		ray_casting.c\
 			adicional.c \
 			put_line.c \
 			put_pixel.c \
-			put_square.c
+			put_square.c \
+			texture.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \

@@ -79,6 +79,7 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
+	init_textures(cub); //TODO revisar
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);

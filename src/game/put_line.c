@@ -125,4 +125,5 @@ void	put_camera(t_cub *cub)
 		start_angle += fraction;
 		screen_col_idx--;
 	}
+	// render_frame(cub); //TODO revisar
 }

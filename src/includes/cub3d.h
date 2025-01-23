@@ -43,6 +43,7 @@ enum e_texure_index
 typedef struct s_texture
 {
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
+	int			**text;
 	long long	floor;
 	long long	ceiling;
 } t_texture;
@@ -65,14 +66,14 @@ typedef struct s_minimap
 	void	*img_void;
 }	t_minimap;
 
-typedef struct s_img
+typedef struct s_imgen
 {
 	void	*img;
 	int		*addr;
 	int		pixel_bits;
 	int		size_line;
 	int		endian;
-}	t_img;
+}	t_imgen;
 
 typedef struct s_player
 {
@@ -181,6 +182,8 @@ int		minimap_render(t_cub *cub);
 void	minimap_put_str(t_cub *cub);
 int		minimap_set_img(t_cub *cub);
 
+void	init_textures(t_cub *data);
+void	render_frame(t_cub *data);
 
 /* DRAW */
 void	put_pixel(int col, int row, int color, t_cub *cub);
