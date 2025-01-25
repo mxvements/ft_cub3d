@@ -30,15 +30,17 @@ static float	distance(float row2, float row1, float col2, float col1, t_cub *cub
 	//this distances has a fisheye effect this fix
 	float angle = atan2(delta_col, delta_row)- cub->map->player->angle; //POSIBLE BUG
 	float fix_distance = abs(distance * cos(angle));
-	printf("dist: %f, fixed: %f\n", distance, fix_distance);
+	// printf("dist: %f, fixed: %f\n", distance, fix_distance);
 	return (fix_distance);
 }
 
 static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin_angle, int color)
 {
-
+	t_imgen	image;
 	float	ray_row;
 	float	ray_col;
+
+	image.img = NULL;
 	const float player_row = player->x * MINIMAP_TILE_SIZE + cub->minimap->start_x
 		+ MINIMAP_TILE_SIZE / 2;
 	const float player_col  = player->y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
@@ -57,18 +59,33 @@ static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin
 	
 }
 
+static void put_texture(t_cub *cub, int col, int end)
+{
+	int i;
+	int col_texture;
 
+	i = 0;
+	col_texture = col % 4;
+	while(i< (PIXEL_SIZE - 1))
+	{
+		printf("hola texture %d\n", cub->textures->text[0][i]);
+		put_pixel(col, end, cub->textures->text[0][i], cub);
+		i++;
+	}
+}
 
 void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 {
 	float	cos_angle;
 	float	sin_angle;
+	t_imgen image;
 
 	float	dist;
 	float	wall_height;
 	int		start_row;
 	int		end_row;
 
+	image.img = NULL;
 	cos_angle = cos(angle);
 	sin_angle = sin(angle);
 	dist = whileTouch(player, cub, cos_angle, sin_angle, color);
@@ -78,10 +95,13 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	// printf("dist, start: %f\n", dist);
 	start_row = ((WIN_HEIGHT - wall_height) / 2);
 	end_row = (start_row + wall_height);
+	//printf("la i %d- starwor%d -  endrow %d\n", i, start_row ,end_row);
 	while (end_row > start_row)
 	{
 		//hay que controlar que no dibuje encima del minimapa
-		put_pixel(i, end_row, 255, cub);
+		put_pixel(i, end_row, cub->textures->text[0][ end_row * PIXEL_SIZE + i], cub);
+		//put_texture(cub, i, end_row);
+		//set_image_pixel(&image, start_row, end_row, cub->textures->text[start_row][end_row]);
 		end_row--;
 	}
 }
@@ -125,5 +145,5 @@ void	put_camera(t_cub *cub)
 		start_angle += fraction;
 		screen_col_idx--;
 	}
-	// render_frame(cub); //TODO revisar
+	//render_frame(cub); //TODO revisar
 }

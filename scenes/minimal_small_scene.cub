@@ -1,9 +1,9 @@
-NO ./path_to_the_north_texture.xpm
-SO ./path_to_the_south_texture.xpm
-WE ./path_to_the_west_texture.xpm
-EA ./path_to_the_east_texture.xpm
-F 220,100,0
-C 225,30,0
+NO ./textures/arena.xpm
+SO ./textures/arena.xpm
+WE ./textures/arena.xpm
+EA ./textures/arena.xpm
+F 0, 255, 0
+C 0, 0, 255
         1111111111111111111111111
         1000000000110000000000001
         1000000000100000000000001

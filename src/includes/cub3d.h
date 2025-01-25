@@ -22,7 +22,7 @@
 
 # define	WALL_SIDES	4
 # define	DEBUG		1 //for the print_error 
-# define	PIXEL_SIZE	128 // ¿que es esto?
+# define	PIXEL_SIZE	128 // tamaño de imagen en un cuadrado
 # define	IMG_SIZE	10
 # define	WIN_HEIGHT	540
 # define 	WIN_WIDTH	960
@@ -44,6 +44,7 @@ typedef struct s_texture
 {
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
 	int			**text;
+	int			**pixel;
 	long long	floor;
 	long long	ceiling;
 } t_texture;
@@ -183,7 +184,11 @@ void	minimap_put_str(t_cub *cub);
 int		minimap_set_img(t_cub *cub);
 
 void	init_textures(t_cub *data);
+void	init_img(t_cub *data, t_imgen *image, int width, int height);
+void	set_frame_image_pixel(t_cub *data, t_imgen *image, int x, int y);
+void	set_image_pixel(t_imgen *image, int x, int y, int color);
 void	render_frame(t_cub *data);
+void	init_texture_pixels(t_cub *data);
 
 /* DRAW */
 void	put_pixel(int col, int row, int color, t_cub *cub);

@@ -21,22 +21,26 @@ void    testprintMap(char **map)
 	}
 }
 
-static void	set_image_pixel(t_imgen *image, int x, int y, int color)
+void	set_image_pixel(t_imgen *image, int x, int y, int color)
 {
 	int	pixel;
-
-	pixel = y * (image->size_line / 4) + x;
+	// pixel = y * (image->size_line / 4) + x;
+	pixel = y * PIXEL_SIZE + x;
+	// printf("setter img, %d. --> %d\n", color, pixel);
 	image->addr[pixel] = color;
+	// printf("setter img\n");
 }
 
-static void	set_frame_image_pixel(t_cub *data, t_img *image, int x, int y)
+void	set_frame_image_pixel(t_cub *data, t_imgen *image, int x, int y)
 {
-	if (data->textures->text[y][x] > 0)
-		set_image_pixel(image, x, y, data->textures->text[y][x]);
-	/* else if (y < WIN_HEIGHT / 2)
-		set_image_pixel(image, x, y, data->texinfo.hex_ceiling);
+	/* printf("x -> %d y -> %d.\n", x, y);
+	printf("d-> %d\n", data->textures->pixel[93][0]); */
+	if (data->textures->pixel[y][x] > 0)
+		set_image_pixel(image, x, y, data->textures->pixel[y][x]);
+	else if (y < WIN_HEIGHT / 2)
+		set_image_pixel(image, x, y, data->textures->ceiling);
 	else if (y < WIN_HEIGHT -1)
-		set_image_pixel(image, x, y, data->texinfo.hex_floor); */
+		set_image_pixel(image, x, y, data->textures->floor); 
 }
 
 
@@ -48,7 +52,8 @@ void	render_frame(t_cub *data)
 	int		y;
 
 	image.img = NULL;
-	/* init_img(data, &image, WIN_WIDTH, WIN_HEIGHT); */
+	init_img(data, &image, WIN_WIDTH, WIN_HEIGHT);
+	init_texture_pixels(data);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
@@ -60,6 +65,27 @@ void	render_frame(t_cub *data)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(data->mlx->mlx_ptr, data->mlx->win, image.img, 0, 0);
-	mlx_destroy_image(data->mlx->mlx_ptr, image.img);
+	/* mlx_put_image_to_window(data->mlx->mlx_ptr, data->mlx->win, image.img, 0, 0);
+	mlx_destroy_image(data->mlx->mlx_ptr, image.img); */
+}
+
+void	init_texture_pixels(t_cub *data)
+{
+	int	i;
+
+	/* if (data->textures->pixel)
+		free */
+	data->textures->pixel = ft_calloc(WIN_HEIGHT + 1,
+			sizeof * data->textures->pixel);
+	if (!data->textures->pixel)
+		print_error("pixel", NULL);
+	i = 0;
+	while (i < WIN_HEIGHT)
+	{
+		data->textures->pixel[i] = ft_calloc(WIN_WIDTH + 1,
+				sizeof * data->textures->pixel);
+		if (!data->textures->pixel[i])
+			print_error("data", NULL);
+		i++;
+	}
 }

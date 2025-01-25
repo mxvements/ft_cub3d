@@ -14,9 +14,12 @@ static void	init_img_clean(t_imgen *img)
 
 static void	init_texture_img(t_cub *data, t_imgen *image, char *path)
 {
+	int	width;
+	int	height;
+
 	init_img_clean(image);
-	image->img = mlx_xpm_file_to_image(data->mlx->mlx_ptr, path, TILE_SIZE,
-			TILE_SIZE);
+	image->img = mlx_xpm_file_to_image(data->mlx->mlx_ptr, path, &width,
+			&height);
 	if (image->img == NULL)
 		print_error('callo', NULL);
 	image->addr = (int *)mlx_get_data_addr(image->img, &image->pixel_bits,
@@ -32,18 +35,19 @@ static int	*xpm_to_img(t_cub *data, char *path)
 	int		y;
 
 	init_texture_img(data, &tmp, path);
+	// printf("tamaño -> %d\n", sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
 	buffer = ft_calloc(1,
-			sizeof * buffer * TILE_SIZE * TILE_SIZE);
+			sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
 	if (!buffer)
 		print_error('callo', NULL);
 	y = 0;
-	while (y < TILE_SIZE)
+	while (y < PIXEL_SIZE)
 	{
 		x = 0;
-		while (x < TILE_SIZE)
+		while (x < PIXEL_SIZE)
 		{
-			buffer[y * TILE_SIZE + x]
-				= tmp.addr[y * TILE_SIZE + x];
+			buffer[y * PIXEL_SIZE + x]
+				= tmp.addr[y * PIXEL_SIZE + x];
 			++x;
 		}
 		y++;
@@ -55,7 +59,7 @@ static int	*xpm_to_img(t_cub *data, char *path)
 void	init_img(t_cub *data, t_imgen *image, int width, int height)
 {
 	init_img_clean(image);
-	image->img = mlx_new_image(data->mlx, width, height);
+	image->img = mlx_new_image(data->mlx->mlx_ptr, width, height);
 	if (image->img == NULL)
 		print_error('new image', NULL);
 	image->addr = (int *)mlx_get_data_addr(image->img, &image->pixel_bits,
@@ -73,7 +77,6 @@ void	init_textures(t_cub *data)
 	data->textures->text[EAST] = xpm_to_img(data, data->textures->wall[EAST]);
 	data->textures->text[WEST] = xpm_to_img(data, data->textures->wall[WEST]);
 }
-
 /* void	init_texture_pixels(t_cub *data)
 {
 	int	i;

@@ -69,7 +69,7 @@ static int	render_loop(t_cub *cub)
 	put_camera(cub);
 	minimap_put_player(cub, 0xFF0000);
 	minimap_put_axis(cub, 0xFF0000);
-	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img,0, 0);
+	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img, 0, 0);
 	minimap_put_str(cub);
 	return (0);
 }
