@@ -4,13 +4,13 @@ static void	change_move_speed(int keycode, t_cub *cub)
 {
 	const float	move_speed_diff = 0.01;
 
-	if (keycode == KEY_F3) //-
+	if (keycode == KEY_F3)
 	{
 		if (cub->options.move_speed <= 0)
 			return ;
 		cub->options.move_speed -= move_speed_diff;
 	}
-	else if (keycode == KEY_F4) //+
+	else if (keycode == KEY_F4)
 	{
 		if (cub->options.move_speed >= MOVE_MAX)
 			return ;
@@ -23,13 +23,13 @@ static void	change_rotate_speed(int keycode, t_cub *cub)
 {
 	const float	rotate_speed_diff = PI / 64;
 
-	if (keycode == KEY_F5) //-
+	if (keycode == KEY_F5)
 	{
 		if (cub->options.rotate_speed <= 0)
 			return ;
 		cub->options.rotate_speed -= rotate_speed_diff;
 	}
-	else if (keycode == KEY_F6) //+
+	else if (keycode == KEY_F6)
 	{
 		if (cub->options.rotate_speed >= PI * 2)
 			return ;
@@ -62,7 +62,6 @@ static void	handle_options(int keycode, t_cub *cub)
 		change_move_speed(keycode, cub);
 	if (keycode == KEY_F5 || keycode == KEY_F6)
 		change_rotate_speed(keycode, cub);
-
 }
 
 int	key_release(int keycode, t_cub *cub)

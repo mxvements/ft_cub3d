@@ -31,7 +31,7 @@
 
 # define PI 3.14159265359
 
-enum			e_texure_index
+enum			e_texture_index
 {
 	NORTH, // 0
 	SOUTH, // 1
@@ -76,7 +76,7 @@ typedef struct s_player
 typedef struct s_map
 {
 	char **map; // two dimensional array
-	char		old_position;
+	char		old_char;
 	t_player	*player;
 	int			rows;
 	int			cols;
@@ -133,13 +133,14 @@ int		check_map(t_map *map);
 long long	color_str_to_long(char **rgb);
 char		*strtrim_gnl(int fd, char *trim);
 void		clean_gnl(int fd);
+void		free_map(void *data);
+void 		free_struct(void **s, void(*free_s)(void *));
 
 /* ERRORS */
 int		print_error(char *origin, char *custom_msg);
 
 /* UTILS */
 int		free_cub(t_cub *cub);
-void	free_map(void *data);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);

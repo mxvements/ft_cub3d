@@ -138,7 +138,7 @@ int	parse_map(t_map *map, int fd)
 	if (normalize_map(map) < 0)
 		return (-1);
 	map->size = PIXEL_SIZE;
-	map->old_position = '0';
+	map->old_char = '0';
 	if (check_map(map) < 0)
 		return (-1);
 	return (0);

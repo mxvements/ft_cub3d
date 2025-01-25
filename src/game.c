@@ -46,9 +46,9 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	printf(LGREEN "\n****************\n");
+	printf(LGREEN"\n****************\n");
 	printf("*  START GAME  *\n");
-	printf("****************\n" RESET);
+	printf("****************\n"RESET);
 	print_key_options(cub);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);

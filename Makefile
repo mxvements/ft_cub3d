@@ -82,6 +82,7 @@ ERR=		print_error.c
 
 UTILS_DIR=	./src/struct_utils/
 UTILS=		free_cub.c \
+			free_cub_utils.c \
 			print_cub.c \
 			print_cub_options.c
 
