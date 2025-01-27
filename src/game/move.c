@@ -9,10 +9,11 @@ static void	update_map(t_cub *cub, char player_char, float new_pos[2])
 
 	player = cub->map->player;
 	//new_pos, con la posicion cambiada de move
-	printf("new position: (%f, %f)\n", new_pos[0], new_pos[1]);
+	// printf("update_map\n");
+	// printf("new position: (%f, %f)\n", new_pos[0], new_pos[1]);
 	new_map_pos[0] = (int)(new_pos[0]);
 	new_map_pos[1] = (int)(new_pos[1]);
-	printf("new map position: (%d, %d)\n", new_map_pos[0], new_map_pos[1]);
+	// printf("new map position: (%d, %d)\n", new_map_pos[0], new_map_pos[1]);
 
 	//si se va a espacio, no moverse
 	// if (cub->options.wall_col == 0)
