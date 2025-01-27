@@ -36,10 +36,10 @@ static char	*get_player_pos_str(t_player *player)
 	char	*y;
 	char	*rslt;
 
-	x = ft_itoa(player->map_x);
+	x = ft_itoa(player->map_row);
 	if (!x)
 		return (NULL);
-	y = ft_itoa(player->map_y);
+	y = ft_itoa(player->map_col);
 	if (!y)
 		return (free(x), NULL);
 	rslt = ft_concat("PLAYER AT: [", x, ",", y, "]", NULL);

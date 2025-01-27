@@ -23,15 +23,15 @@ static void	update_map(t_cub *cub, char player_char, float new_pos[2])
 	// if (cub->map->map[new_map_pos[0]][new_map_pos[1]] == limit_char)
 	// 	return ;
 	//en donde esta el payer en el map, metemos el old_char
-	cub->map->map[(int)player->map_x][(int)player->map_y] = cub->map->old_char;
+	cub->map->map[(int)player->map_row][(int)player->map_col] = cub->map->old_char;
 	//actualizamos el old_char al que haya en el mapa en la posicion del player
 	cub->map->old_char = cub->map->map[new_map_pos[0]][new_map_pos[1]];
 	cub->map->map[new_map_pos[0]][new_map_pos[1]] = player_char;
 	
 	
 	// update player position
-	player->map_x = (float)new_pos[0];
-	player->map_y = (float)new_pos[1];
+	player->map_row = (float)new_pos[0];
+	player->map_col = (float)new_pos[1];
 }
 
 static void	rotate(t_cub *cub)
@@ -71,7 +71,7 @@ static void	move(t_cub *cub, float pos[2], float move_x, float move_y)
 		return ;
 
 
-	update_map(cub, cub->map->map[(int)player->map_x][(int)player->map_y], pos);
+	update_map(cub, cub->map->map[(int)player->map_row][(int)player->map_col], pos);
 }
 
 void	move_and_rotate(t_cub *cub)
@@ -80,8 +80,8 @@ void	move_and_rotate(t_cub *cub)
 	float		new_pos[2];
 
 	player = cub->map->player;
-	new_pos[0] = player->map_x;
-	new_pos[1] = player->map_y;
+	new_pos[0] = player->map_row;
+	new_pos[1] = player->map_col;
 	rotate(cub);
 	if (player->move_keys.key_up)
 		move(cub, new_pos, (float)cos(player->angle),

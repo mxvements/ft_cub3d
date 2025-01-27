@@ -33,13 +33,15 @@ static float	distance(float row2, float row1, float col2, float col1,
 	// printf("dist: %f, fixed: %f\n", distance, fix_distance);
 	return (fix_distance);
 }
+
+//TODO: call to player->win_x and player_>win_y on the start of the rays
 void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 {
 	float		cos_angle;
 	float		sin_angle;
-	const float	player_row = player->map_x * MINIMAP_TILE_SIZE
+	const float	player_row = player->map_row * MINIMAP_TILE_SIZE
 			+ cub->minimap->start_x + MINIMAP_TILE_SIZE / 2;
-	const float	player_col = player->map_y * MINIMAP_TILE_SIZE
+	const float	player_col = player->map_col * MINIMAP_TILE_SIZE
 			+ MINIMAP_TILE_SIZE / 2;
 	float		ray_row;
 	float		ray_col;
@@ -79,6 +81,7 @@ void	put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 	}
 }
 
+//TODO: call to player->win_x and player_>win_y on the start of the rays
 void	minimap_put_axis(t_cub *cub, int color)
 {
 	t_player	*player;
@@ -89,9 +92,9 @@ void	minimap_put_axis(t_cub *cub, int color)
 
 	// printf("minimap_put_axis\n");
 	player = cub->map->player;
-	ray_row = player->map_x * MINIMAP_TILE_SIZE + cub->minimap->start_x
+	ray_row = player->map_row * MINIMAP_TILE_SIZE + cub->minimap->start_x
 		+ MINIMAP_TILE_SIZE / 2;
-	ray_col = player->map_y * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
+	ray_col = player->map_col * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE / 2;
 	cos_angle = cos(player->angle);
 	sin_angle = sin(player->angle);
 	while (!touch_wall(ray_col, ray_row, cub))
@@ -102,6 +105,8 @@ void	minimap_put_axis(t_cub *cub, int color)
 		ray_col += sin_angle;
 	}
 }
+
+//TODO: add FOV to options so we can change it with a hook
 void	put_camera(t_cub *cub)
 {
 	t_player	*player;

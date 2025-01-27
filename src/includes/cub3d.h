@@ -67,8 +67,10 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-	float		map_x;
-	float		map_y;
+	float		map_row;
+	float		map_col;
+	float		win_row;
+	float		win_col;
 	float		angle;
 	t_move_keys	move_keys;
 }				t_player;

@@ -53,15 +53,15 @@ int	is_texture_struct_full(t_texture *tx)
 
 int	is_player(t_player *player)
 {
-	if (player->map_x == -1 || player->map_y == -1)
+	if (player->map_row == -1 || player->map_col == -1)
 		return (0);
 	return (1);
 }
 
 int	is_player_on_edge(t_map *map, t_player *player)
 {
-	if (player->map_x == 0 || player->map_y == 0 || player->map_x == map->rows
-		|| player->map_y == map->cols)
+	if (player->map_row == 0 || player->map_col == 0 || player->map_row == map->rows
+		|| player->map_col == map->cols)
 		return (print_error("is_player", ERR_PL_EDGE));
 	return (0);
 }

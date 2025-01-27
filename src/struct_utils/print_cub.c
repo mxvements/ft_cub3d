@@ -3,8 +3,8 @@
 void	print_player(t_player *pl)
 {
 	printf(YLLW "\n[player status]\n" RESET);
-	if (pl->map_x != -1 && pl->map_y != -1)
-		printf("player position (x, y): (%f, %f)\n", pl->map_x, pl->map_y);
+	if (pl->map_row != -1 && pl->map_col != -1)
+		printf("player position (x, y): (%f, %f)\n", pl->map_row, pl->map_col);
 	if (pl->angle)
 		printf("player angle in rads: (%f)\n", pl->angle);
 }

@@ -63,8 +63,8 @@ static int	get_player(t_map *map, char *line, int row)
 			return (print_error("get_player", ERR_PL_MULT));
 		if (player)
 		{
-			map->player->map_x = row;
-			map->player->map_y = player - line;
+			map->player->map_row = row;
+			map->player->map_col = player - line;
 			map->player->angle = (PI * i)/2;
 			return (0);
 		}

@@ -22,8 +22,8 @@ void	minimap_put_player(t_cub *cub, int color)
 
 	player = cub->map->player;
 	// printf("player_x, player_y (%f, %f)\n", player->x, player->y);
-	start_row = (player->map_x * MINIMAP_TILE_SIZE) + cub->minimap->start_x + MINIMAP_TILE_SIZE/4;
-	start_col = (player->map_y * MINIMAP_TILE_SIZE) + MINIMAP_TILE_SIZE/4;
+	start_row = (player->map_row * MINIMAP_TILE_SIZE) + cub->minimap->start_x + MINIMAP_TILE_SIZE/4;
+	start_col = (player->map_col * MINIMAP_TILE_SIZE) + MINIMAP_TILE_SIZE/4;
 	// printf(RED"start_row, start_col (%f, %f)\n"RESET, start_row, start_col);
 	put_square(start_col, start_row, MINIMAP_TILE_SIZE/2, color, cub);
 }
