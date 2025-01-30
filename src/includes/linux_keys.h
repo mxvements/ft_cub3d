@@ -7,7 +7,6 @@
 # define KEY_ESC		XK_Escape
 # define KEY_TAB		XK_KP_Tab
 # define KEY_ENTER		XK_KP_Enter
-# define KEY_F1			XK_KP_F1
 # define KEY_0			XK_KP_0
 # define KEY_1			XK_KP_1
 # define KEY_2			XK_KP_2
@@ -25,10 +24,18 @@
 # define KEY_A			XK_a
 # define KEY_S			XK_s
 # define KEY_D			XK_d
+# define KEY_O			XK_o
+# define KEY_i			XK_i
 # define KEY_LEFT		XK_Left
 # define KEY_RIGHT		XK_Right
 # define KEY_DOWN		XK_Down
 # define KEY_UP			XK_Up
-# define KEY_SP			XK_space	
+# define KEY_SP			XK_space
+# define KEY_F1			269025027
+# define KEY_F2			269025026
+# define KEY_F3			269025098
+# define KEY_F4			269025099
+# define KEY_F5			269025030
+# define KEY_F6			269025029
 
 #endif

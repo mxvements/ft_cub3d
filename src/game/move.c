@@ -1,35 +1,46 @@
-
 #include "../includes/cub3d.h"
 
-void	update_map(t_cub *cub, char player_char, float new_pos[2])
+static void	update_map(t_cub *cub, char player_char, float new_pos[2])
 {
 	t_player	*player;
+	// char		limit_char;
+	int			new_map_pos[2];
+	// float		player_win_pos[2];
 
 	player = cub->map->player;
-	//BUG
-	// cambiar el espacio por muro en bonus, poner variable
-	if (cub->map->map[(int)round(new_pos[0])][(int)round(new_pos[1])] == ' ')
-		return ;
-	if ((int)round(new_pos[0]) >= (cub->map->rows - 0.5) || (int)round(new_pos[0]) <= 0
-		|| (int)round(new_pos[1]) >= (cub->map->cols - 0.5) || (int)round(new_pos[1]) <= 0)
-		return ;
+	//new_pos, con la posicion cambiada de move
+	// printf("update_map\n");
+	// printf("new position: (%f, %f)\n", new_pos[0], new_pos[1]);
+	new_map_pos[0] = (int)(new_pos[0]);
+	new_map_pos[1] = (int)(new_pos[1]);
+	// printf("new map position: (%d, %d)\n", new_map_pos[0], new_map_pos[1]);
 
-	// update map with new positions
-	cub->map->map[(int)player->x][(int)player->y] = cub->map->old_position;
-	cub->map->old_position = cub->map->map[(int)new_pos[0]][(int)new_pos[1]];
-	cub->map->map[(int)new_pos[0]][(int)new_pos[1]] = player_char;
+	//si se va a espacio, no moverse
+	// if (cub->options.wall_col == 0)
+	// 	limit_char = ' ';
+	// else
+	// 	limit_char = '1';
+	// if (cub->map->map[new_map_pos[0]][new_map_pos[1]] == limit_char)
+	// 	return ;
+	//en donde esta el payer en el map, metemos el old_char
+	cub->map->map[(int)player->map_row][(int)player->map_col] = cub->map->old_char;
+	//actualizamos el old_char al que haya en el mapa en la posicion del player
+	cub->map->old_char = cub->map->map[new_map_pos[0]][new_map_pos[1]];
+	cub->map->map[new_map_pos[0]][new_map_pos[1]] = player_char;
+	
+	
 	// update player position
-	player->x = (float)new_pos[0];
-	player->y = (float)new_pos[1];
+	player->map_row = (float)new_pos[0];
+	player->map_col = (float)new_pos[1];
 }
 
-static void	rote(t_cub *cub)
+static void	rotate(t_cub *cub)
 {
-	t_player	*player;
-	float		angle_speed;
+	t_player *player;
+	float	angle_speed;
 
-	angle_speed = PI / 32;
 	player = cub->map->player;
+	angle_speed = cub->options.rotate_speed;
 	if (player->move_keys.left_rotate)
 		player->angle += angle_speed;
 	if (player->move_keys.right_rotate)
@@ -40,40 +51,48 @@ static void	rote(t_cub *cub)
 		player->angle += 2 * PI;
 }
 
-void	move(t_cub *cub)
+static void	move(t_cub *cub, float pos[2], float move_x, float move_y)
 {
 	t_player	*player;
 	float		speed;
+	char		limit_char;
+
+	speed = cub->options.move_speed;
+	player = cub->map->player;
+	pos[0] += speed * move_x;
+	pos[1] += speed * move_y;
+
+	//put limit here
+	if (cub->options.wall_col == 0)
+		limit_char = ' ';
+	else
+		limit_char = '1';
+	if (cub->map->map[(int)pos[0]][(int)pos[1]] == limit_char)
+		return ;
+
+
+	update_map(cub, cub->map->map[(int)player->map_row][(int)player->map_col], pos);
+}
+
+void	move_and_rotate(t_cub *cub)
+{
+	t_player	*player;
 	float		new_pos[2];
 
-	speed = 0.1;
 	player = cub->map->player;
-	new_pos[0] = player->x;
-	new_pos[1] = player->y;
-	rote(cub);
-	// move
+	new_pos[0] = player->map_row;
+	new_pos[1] = player->map_col;
+	rotate(cub);
 	if (player->move_keys.key_up)
-	{
-		new_pos[0] += speed * (float)cos(player->angle);
-		new_pos[1] += speed * (float)sin(player->angle);
-		update_map(cub, cub->map->map[(int)player->x][(int)player->y], new_pos);
-	}
+		move(cub, new_pos, (float)cos(player->angle),
+			(float)sin(player->angle));
 	else if (player->move_keys.key_down)
-	{
-		new_pos[0] -= speed * (float)cos(player->angle);
-		new_pos[1] -= speed * (float)sin(player->angle);
-		update_map(cub, cub->map->map[(int)player->x][(int)player->y], new_pos);
-	}
+		move(cub, new_pos, -(float)cos(player->angle),
+			-(float)sin(player->angle));
 	else if (player->move_keys.key_left)
-	{
-		new_pos[0] += speed * (float)cos(player->angle + PI / 2);
-		new_pos[1] += speed * (float)sin(player->angle + PI / 2);
-		update_map(cub, cub->map->map[(int)player->x][(int)player->y], new_pos);
-	}
+		move(cub, new_pos, (float)cos(player->angle + PI / 2),
+			(float)sin(player->angle + PI / 2));
 	else if (player->move_keys.key_right)
-	{
-		new_pos[0] += speed * (float)cos(player->angle - PI / 2);
-		new_pos[1] += speed * (float)sin(player->angle - PI / 2);
-		update_map(cub, cub->map->map[(int)player->x][(int)player->y], new_pos);
-	}
+		move(cub, new_pos, (float)cos(player->angle - PI / 2),
+			(float)sin(player->angle - PI / 2));
 }

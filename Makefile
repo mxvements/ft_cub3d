@@ -61,7 +61,6 @@ GAME_DIR=	./src/game/
 GAME=		ray_casting.c\
 			move.c\
 			render.c\
-			adicional.c \
 			put_line.c \
 			put_pixel.c \
 			put_square.c \
@@ -84,13 +83,19 @@ ERR=		print_error.c
 
 UTILS_DIR=	./src/struct_utils/
 UTILS=		free_cub.c \
-			print_cub.c
+			free_cub_utils.c \
+			print_cub.c \
+			print_cub_options.c
 
 MINIMAP_DIR=	./src/minimap/
 MINIMAP=		minimap_init.c \
 				minimap_render.c \
 				minimap_put_str.c
 
+HOOKS_DIR=		./src/hooks/
+HOOKS=			key_press.c \
+				key_release.c \
+				win_close.c
 
 # libft
 
@@ -123,7 +128,8 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
 		$(UTILS:%.c=$(OBJ_DIR)%.o) \
-		$(MINIMAP:%.c=$(OBJ_DIR)%.o)
+		$(MINIMAP:%.c=$(OBJ_DIR)%.o) \
+		$(HOOKS:%.c=$(OBJ_DIR)%.o)
 
 
 ###############################################################################
@@ -176,6 +182,11 @@ $(OBJ_DIR)%.o: $(UTILS_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)%.o: $(MINIMAP_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(HOOKS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -1,76 +1,43 @@
 
 #include "includes/cub3d.h"
 
-static int	close_win(t_cub *data)
+static void	clean_img(t_cub *cub)
 {
-	mlx_destroy_window(data->mlx->mlx_ptr, data->mlx->win);
-	printf("FINISH GAME\n");
-	free_cub(data);
-	exit(1);
-}
+	int	i;
+	int	j;
 
-static int	key_press(int keycode, t_cub *cub)
-{
-	t_player	*player;
-
-	player = cub->map->player;
-	if (keycode == KEY_W)
-		player->move_keys.key_up = 1;
-	if (keycode == KEY_A)
-		player->move_keys.key_left = 1;
-	if (keycode == KEY_S)
-		player->move_keys.key_down = 1;
-	if (keycode == KEY_D)
-		player->move_keys.key_right = 1;
-	if (keycode == KEY_LEFT)
-		player->move_keys.left_rotate = 1;
-	if (keycode == KEY_RIGHT)
-		player->move_keys.right_rotate = 1;
-	if (keycode == KEY_ESC)
-		close_win(cub);
-	return (0);
-}
-
-static int	key_release(int keycode, t_cub *cub)
-{
-	t_player	*player;
-
-	player = cub->map->player;
-	if (keycode == KEY_W)
-		player->move_keys.key_up = 0;
-	if (keycode == KEY_A)
-		player->move_keys.key_left = 0;
-	if (keycode == KEY_S)
-		player->move_keys.key_down = 0;
-	if (keycode == KEY_D)
-		player->move_keys.key_right = 0;
-	if (keycode == KEY_LEFT)
-		player->move_keys.left_rotate = 0;
-	if (keycode == KEY_RIGHT)
-		player->move_keys.right_rotate = 0;
-	if (keycode == KEY_ESC)
-		close_win(cub);
-	return (0);
-}
-static void	clean_img(t_cub *game)
-{
-	for (int i = 0; i < WIN_HEIGHT; i++)
-		for (int j = 0; j < WIN_WIDTH; j++)
-			put_pixel(j, i, 0x00, game);
+	i = -1;
+	while (++i < WIN_HEIGHT)
+	{
+		j = -1;
+		while (++j < WIN_WIDTH)
+			put_pixel(j, i, 0x00, cub);
+	}
 }
 
 static int	render_loop(t_cub *cub)
 {
+	t_mlx	*mlx;
+
+	mlx = cub->mlx;
 	// move settings? to recalculate after key_press
 	clean_img(cub);
-	move(cub);
+	move_and_rotate(cub);
 	// RENDER/DRAW everything
-	render(cub, cub->map);
-	put_camera(cub);
-	minimap_put_player(cub, 0xFF0000);
-	minimap_put_axis(cub, 0xFF0000);
-	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img, 0, 0);
-	minimap_put_str(cub);
+	// render(cub, cub->map);
+	if (cub->options.show_minimap == 1)
+		minimap_render(cub);
+	put_camera(cub); // puts rays in minimap and draws perspective
+	if (cub->options.show_minimap == 1)
+	{
+		minimap_put_player(cub, 0xFF0000);
+		minimap_put_axis(cub, 0xFF0000);
+	}
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
+	if (cub->options.show_minimap == 1)
+		minimap_put_str(cub);
+	// RAYCASTING
+	// ray(cub);
 	return (0);
 }
 
@@ -80,9 +47,13 @@ int	init_engine(t_cub *cub)
 
 	mlx = cub->mlx;
 	init_textures(cub); //TODO revisar
+	printf(LGREEN"\n****************\n");
+	printf("*  START GAME  *\n");
+	printf("****************\n"RESET);
+	print_key_options(cub);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
-	mlx_hook(mlx->win, 17, 0, close_win, cub);
+	mlx_hook(mlx->win, 17, 0, win_close, cub);
 	mlx_loop_hook(mlx->mlx_ptr, render_loop, cub);
 	mlx_loop(mlx->mlx_ptr);
 	return (0);
@@ -99,8 +70,8 @@ int	init_mlx(t_cub *cub)
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
 		return (print_error("init-mlx", NULL));
-	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
-			"main-window");
+	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
+	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	if (!mlx->win)
 		return (print_error("init-mlx", NULL));
 	mlx->img = mlx_new_image(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);

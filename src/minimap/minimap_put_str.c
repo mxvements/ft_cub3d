@@ -36,10 +36,10 @@ static char	*get_player_pos_str(t_player *player)
 	char	*y;
 	char	*rslt;
 
-	x = ft_itoa(player->x);
+	x = ft_itoa(player->map_row);
 	if (!x)
 		return (NULL);
-	y = ft_itoa(player->y);
+	y = ft_itoa(player->map_col);
 	if (!y)
 		return (free(x), NULL);
 	rslt = ft_concat("PLAYER AT: [", x, ",", y, "]", NULL);
@@ -57,10 +57,10 @@ static char	*get_player_dir_str(t_player *player)
 	char	*y;
 	char	*rslt;
 
-	x = ft_itoa(player->dirX);
+	x = ft_itoa(roundl(cos(player->angle)));
 	if (!x)
 		return (NULL);
-	y = ft_itoa(player->dirY);
+	y = ft_itoa(roundf(sin(player->angle)));
 	if (!y)
 		return (free(x), NULL);
 	rslt = ft_concat("VECTOR: [", x, ",", y, "]", NULL);
@@ -76,14 +76,23 @@ void	minimap_put_str(t_cub *cub)
 {
 	const int	minimap_start_height = WIN_HEIGHT - cub->map->rows
 			* MINIMAP_TILE_SIZE;
-	const char	*str_position = get_player_pos_str(cub->map->player);
-	const char	*str_vector = get_player_dir_str(cub->map->player);
+	char	*str_position;
+	char	*str_vector;
 
-	if (!str_position || !str_vector)
+	str_position = get_player_pos_str(cub->map->player);
+	if (!str_position)
 		return ;
+	str_vector = get_player_dir_str(cub->map->player);
+	if (!str_vector)
+	{
+		free(str_position);
+		return ;
+	}
 	// print_player(cub->map->player);
 	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
 		+ 16, 0xFF1100, (char *)str_position);
 	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
 		+ 32, 0xFF1100, (char *)str_vector);
+	free(str_position);
+	free(str_vector);
 }

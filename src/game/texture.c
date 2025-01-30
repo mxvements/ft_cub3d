@@ -18,10 +18,9 @@ static void	init_texture_img(t_cub *data, t_imgen *image, char *path)
 	int	height;
 
 	init_img_clean(image);
-	image->img = mlx_xpm_file_to_image(data->mlx->mlx_ptr, path, &width,
-			&height);
+	image->img = mlx_xpm_file_to_image(data->mlx->mlx_ptr, path, &width, &height);
 	if (image->img == NULL)
-		print_error('callo', NULL);
+		print_error("init_texture_img", NULL);
 	image->addr = (int *)mlx_get_data_addr(image->img, &image->pixel_bits,
 			&image->size_line, &image->endian);
 	return ;
@@ -36,18 +35,22 @@ static int	*xpm_to_img(t_cub *data, char *path)
 
 	init_texture_img(data, &tmp, path);
 	// printf("tamaño -> %d\n", sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
-	buffer = ft_calloc(1,
-			sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
+	buffer = ft_calloc(PIXEL_SIZE * PIXEL_SIZE, sizeof(int));
 	if (!buffer)
-		print_error('callo', NULL);
+		print_error("xpm_to_img", NULL);
+
+	if (!tmp.addr)
+	{
+		mlx_destroy_image(data->mlx->mlx_ptr, tmp.img);
+		print_error("xpm_to_img", "Failed to get texture data.");
+	}
 	y = 0;
 	while (y < PIXEL_SIZE)
 	{
 		x = 0;
 		while (x < PIXEL_SIZE)
 		{
-			buffer[y * PIXEL_SIZE + x]
-				= tmp.addr[y * PIXEL_SIZE + x];
+			buffer[y * PIXEL_SIZE + x] = tmp.addr[y * PIXEL_SIZE + x];
 			++x;
 		}
 		y++;
@@ -61,7 +64,7 @@ void	init_img(t_cub *data, t_imgen *image, int width, int height)
 	init_img_clean(image);
 	image->img = mlx_new_image(data->mlx->mlx_ptr, width, height);
 	if (image->img == NULL)
-		print_error('new image', NULL);
+		print_error("new image", NULL);
 	image->addr = (int *)mlx_get_data_addr(image->img, &image->pixel_bits,
 			&image->size_line, &image->endian);
 	return ;
@@ -71,11 +74,12 @@ void	init_textures(t_cub *data)
 {
 	data->textures->text = ft_calloc(5, sizeof * data->textures);
 	if (!data->textures->text)
-		print_error('callo', NULL);
+		print_error("init_texture", NULL);
 	data->textures->text[NORTH] = xpm_to_img(data, data->textures->wall[NORTH]);
 	data->textures->text[SOUTH] = xpm_to_img(data, data->textures->wall[SOUTH]);
 	data->textures->text[EAST] = xpm_to_img(data, data->textures->wall[EAST]);
 	data->textures->text[WEST] = xpm_to_img(data, data->textures->wall[WEST]);
+	printf("init_textures\n");
 }
 /* void	init_texture_pixels(t_cub *data)
 {

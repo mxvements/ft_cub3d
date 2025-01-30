@@ -1,6 +1,13 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../../gnl/get_next_line.h"
+# include "../../libft/libft.h"
+# include "../../minilibx-linux/mlx.h"
+# include "minimap.h"
+# include "colors.h"
+# include "error_msg.h"
+# include "linux_keys.h"
 # include <limits.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -12,15 +19,8 @@
 # include <errno.h>
 # include <math.h>
 
-# include "../../libft/libft.h"
-# include "../../gnl/get_next_line.h"
-# include "../../minilibx-linux/mlx.h"
-# include "colors.h"
-# include "error_msg.h"
-# include "minimap.h"
-# include "linux_keys.h"
-
 # define	WALL_SIDES	4
+# define	MOVE_MAX 1
 # define	DEBUG		1 //for the print_error 
 # define	PIXEL_SIZE	128 // tamaño de imagen en un cuadrado
 # define	IMG_SIZE	10
@@ -32,13 +32,13 @@
 
 # define PI 3.14159265359
 
-enum e_texure_index
+enum			e_texture_index
 {
-	NORTH,	// 0
-	SOUTH,	// 1
-	WEST,	// 2
-	EAST	// 3
-} ; 
+	NORTH, // 0
+	SOUTH, // 1
+	WEST,  // 2
+	EAST   // 3
+};
 
 typedef struct s_texture
 {
@@ -47,17 +47,18 @@ typedef struct s_texture
 	int			**pixel;
 	long long	floor;
 	long long	ceiling;
-} t_texture;
+}				t_texture;
 
 typedef struct s_move_keys
 {
-	int key_up;
-    int key_down;
-    int key_left;
-    int key_right;
-    int left_rotate;
-    int right_rotate;
-} t_move_keys;
+	int			key_up;
+	int			key_down;
+	int			key_left;
+	int			key_right;
+	int			left_rotate;
+	int			right_rotate;
+}				t_move_keys;
+
 typedef struct s_minimap
 {
 	float	start_x; //start of the drawing of the map in the img
@@ -78,55 +79,56 @@ typedef struct s_imgen
 
 typedef struct s_player
 {
-    float	x; //parseo (N.S.E.W), posicion en el mapa
-    float	y; //parseo (N), posicion en el mapa
-	float	angle;
+	float		map_row;
+	float		map_col;
+	float		win_row;
+	float		win_col;
+	float		angle;
 	t_move_keys	move_keys;
-
-    float	dirX; //parseo, dar vector
-    float	dirY; //parseo, dar vector
-
-    int  	a;
-    int  	walk[2]; 
-    int  	spin;   //girar 1 derecha (cv), -1 izquierda (ccw)
-}	t_player;
+}				t_player;
 
 typedef struct s_map
 {
-	char 		**map; //two dimensional array
-	char		old_position;
+	char **map; // two dimensional array
+	char		old_char;
 	t_player	*player;
 	int			rows;
 	int			cols;
 	int			size;
-}	t_map;
-
+}				t_map;
 
 typedef struct s_mlx
 {
-	void	*mlx_ptr;
-	void	*win;
-	void	*img;
-	char	*img_addr;
-	int		bpp; //bits per pixel
-	int		line_len;
-	int		endian;
-}	t_mlx;
+	void		*mlx_ptr;
+	void		*win;
+	void		*img;
+	char		*img_addr;
+	int bpp; // bits per pixel
+	int			line_len;
+	int			endian;
+}				t_mlx;
+
+typedef struct s_options
+{
+	int			wall_col;
+	int			show_minimap;
+	float		move_speed;
+	float		rotate_speed;
+}				t_options;
 
 typedef struct s_cub
 {
 	int			count;
 	t_mlx		*mlx;
-	t_map 		*map;
+	t_map		*map;
 	t_minimap	*minimap;
 	t_texture	*textures;
+	t_options	options;
 	int			fd;
-}	t_cub ;
+}				t_cub;
 
-
-
-int	init_cub_game(char *filepath);
-int init_mlx(t_cub *cub);
+int		init_cub_game(char *filepath);
+int		init_mlx(t_cub *cub);
 
 /* PARSING */
 int		parse_input(t_cub *cub, char *filepath);
@@ -145,36 +147,41 @@ int		check_map(t_map *map);
 long long	color_str_to_long(char **rgb);
 char		*strtrim_gnl(int fd, char *trim);
 void		clean_gnl(int fd);
+void		free_map(void *data);
+void 		free_struct(void **s, void(*free_s)(void *));
 
 /* ERRORS */
 int		print_error(char *origin, char *custom_msg);
 
 /* UTILS */
 int		free_cub(t_cub *cub);
-void	free_map(t_map *map);
 void	print_cub(t_cub *cub);
 void	print_player(t_player *pl);
 void	print_texture(t_texture *tx);
 void	print_minimap(t_minimap *minimap);
 void	print_map(t_map *map);
-char	*ft_concat(char *first, ...); //at add_minimap.c
+void	print_options_status(t_options *options);
+void	print_key_options(t_cub *cub);
+char	*ft_concat(char *first, ...); // at add_minimap.c
 
 /* PARSING TEST */
-int	parse_test(void);
-
-/* develop */
-void    testprintMap(char **map); //remove
+int		parse_test(void);
 
 /* game */
 void	ray(t_cub *data);
 void	insert_img(t_cub *data, t_map *map);
 void	mapok(char **res, t_cub *data, int i, int j);
 void	render(t_cub *mlx, t_map *map);
-int 	init_engine(t_cub *cub);
-// int		del_data(t_cub *data);
-void	move(t_cub *data);
+int		init_engine(t_cub *cub);
+// int	del_data(t_cub *data);
+void	move_and_rotate(t_cub *data);
 char	*read_map(char *s);
 void	positionPlayer(t_cub *data);
+
+/* HOOKS */
+int		key_release(int keycode, t_cub *cub);
+int		key_press(int keycode, t_cub *cub);
+int		win_close(t_cub *cub);
 
 /* MINIMAP*/
 // int	add_minimap(t_cub *cub);
@@ -195,8 +202,7 @@ void	put_pixel(int col, int row, int color, t_cub *cub);
 void	put_square(int row, int col, int size, int color, t_cub *cub);
 void	minimap_put_axis(t_cub *cub, int color);
 void	minimap_put_player(t_cub *cub, int color);
-void	put_line(t_player *player, t_cub *game, float start_x, int i,
-		int color);
-void 	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
+void	put_line(t_player *player, t_cub *game, float start_x, int i, int color);
+void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
 void	put_camera(t_cub *cub);
 #endif

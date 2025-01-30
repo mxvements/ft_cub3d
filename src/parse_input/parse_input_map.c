@@ -52,9 +52,7 @@ static int	normalize_map(t_map *map)
 static int	get_player(t_map *map, char *line, int row)
 {
 	char		*player;
-	const char	dir[4] = {'N', 'S', 'E', 'W'};
-	const int	vector[4][2] = {{-1, 0}, {1, 0}, {0, 1}, {-1, 0}};
-	// const float	angle[4] = {(PI / 2), ((3 * PI) / 2), 0, PI};
+	const char	dir[4] = {'S', 'E', 'N', 'W'};
 	int			i;
 
 	i = -1;
@@ -65,11 +63,9 @@ static int	get_player(t_map *map, char *line, int row)
 			return (print_error("get_player", ERR_PL_MULT));
 		if (player)
 		{
-			map->player->x = row;
-			map->player->y = player - line;
-			map->player->angle = PI; //angle[i];
-			map->player->dirX = vector[i][0];
-			map->player->dirY = vector[i][1];
+			map->player->map_row = row;
+			map->player->map_col = player - line;
+			map->player->angle = (PI * i)/2;
 			return (0);
 		}
 	}
@@ -142,7 +138,7 @@ int	parse_map(t_map *map, int fd)
 	if (normalize_map(map) < 0)
 		return (-1);
 	map->size = PIXEL_SIZE;
-	map->old_position = '0';
+	map->old_char = '0';
 	if (check_map(map) < 0)
 		return (-1);
 	return (0);

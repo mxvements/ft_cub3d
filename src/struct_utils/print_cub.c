@@ -2,24 +2,18 @@
 
 void	print_player(t_player *pl)
 {
-	printf(YLLW "[player struct]\n" RESET);
-	if (pl->x != -1 && pl->y != -1)
-		printf("player position (x, y): (%f, %f)\n", pl->x, pl->y);
+	printf(YLLW "\n[player status]\n" RESET);
+	if (pl->map_row != -1 && pl->map_col != -1)
+		printf("player position (x, y): (%f, %f)\n", pl->map_row, pl->map_col);
 	if (pl->angle)
 		printf("player angle in rads: (%f)\n", pl->angle);
-	if (pl->dirX != 0 || pl->dirY != 0)
-		printf("player direction (x, y): (%f, %f)\n", pl->dirX, pl->dirY);
-	if (pl->walk[0] != 0 && pl->walk[1] != 0)
-		printf("walk direction: (%d, %d)\n", pl->walk[0], pl->walk[1]);
-	if (pl->spin != 0)
-		printf("spin dir (1=cw, -1=ccw): (%d)\n", pl->spin);
 }
 
 void	print_map(t_map *map)
 {
 	int	i;
 
-	printf(YLLW "[map struct]\n" RESET);
+	printf(YLLW "\n[map status]\n" RESET);
 	if (map->cols != 0 && map->rows != 0)
 		printf("map (rows, cols): (%d, %d)\n", map->rows, map->cols);
 	if (map->map)
@@ -37,7 +31,7 @@ void	print_texture(t_texture *tx)
 {
 	int	i;
 
-	printf(YLLW "[texture struct]\n" RESET);
+	printf(YLLW "\n[texture status]\n" RESET);
 	printf("wall side textures:\n");
 	i = -1;
 	while (++i < WALL_SIDES && tx->wall[i] != 0)
@@ -50,9 +44,9 @@ void	print_texture(t_texture *tx)
 
 void	print_minimap(t_minimap *minimap)
 {
-	printf(YLLW "[minimap struct]\n" RESET);
+	printf(YLLW "\n[minimap status]\n" RESET);
 	if (minimap->start_x != 0)
-		printf("start row position minimap: %d\n", minimap->start_x);
+		printf("start row position minimap: %f\n", minimap->start_x);
 	if (minimap->img_wall)
 		printf("img_wall: %p\n", minimap->img_wall);
 	if (minimap->img_void)
@@ -65,7 +59,7 @@ void	print_minimap(t_minimap *minimap)
 
 void	print_cub(t_cub *cub)
 {
-	printf(YLLW "[cub status]\n" RESET);
+	printf(YLLW "\n[cub status]\n" RESET);
 	if (cub->fd)
 		printf("cub fd:%d\n", cub->fd);
 	if (cub->map)
