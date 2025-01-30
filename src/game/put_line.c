@@ -53,7 +53,7 @@ static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin
     return distance(ray_row, player_row, ray_col, player_col, cub);
 }
 
-static void	put_texture(t_cub *cub, int col, int end)
+/* static void	put_texture(t_cub *cub, int col, int end)
 {
 	int	i;
 	int	col_texture;
@@ -66,7 +66,7 @@ static void	put_texture(t_cub *cub, int col, int end)
 		put_pixel(col, end, cub->textures->text[0][i], cub);
 		i++;
 	}
-}
+} */
 
 void    put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 {
