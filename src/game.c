@@ -1,154 +1,114 @@
 
 #include "includes/cub3d.h"
 
-
 static int	close_win(t_cub *data)
 {
-	mlx_destroy_window(data->mlx->mlx, data->mlx->win);
-	free(data);
+	mlx_destroy_window(data->mlx->mlx_ptr, data->mlx->win);
+	printf("FINISH GAME\n");
+	free_cub(data);
 	exit(1);
 }
 
-static int	ft_hook_key(int key, t_cub *data)
+static int	key_press(int keycode, t_cub *cub)
 {
-	
-	if (key == key_ESC)
-		close_win(data);
-	if (key == key_A || key == key_LEFT)
-	{
-		move(data, 0, -1);
-		render_map(data, data->map);
-		// double oldDirX = dirX;
-		// dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-		// dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-		// double oldPlaneX = planeX;
-		// planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-		// planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-	}
-	if (key == key_S || key == key_DOWN)
-	{
-		move(data, 1, 0);
-		render_map(data, data->map);
-		// if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-    	// if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-	}
-	if (key == key_D || key == key_RIGHT)
-	{
-		move(data, 0, 1);
-		render_map(data, data->map);
-		// double oldDirX = dirX;
-		// dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-		// dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-		// double oldPlaneX = planeX;
-		// planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-		// planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-	}
-	if (key == key_W || key == key_UP)
-	{
-		move(data, -1, 0);
-		render_map(data, data->map);
-		// if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-      	// if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-	}
-	// ray(data);
-	/* printf("jugador x->%f, y->%f\n", data->player->x, data->player->y); */
+	t_player	*player;
+
+	player = cub->map->player;
+	if (keycode == KEY_W)
+		player->move_keys.key_up = 1;
+	if (keycode == KEY_A)
+		player->move_keys.key_left = 1;
+	if (keycode == KEY_S)
+		player->move_keys.key_down = 1;
+	if (keycode == KEY_D)
+		player->move_keys.key_right = 1;
+	if (keycode == KEY_LEFT)
+		player->move_keys.left_rotate = 1;
+	if (keycode == KEY_RIGHT)
+		player->move_keys.right_rotate = 1;
+	if (keycode == KEY_ESC)
+		close_win(cub);
 	return (0);
 }
 
-// static void cube_init(t_cub *data)
-// {
-// 	t_player *player;
-// 	// double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+static int	key_release(int keycode, t_cub *cub)
+{
+	t_player	*player;
 
-// // 	// double time = 0; //time of current frame
-// // 	// double oldTime = 0; //time of previous frame
+	player = cub->map->player;
+	if (keycode == KEY_W)
+		player->move_keys.key_up = 0;
+	if (keycode == KEY_A)
+		player->move_keys.key_left = 0;
+	if (keycode == KEY_S)
+		player->move_keys.key_down = 0;
+	if (keycode == KEY_D)
+		player->move_keys.key_right = 0;
+	if (keycode == KEY_LEFT)
+		player->move_keys.left_rotate = 0;
+	if (keycode == KEY_RIGHT)
+		player->move_keys.right_rotate = 0;
+	if (keycode == KEY_ESC)
+		close_win(cub);
+	return (0);
+}
+static void	clean_img(t_cub *game)
+{
+	for (int i = 0; i < WIN_HEIGHT; i++)
+		for (int j = 0; j < WIN_WIDTH; j++)
+			put_pixel(j, i, 0x00, game);
+}
 
-// 	// data->map->size = 128; // cada cuadrado, centro seria 64x64
-// 	// data->map->cols = 10 * data->map->size; //10 x 128 
-// 	// data->map->rows = data->map->cols;
-	
-// 	// player = malloc(sizeof(t_player));
-// 	// player->x = (5 * data->size) + (data->size / 2);
-// 	// player->y = (8 * data->size) + (data->size / 2);
-// 	// player->a = 0;
-// 	/* player->x = 2.0;
-// 	player->y = 8.0; */
-// 	// player->dirX = 2.0; //ahora mismo apunta para abajo x5 y0
-// 	// player->dirY = 0.0;
-// 	// data->player = player;
-// 	// positionPlayer(data);
-// 	// printf("jugador x->%f, y->%f\n", data->player->x, data->player->y);
-	
+static int	render_loop(t_cub *cub)
+{
+	// move settings? to recalculate after key_press
+	clean_img(cub);
+	move(cub);
+	// RENDER/DRAW everything
+	render(cub, cub->map);
+	put_camera(cub);
+	minimap_put_player(cub, 0xFF0000);
+	minimap_put_axis(cub, 0xFF0000);
+	mlx_put_image_to_window(cub->mlx->mlx_ptr, cub->mlx->win, cub->mlx->img, 0, 0);
+	minimap_put_str(cub);
+	return (0);
+}
 
-// // 	// oldTime = time;
-// //     // time = getTicks();
-// //     // double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-// //     // print(1.0 / frameTime); //FPS counter
-// //     // redraw();
-// //     // cls();
-
-// //     //speed modifiers
-// //     // double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-// //     // double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
-// }
-
-// int	del_data(t_cub *data)
-// {
-// 	data->count++;
-// 	if (data->count % 10000 == 0)
-// 	{
-// 		data->count = 0;
-// 		print_map(data, data->map);
-// 	}
-// 	return (0);
-// }
-
-void init_mlx(t_cub *cub)
+int	init_engine(t_cub *cub)
 {
 	t_mlx	*mlx;
 
-	// data = malloc(sizeof(t_cub));
-	// maps = malloc(sizeof(t_map));
-	// data->map = maps;
-	// maps->map1d = map;
-	// res = ft_split(maps->map1d, '\n');
-	// maps->map = res;
-	// data->steps = 3; //velocidad de avance
-	// data->sp_spin =3 *(3.14/180); //velocidad de giro
-	// cube_init(data);
-	cub->mlx->mlx = mlx_init();
 	mlx = cub->mlx;
-	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
-	mlx->win = mlx_new_window(mlx->mlx, WIN_WIDTH, WIN_HEIGHT, "prueba");
-	init_minimap(cub);
-	// data->count = 0;
-	
-	render_map(cub, cub->map);
-	mlx_key_hook(mlx->win, ft_hook_key, cub);
-	// mlx_pixel_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24);
-	// mlx_string_put(data->mlx, data->win, data->player->x, data->player->y, 0x00FF24, "Total steps");
+	init_textures(cub); //TODO revisar
+	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
+	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
 	mlx_hook(mlx->win, 17, 0, close_win, cub);
-	//mlx_loop_hook(data->mlx, del, data);  //añadir para efectos 
-	mlx_loop(mlx->mlx);
+	mlx_loop_hook(mlx->mlx_ptr, render_loop, cub);
+	mlx_loop(mlx->mlx_ptr);
+	return (0);
 }
 
-// int	main(int argc, char *argv[])
-// {
-// 	char *map;
+int	init_mlx(t_cub *cub)
+{
+	t_mlx	*mlx;
 
-// 	if(argc > 3)
-// 	{
-// 		printf("Error de parametros\n");
-// 		return (0);
-// 	}
-// 	printf("en el programa con -> %s\n", argv[1]);
-// 	map = read_map(argv[1]);
-// 	if (map == NULL)
-// 	{
-// 		write(1, "ERROR\n", 6);
-// 		return (0);
-// 	}
-// 	cube(map);
-// 	return (1);
-// }
-
+	cub->mlx = ft_calloc(1, sizeof(t_mlx));
+	if (!cub->mlx)
+		return (print_error("init_mlx", NULL));
+	mlx = cub->mlx;
+	mlx->mlx_ptr = mlx_init();
+	if (!mlx->mlx_ptr)
+		return (print_error("init-mlx", NULL));
+	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
+			"main-window");
+	if (!mlx->win)
+		return (print_error("init-mlx", NULL));
+	mlx->img = mlx_new_image(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	if (!mlx->img)
+		return (print_error("init-mlx", NULL));
+	mlx->img_addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->line_len,
+			&mlx->endian);
+	if (!mlx->img_addr)
+		return (print_error("init-mlx", NULL));
+	return (0);
+}

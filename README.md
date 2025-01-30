@@ -18,3 +18,12 @@ mxvements' libft and gnl
 ## Resources
 + https://github.com/mcombeau/cub3D
 + https://github.com/Saxsori/ray-cast
+
+# TODO:
+- camara
+- texturas en 3d
+- diferencias bonus de no bonus:
+  - dibujar minimap
+  - colision con muros
+  - rotar con mouse
+  - sprites animados (mover puertas, mover personajes)
