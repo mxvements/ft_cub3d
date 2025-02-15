@@ -29,10 +29,13 @@ static float    distance(float row2, float row1, float col2, float col1, t_cub *
     return (fix_distance);
 }
 
-
+/**
+ * TODO: store distances so we can control better the drawing of the minimap
+ * and the perpective
+ */
 static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin_angle, int color)
 {
-    t_imgen image;
+    t_image image;
     float   ray_row;
     float   ray_col;
     image.img = NULL;
@@ -53,6 +56,10 @@ static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin
     return distance(ray_row, player_row, ray_col, player_col, cub);
 }
 
+/**
+ * TODO: textures are not in 3d
+ * TODO: unused function
+ */
 static void	put_texture(t_cub *cub, int col, int end)
 {
 	int	i;
@@ -62,7 +69,6 @@ static void	put_texture(t_cub *cub, int col, int end)
 	col_texture = col % 4;
 	while (i < (PIXEL_SIZE - 1))
 	{
-		printf("hola texture %d\n", cub->textures->text[0][i]);
 		put_pixel(col, end, cub->textures->text[0][i], cub);
 		i++;
 	}
@@ -72,7 +78,7 @@ void    put_line(t_player *player, t_cub *cub, float angle, int i, int color)
 {
     float   cos_angle;
     float   sin_angle;
-    t_imgen image;
+    t_image image;
     float   dist;
     float   wall_height;
     int     start_row;

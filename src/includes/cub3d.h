@@ -68,14 +68,14 @@ typedef struct s_minimap
 	void	*img_void;
 }	t_minimap;
 
-typedef struct s_imgen
+typedef struct s_image
 {
 	void	*img;
 	int		*addr;
 	int		pixel_bits;
 	int		size_line;
 	int		endian;
-}	t_imgen;
+}	t_image;
 
 typedef struct s_player
 {
@@ -190,10 +190,12 @@ int		minimap_render(t_cub *cub);
 void	minimap_put_str(t_cub *cub);
 int		minimap_set_img(t_cub *cub);
 
-void	init_textures(t_cub *data);
-void	init_img(t_cub *data, t_imgen *image, int width, int height);
-void	set_frame_image_pixel(t_cub *data, t_imgen *image, int x, int y);
-void	set_image_pixel(t_imgen *image, int x, int y, int color);
+/** WALL TEXTURES */
+int		init_textures(t_cub *data);
+int		init_img(t_cub *data, t_image *image, int width, int height);
+// void	clean_img(t_image *img);
+void	set_frame_image_pixel(t_cub *data, t_image *image, int x, int y);
+void	set_image_pixel(t_image *image, int x, int y, int color);
 void	render_frame(t_cub *data);
 void	init_texture_pixels(t_cub *data);
 

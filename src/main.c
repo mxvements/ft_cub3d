@@ -32,12 +32,6 @@ static int	init_cub_struct(t_cub *cub)
 		return (print_error("init_cub", NULL));
 	}
 	init_texture_struct(cub->textures);
-	// if (parse_input(cub, filepath) < 0)
-	// {
-	// 	free_cub(cub);
-	// 	return (-1);
-	// }
-	// print_cub(cub); //LOG
 	return (0);
 }
 
@@ -85,6 +79,8 @@ int	init_cub_game(char *filepath)
 	// add images after initializing mlx
 	if (minimap_set_img(&cub) < 0)
 		return (free_cub(&cub), -1);
+	if (init_textures(&cub) < 0) //nuevo
+		return (free_cub(&cub));
 	// start engine
 	init_engine(&cub);
 	// end

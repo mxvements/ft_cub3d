@@ -1,7 +1,7 @@
 
 #include "includes/cub3d.h"
 
-static void	clean_img(t_cub *cub)
+static void	clean_window(t_cub *cub)
 {
 	int	i;
 	int	j;
@@ -21,10 +21,8 @@ static int	render_loop(t_cub *cub)
 
 	mlx = cub->mlx;
 	// move settings? to recalculate after key_press
-	clean_img(cub);
+	clean_window(cub);
 	move_and_rotate(cub);
-	// RENDER/DRAW everything
-	// render(cub, cub->map);
 	if (cub->options.show_minimap == 1)
 		minimap_render(cub);
 	put_camera(cub); // puts rays in minimap and draws perspective
@@ -36,8 +34,6 @@ static int	render_loop(t_cub *cub)
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
 	if (cub->options.show_minimap == 1)
 		minimap_put_str(cub);
-	// RAYCASTING
-	// ray(cub);
 	return (0);
 }
 
@@ -46,7 +42,7 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	init_textures(cub); //TODO revisar
+	// init_textures(cub); //TODO revisar
 	printf(LGREEN"\n****************\n");
 	printf("*  START GAME  *\n");
 	printf("****************\n"RESET);
