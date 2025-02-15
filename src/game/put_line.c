@@ -83,7 +83,7 @@ void    put_line(t_player *player, t_cub *cub, float angle, int i, int color)
     float   wall_height;
     int     start_row;
     int     end_row;
-    image.img = NULL;
+    // image.img = NULL;
     cos_angle = cos(angle);
     sin_angle = sin(angle);
     dist = whileTouch(player, cub, cos_angle, sin_angle, color);
@@ -91,12 +91,16 @@ void    put_line(t_player *player, t_cub *cub, float angle, int i, int color)
         wall_height = (WIN_HEIGHT * 16) / dist; // * (WIN_WIDTH / 2);  //WALL_SIZE
     else
         wall_height = (WIN_HEIGHT * 16); // * (WIN_WIDTH / 2);  //WALL_SIZE
-    // start_row = (WIN_HEIGHT - wall_height) / 2;
-    // end_row = start_row + wall_height;
-    // printf("dist, start: %f\n", dist);
     start_row = ((WIN_HEIGHT - wall_height) / 2);
     end_row = (start_row + wall_height);
-    //printf("la i %d- starwor%d -  endrow %d\n", i, start_row ,end_row);
+
+	/**
+	 * BUG accesing out-of-bounds 
+	 * end_row * PIXEL_SIZE + i >= PIXEL_SIZE * PIXEL_SIZE
+	 * 
+	 * we need to map the texture to our wall_height
+	 * texture_y = (y - start_row) * (texture_height / wall height)
+	 */
     while (end_row > start_row)
     {
         //hay que controlar que no dibuje encima del minimapa
@@ -151,6 +155,7 @@ void	put_camera(t_cub *cub)
 	{	
 		int color = 0xAA6666;
 		// printf("put_line(player, cub, angle, i, color): (%p, %p, %f, %d, %d)\n", player, cub, start_angle, screen_col_idx, color);
+		//BUG: valgring error here
 		put_line(player, cub, start_angle, screen_col_idx, color);
 		//previous color: 255
 		start_angle += fraction;
