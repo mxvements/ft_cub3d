@@ -169,16 +169,12 @@ char	*ft_concat(char *first, ...); // at add_minimap.c
 /* PARSING TEST */
 int		parse_test(void);
 
-/* game */
-void	ray(t_cub *data);
-void	insert_img(t_cub *data, t_map *map);
-void	mapok(char **res, t_cub *data, int i, int j);
-void	render(t_cub *mlx, t_map *map);
+/* GAME */
 int		init_engine(t_cub *cub);
-// int	del_data(t_cub *data);
 void	move_and_rotate(t_cub *data);
-char	*read_map(char *s);
-void	positionPlayer(t_cub *data);
+int		is_touching_wall(float pcol, float prow, t_cub *cub);
+void	get_distance(t_cub *cub, float cos, float sin, int i);
+void	put_perspective(t_cub *cub);
 
 /* HOOKS */
 int		key_release(int keycode, t_cub *cub);
@@ -191,6 +187,9 @@ int		minimap_init(t_cub *cub);
 int		minimap_render(t_cub *cub);
 void	minimap_put_str(t_cub *cub);
 int		minimap_set_img(t_cub *cub);
+void	minimap_put_player(t_cub *cub, int color);
+void	minimap_put_axis(t_cub *cub, int color_axis);
+void	minimap_put_fov(t_cub *cub, int color_fov);
 
 /** WALL TEXTURES */
 int		init_textures(t_cub *data);
@@ -204,10 +203,5 @@ void	init_texture_pixels(t_cub *data);
 void	put_pixel(int col, int row, int color, t_cub *cub);
 void	put_square(int row, int col, int size, int color, t_cub *cub);
 void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
-int		is_touching_wall(float pcol, float prow, t_cub *cub);
-void	minimap_put_player(t_cub *cub, int color);
-void	minimap_put_axis(t_cub *cub, int color_axis);
-void	minimap_put_fov(t_cub *cub, int color_fov);
-void	put_line(t_player *player, t_cub *game, float start_x, int i);
-void	put_camera(t_cub *cub);
+
 #endif

@@ -70,6 +70,7 @@ int	minimap_render(t_cub *cub)
 
 /* ----------------------------------------------------------------------- */
 
+
 void	minimap_put_fov(t_cub *cub, int color_fov)
 {
 	float	fraction;

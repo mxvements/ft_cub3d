@@ -35,7 +35,7 @@
 
 CC=			cc
 NAME=		cub3D
-CFLAGS=		-Wall -Wextra -g3
+CFLAGS=		-Wall -Wextra -g3 -O3
 CFLAG_SAN=	-fsanitize=address
 MLX_LINUX=	-Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 
@@ -59,6 +59,7 @@ SRC=		main.c\
 
 GAME_DIR=	./src/game/
 GAME=		move.c\
+			is_touching_wall.c \
 			distance.c \
 			put_line.c
 

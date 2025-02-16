@@ -36,17 +36,13 @@ static int	render_loop(t_cub *cub)
 	mlx = cub->mlx;
 	clean_window(cub);
 	move_and_rotate(cub);
-	//calculate player on window
 	get_player_win(cub);
-	//calculate distance
-	//draw perspective
-	//draw minimap
-	put_camera(cub); // puts rays calculates distance and draws perpective
+	put_perspective(cub); // puts rays calculates distance and draws perpective
 	if (cub->options.show_minimap == 1)
 	{
 		minimap_render(cub);
-		minimap_put_player(cub, 0xFF0000);
 		minimap_put_fov(cub, 0xAA6666);
+		minimap_put_player(cub, 0xFF0000);
 		minimap_put_axis(cub, 0xFF0000);
 	}
 	//at the end, put img to window, all at once
