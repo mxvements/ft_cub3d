@@ -43,7 +43,7 @@ enum			e_texture_index
 typedef struct s_texture
 {
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
-	int			**text;
+	int			*text[WALL_SIDES];
 	int			**pixel;
 	long long	floor;
 	long long	ceiling;
@@ -103,7 +103,7 @@ typedef struct s_mlx
 	void		*win;
 	void		*img;
 	char		*img_addr;
-	int bpp; // bits per pixel
+	int 		bpp; // bits per pixel
 	int			line_len;
 	int			endian;
 }				t_mlx;
@@ -151,6 +151,7 @@ char		*strtrim_gnl(int fd, char *trim);
 void		clean_gnl(int fd);
 void		free_map(void *data);
 void 		free_struct(void **s, void(*free_s)(void *));
+void		free_int_ptr(int **ptr);
 
 /* ERRORS */
 int		print_error(char *origin, char *custom_msg);

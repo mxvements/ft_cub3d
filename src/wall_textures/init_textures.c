@@ -5,7 +5,6 @@ static int	init_texture_img(t_cub *data, t_image *image, char *path)
 	int	width;
 	int	height;
 
-	// clean_img(image);
 	ft_memset(image, 0, sizeof(t_image));
 	image->img = mlx_xpm_file_to_image(data->mlx->mlx_ptr, path, &width,
 			&height);
@@ -16,6 +15,7 @@ static int	init_texture_img(t_cub *data, t_image *image, char *path)
 	return (0);
 }
 
+// BUG: leaks!
 static int	*xpm_to_img(t_cub *data, char *path)
 {
 	t_image	tmp;
@@ -23,15 +23,16 @@ static int	*xpm_to_img(t_cub *data, char *path)
 	int		x;
 	int		y;
 
-	if (init_texture_img(data, &tmp, path) < 0)
-		return (NULL);
 	// printf("tamaño -> %d\n", sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
 	buffer = ft_calloc(PIXEL_SIZE * PIXEL_SIZE, sizeof(int));
 	if (!buffer)
 		return (print_error("xpm_to_img", NULL), NULL);
+	if (init_texture_img(data, &tmp, path) < 0)
+		return (free(buffer),  NULL);
 	if (!tmp.addr)
 	{
 		mlx_destroy_image(data->mlx->mlx_ptr, tmp.img);
+		free(buffer);
 		return (print_error("xpm_to_img", "Failed to get texture data."), NULL);
 	}
 	y = -1;
@@ -48,9 +49,9 @@ static int	*xpm_to_img(t_cub *data, char *path)
 int	init_textures(t_cub *cub)
 {
 	// cub->textures->text = ft_calloc(5, sizeof *cub->textures);
-	cub->textures->text = ft_calloc(5, sizeof(int *));
-	if (!cub->textures->text)
-		return (print_error("init_texture", NULL));
+	// cub->textures->text = ft_calloc(5, sizeof(int *));
+	// if (!cub->textures->text)
+	// 	return (print_error("init_texture", NULL));
 	cub->textures->text[NORTH] = xpm_to_img(cub, cub->textures->wall[NORTH]);
 	if (!cub->textures->text[NORTH])
 		return (-1);
