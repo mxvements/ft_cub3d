@@ -35,27 +35,15 @@ static int	init_cub_struct(t_cub *cub)
 	return (0);
 }
 
-//TODO: calculate this in the render loop
-static int	player_win(t_cub *cub)
-{
-	t_player	*player;
 
-	player = cub->map->player;
-	if (player->map_row < 0 || player->map_col < 0)
-		return (-1);
-	player->win_row = player->map_row * MINIMAP_TILE_SIZE
-		+ cub->minimap->start_x + MINIMAP_TILE_SIZE / 2;
-	player->win_col = player->map_col * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE
-		/ 2;
-	return (0);
-}
 
 static void	init_options(t_cub *cub)
 {
 	cub->options.show_minimap = 0;
 	cub->options.wall_col = 0;
-	cub->options.move_speed = (float)0.1;       //
+	cub->options.move_speed = (float)0.1;
 	cub->options.rotate_speed = (float)PI / 32; // dividir o multiplicar por 4
+	cub->options.fov = (float)PI/6;
 }
 
 int	init_cub_game(char *filepath)
@@ -71,8 +59,6 @@ int	init_cub_game(char *filepath)
 	if (parse_input(&cub, filepath) < 0)
 		return (free_cub(&cub), -1);
 	if (minimap_init(&cub) < 0)
-		return (free_cub(&cub), -1);
-	if (player_win(&cub) < 0)
 		return (free_cub(&cub), -1);
 	if (init_mlx(&cub) < 0)
 		return (free_cub(&cub), -1);

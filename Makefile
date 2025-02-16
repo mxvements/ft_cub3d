@@ -60,8 +60,6 @@ SRC=		main.c\
 GAME_DIR=	./src/game/
 GAME=		move.c\
 			put_line.c \
-			put_pixel.c \
-			put_square.c \
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \
@@ -97,7 +95,9 @@ HOOKS=		key_press.c \
 WTX_DIR=	./src/wall_textures/
 WTX=		init_textures.c \
 			texture.c
-
+DRAW_DIR=	./src/draw/
+DRAW=		put_pixel.c \
+			put_square.c
 
 # libft
 
@@ -132,7 +132,8 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(UTILS:%.c=$(OBJ_DIR)%.o) \
 		$(MINIMAP:%.c=$(OBJ_DIR)%.o) \
 		$(HOOKS:%.c=$(OBJ_DIR)%.o) \
-		$(WTX:%.c=$(OBJ_DIR)%.o)
+		$(WTX:%.c=$(OBJ_DIR)%.o) \
+		$(DRAW:%.c=$(OBJ_DIR)%.o)
 
 
 ###############################################################################
@@ -198,6 +199,12 @@ $(OBJ_DIR)%.o: $(WTX_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(DRAW_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 sanitize: fclean $(NAME)
 	$(CC) $(CFLAGS) $(CFLAG_SAN) $(OBJ) $(LIBFT) $(MLX) $(MLX_LINUX) -o $(NAME)

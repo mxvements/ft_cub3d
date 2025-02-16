@@ -45,10 +45,8 @@ static int	*xpm_to_img(t_cub *data, char *path)
 	return (buffer);
 }
 
-
 int	init_textures(t_cub *cub)
 {
-	//OJO, revisar como esta aqui el puntero de cub->textures
 	// cub->textures->text = ft_calloc(5, sizeof *cub->textures);
 	cub->textures->text = ft_calloc(5, sizeof(int *));
 	if (!cub->textures->text)

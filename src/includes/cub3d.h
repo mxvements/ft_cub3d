@@ -114,6 +114,7 @@ typedef struct s_options
 	int			show_minimap;
 	float		move_speed;
 	float		rotate_speed;
+	float		fov;
 }				t_options;
 
 typedef struct s_cub
@@ -193,7 +194,6 @@ int		minimap_set_img(t_cub *cub);
 /** WALL TEXTURES */
 int		init_textures(t_cub *data);
 int		init_img(t_cub *data, t_image *image, int width, int height);
-// void	clean_img(t_image *img);
 void	set_frame_image_pixel(t_cub *data, t_image *image, int x, int y);
 void	set_image_pixel(t_image *image, int x, int y, int color);
 void	render_frame(t_cub *data);
@@ -202,9 +202,9 @@ void	init_texture_pixels(t_cub *data);
 /* DRAW */
 void	put_pixel(int col, int row, int color, t_cub *cub);
 void	put_square(int row, int col, int size, int color, t_cub *cub);
+void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
 void	minimap_put_axis(t_cub *cub, int color);
 void	minimap_put_player(t_cub *cub, int color);
 void	put_line(t_player *player, t_cub *game, float start_x, int i, int color);
-void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
 void	put_camera(t_cub *cub);
 #endif
