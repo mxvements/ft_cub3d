@@ -59,7 +59,8 @@ SRC=		main.c\
 
 GAME_DIR=	./src/game/
 GAME=		move.c\
-			put_line.c \
+			distance.c \
+			put_line.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \

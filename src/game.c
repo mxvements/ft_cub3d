@@ -41,12 +41,12 @@ static int	render_loop(t_cub *cub)
 	//calculate distance
 	//draw perspective
 	//draw minimap
-	if (cub->options.show_minimap == 1)
-		minimap_render(cub);
-	put_camera(cub); // puts rays in minimap and draws perspective
+	put_camera(cub); // puts rays calculates distance and draws perpective
 	if (cub->options.show_minimap == 1)
 	{
+		minimap_render(cub);
 		minimap_put_player(cub, 0xFF0000);
+		minimap_put_fov(cub, 0xAA6666);
 		minimap_put_axis(cub, 0xFF0000);
 	}
 	//at the end, put img to window, all at once

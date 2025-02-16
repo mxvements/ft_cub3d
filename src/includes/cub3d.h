@@ -125,6 +125,7 @@ typedef struct s_cub
 	t_minimap	*minimap;
 	t_texture	*textures;
 	t_options	options;
+	float		dist[WIN_WIDTH];
 	int			fd;
 }				t_cub;
 
@@ -203,8 +204,10 @@ void	init_texture_pixels(t_cub *data);
 void	put_pixel(int col, int row, int color, t_cub *cub);
 void	put_square(int row, int col, int size, int color, t_cub *cub);
 void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
-void	minimap_put_axis(t_cub *cub, int color);
+int		is_touching_wall(float pcol, float prow, t_cub *cub);
 void	minimap_put_player(t_cub *cub, int color);
-void	put_line(t_player *player, t_cub *game, float start_x, int i, int color);
+void	minimap_put_axis(t_cub *cub, int color_axis);
+void	minimap_put_fov(t_cub *cub, int color_fov);
+void	put_line(t_player *player, t_cub *game, float start_x, int i);
 void	put_camera(t_cub *cub);
 #endif
