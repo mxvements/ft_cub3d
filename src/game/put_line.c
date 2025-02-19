@@ -69,6 +69,46 @@ static float whileTouch(t_player *player, t_cub *cub, float cos_angle, float sin
 
 /* ----------------------------------------------------------------------- */
 
+static void	texture_ceiling(t_cub *cub, int start_row, int i)
+{
+	int	k;
+
+	k = 0;
+	while (k < start_row)
+	{
+		put_pixel(i, k, cub->textures->ceiling, cub);
+		k++;
+	}
+}
+
+static void	texture_floor(t_cub *cub, int end_row, int i)
+{
+	int	k;
+
+	k = end_row;
+	while (k < WIN_WIDTH)
+	{
+		put_pixel(i, k, cub->textures->floor, cub);
+		k++;
+	}
+}
+
+static void	texture_wall(t_cub *cub, int start_row, int end_row, int i)
+{
+	int	k;
+	int factor;
+
+
+	k = end_row;
+	while (k > start_row)
+	{
+		factor = (k-start_row)/(end_row-start_row);
+		put_pixel(i, k, cub->textures->text[0][k * factor * PIXEL_SIZE + i],
+			cub);
+		k--;
+	}
+}
+
 static void	put_line(t_cub *cub, int i)
 {
 	float	wall_height;
@@ -89,13 +129,9 @@ static void	put_line(t_cub *cub, int i)
 		* texture_y = (y - start_row) * (texture_height / wall height)
 		* needs to be floats!
 		*/
-	while (end_row > start_row)
-	{
-		put_pixel(i, end_row, cub->textures->text[0][end_row * PIXEL_SIZE + i],
-			cub);
-		// put_texture(cub, i, end_row);
-		end_row--;
-	}
+	texture_ceiling(cub, start_row, i);
+	texture_wall(cub, start_row, end_row,i);
+	texture_floor(cub, end_row, i);
 }
 
 void	put_perspective(t_cub *cub)
