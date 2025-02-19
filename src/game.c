@@ -36,7 +36,9 @@ static int	render_loop(t_cub *cub)
 	mlx = cub->mlx;
 	clean_window(cub);
 	move_and_rotate(cub);
-	get_player_win(cub);
+	if (get_player_win(cub) < 0)
+		return (0);
+	// TODO: controlar que el player este dentro de la ventana/mapa
 	put_perspective(cub); // puts rays calculates distance and draws perpective
 	if (cub->options.show_minimap == 1)
 	{
@@ -45,7 +47,7 @@ static int	render_loop(t_cub *cub)
 		minimap_put_player(cub, 0xFF0000);
 		minimap_put_axis(cub, 0xFF0000);
 	}
-	//at the end, put img to window, all at once
+	// at the end, put img to window, all at once
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
 	if (cub->options.show_minimap == 1)
 		minimap_put_str(cub);
@@ -57,9 +59,9 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	printf(LGREEN"\n****************\n");
+	printf(LGREEN "\n****************\n");
 	printf("*  START GAME  *\n");
-	printf("****************\n"RESET);
+	printf("****************\n" RESET);
 	print_key_options(cub);
 	mlx_hook(mlx->win, 2, 1L << 0, key_press, cub);
 	mlx_hook(mlx->win, 3, 1L << 1, key_release, cub);
