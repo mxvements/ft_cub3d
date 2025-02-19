@@ -25,7 +25,11 @@ static void	put_line(t_cub *cub, int i)
 	float	wall_height;
 	int		start_row;
 	int		end_row;
+	int		color;
+	int		texture_x;
+	int		texture_y;
 
+	//
 	if (cub->dist[i] > 0.1)
 		wall_height = (WIN_HEIGHT * 16) / cub->dist[i];
 	else
@@ -40,12 +44,15 @@ static void	put_line(t_cub *cub, int i)
 		* texture_y = (y - start_row) * (texture_height / wall height)
 		* needs to be floats!
 		*/
-	while (end_row > start_row)
+	texture_x = i % PIXEL_SIZE;
+	int j = start_row;
+	while (end_row > j)
 	{
-		put_pixel(i, end_row, cub->textures->text[0][end_row * PIXEL_SIZE + i],
-			cub);
+		texture_y = (j - start_row) * (PIXEL_SIZE / wall_height);
+		color = cub->textures->text[0][texture_y * PIXEL_SIZE + texture_x];
+		put_pixel(i, j, color, cub);
 		// put_texture(cub, i, end_row);
-		end_row--;
+		j++;
 	}
 }
 
