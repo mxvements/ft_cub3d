@@ -1,7 +1,7 @@
-NO ./textures/arena.xpm
-SO ./textures/arena.xpm
-WE ./textures/arena.xpm
-EA ./textures/arena.xpm
+NO ./textures/pared128.xpm
+SO ./textures/pared128.xpm
+WE ./textures/pared128.xpm
+EA ./textures/pared128.xpm
 F 0, 255, 0
 C 0, 0, 255
         1111111111111111111111111

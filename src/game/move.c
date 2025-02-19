@@ -51,7 +51,7 @@ static void	rotate(t_cub *cub)
 		player->angle += 2 * PI;
 }
 
-static void	move(t_cub *cub, float pos[2], float move_x, float move_y)
+static void	move_and_update_map(t_cub *cub, float pos[2], float move_x, float move_y)
 {
 	t_player	*player;
 	float		speed;
@@ -84,15 +84,15 @@ void	move_and_rotate(t_cub *cub)
 	new_pos[1] = player->map_col;
 	rotate(cub);
 	if (player->move_keys.key_up)
-		move(cub, new_pos, (float)cos(player->angle),
+		move_and_update_map(cub, new_pos, (float)cos(player->angle),
 			(float)sin(player->angle));
 	else if (player->move_keys.key_down)
-		move(cub, new_pos, -(float)cos(player->angle),
+		move_and_update_map(cub, new_pos, -(float)cos(player->angle),
 			-(float)sin(player->angle));
 	else if (player->move_keys.key_left)
-		move(cub, new_pos, (float)cos(player->angle + PI / 2),
+		move_and_update_map(cub, new_pos, (float)cos(player->angle + PI / 2),
 			(float)sin(player->angle + PI / 2));
 	else if (player->move_keys.key_right)
-		move(cub, new_pos, (float)cos(player->angle - PI / 2),
+		move_and_update_map(cub, new_pos, (float)cos(player->angle - PI / 2),
 			(float)sin(player->angle - PI / 2));
 }

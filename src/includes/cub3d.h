@@ -43,7 +43,7 @@ enum			e_texture_index
 typedef struct s_texture
 {
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
-	int			**text;
+	int			*text[WALL_SIDES];
 	int			**pixel;
 	long long	floor;
 	long long	ceiling;
@@ -68,14 +68,14 @@ typedef struct s_minimap
 	void	*img_void;
 }	t_minimap;
 
-typedef struct s_imgen
+typedef struct s_image
 {
 	void	*img;
 	int		*addr;
 	int		pixel_bits;
 	int		size_line;
 	int		endian;
-}	t_imgen;
+}	t_image;
 
 typedef struct s_player
 {
@@ -103,7 +103,7 @@ typedef struct s_mlx
 	void		*win;
 	void		*img;
 	char		*img_addr;
-	int bpp; // bits per pixel
+	int 		bpp; // bits per pixel
 	int			line_len;
 	int			endian;
 }				t_mlx;
@@ -114,6 +114,7 @@ typedef struct s_options
 	int			show_minimap;
 	float		move_speed;
 	float		rotate_speed;
+	float		fov;
 }				t_options;
 
 typedef struct s_cub
@@ -124,6 +125,7 @@ typedef struct s_cub
 	t_minimap	*minimap;
 	t_texture	*textures;
 	t_options	options;
+	float		dist[WIN_WIDTH];
 	int			fd;
 }				t_cub;
 
@@ -149,6 +151,7 @@ char		*strtrim_gnl(int fd, char *trim);
 void		clean_gnl(int fd);
 void		free_map(void *data);
 void 		free_struct(void **s, void(*free_s)(void *));
+void		free_int_ptr(int **ptr);
 
 /* ERRORS */
 int		print_error(char *origin, char *custom_msg);
@@ -167,16 +170,12 @@ char	*ft_concat(char *first, ...); // at add_minimap.c
 /* PARSING TEST */
 int		parse_test(void);
 
-/* game */
-void	ray(t_cub *data);
-void	insert_img(t_cub *data, t_map *map);
-void	mapok(char **res, t_cub *data, int i, int j);
-void	render(t_cub *mlx, t_map *map);
+/* GAME */
 int		init_engine(t_cub *cub);
-// int	del_data(t_cub *data);
 void	move_and_rotate(t_cub *data);
-char	*read_map(char *s);
-void	positionPlayer(t_cub *data);
+int		is_touching_wall(float pcol, float prow, t_cub *cub);
+void	get_distance(t_cub *cub, float cos, float sin, int i);
+void	put_perspective(t_cub *cub);
 
 /* HOOKS */
 int		key_release(int keycode, t_cub *cub);
@@ -189,20 +188,21 @@ int		minimap_init(t_cub *cub);
 int		minimap_render(t_cub *cub);
 void	minimap_put_str(t_cub *cub);
 int		minimap_set_img(t_cub *cub);
+void	minimap_put_player(t_cub *cub, int color);
+void	minimap_put_axis(t_cub *cub, int color_axis);
+void	minimap_put_fov(t_cub *cub, int color_fov);
 
-void	init_textures(t_cub *data);
-void	init_img(t_cub *data, t_imgen *image, int width, int height);
-void	set_frame_image_pixel(t_cub *data, t_imgen *image, int x, int y);
-void	set_image_pixel(t_imgen *image, int x, int y, int color);
+/** WALL TEXTURES */
+int		init_textures(t_cub *data);
+int		init_img(t_cub *data, t_image *image, int width, int height);
+void	set_frame_image_pixel(t_cub *data, t_image *image, int x, int y);
+void	set_image_pixel(t_image *image, int x, int y, int color);
 void	render_frame(t_cub *data);
 void	init_texture_pixels(t_cub *data);
 
 /* DRAW */
 void	put_pixel(int col, int row, int color, t_cub *cub);
 void	put_square(int row, int col, int size, int color, t_cub *cub);
-void	minimap_put_axis(t_cub *cub, int color);
-void	minimap_put_player(t_cub *cub, int color);
-void	put_line(t_player *player, t_cub *game, float start_x, int i, int color);
 void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset);
-void	put_camera(t_cub *cub);
+
 #endif
