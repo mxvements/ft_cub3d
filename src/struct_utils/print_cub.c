@@ -1,24 +1,19 @@
 #include "../includes/cub3d.h"
 
-
-void print_player(t_player *pl)
+void	print_player(t_player *pl)
 {
-	printf(YLLW"[player struct]\n"RESET);
-	if (pl->x != -1 && pl->y != -1)
-		printf("player position (x, y): (%f, %f)\n", pl->x, pl->y);
-	if (pl->dirX != 0 || pl->dirY != 0)
-		printf("player direction (x, y): (%f, %f)\n", pl->dirX, pl->dirY);
-	if (pl->walk != 0)
-		printf("walk direction (-1 or 0 or 1): (%d)\n", pl->walk);
-	if (pl->spin != 0)
-		printf("spin dir (1=cw, -1=ccw): (%d)\n", pl->spin);
+	printf(YLLW "\n[player status]\n" RESET);
+	if (pl->map_row != -1 && pl->map_col != -1)
+		printf("player position (x, y): (%f, %f)\n", pl->map_row, pl->map_col);
+	if (pl->angle)
+		printf("player angle in rads: (%f)\n", pl->angle);
 }
 
-void print_map(t_map *map)
+void	print_map(t_map *map)
 {
 	int	i;
 
-	printf(YLLW"[map struct]\n"RESET);
+	printf(YLLW "\n[map status]\n" RESET);
 	if (map->cols != 0 && map->rows != 0)
 		printf("map (rows, cols): (%d, %d)\n", map->rows, map->cols);
 	if (map->map)
@@ -32,11 +27,11 @@ void print_map(t_map *map)
 		print_player(map->player);
 }
 
-void print_texture(t_texture *tx)
+void	print_texture(t_texture *tx)
 {
 	int	i;
 
-	printf(YLLW"[texture struct]\n"RESET);
+	printf(YLLW "\n[texture status]\n" RESET);
 	printf("wall side textures:\n");
 	i = -1;
 	while (++i < WALL_SIDES && tx->wall[i] != 0)
@@ -47,14 +42,30 @@ void print_texture(t_texture *tx)
 		printf("ceiling color:\t%lli\n", tx->ceiling);
 }
 
+void	print_minimap(t_minimap *minimap)
+{
+	printf(YLLW "\n[minimap status]\n" RESET);
+	if (minimap->start_x != 0)
+		printf("start row position minimap: %f\n", minimap->start_x);
+	if (minimap->img_wall)
+		printf("img_wall: %p\n", minimap->img_wall);
+	if (minimap->img_void)
+		printf("img_void: %p\n", minimap->img_void);
+	if (minimap->img_player)
+		printf("img_player: %p\n", minimap->img_player);
+	if (minimap->img_floor)
+		printf("img_floor: %p\n", minimap->img_floor);
+}
+
 void	print_cub(t_cub *cub)
 {
-	printf(YLLW"[cub status]\n"RESET);
+	printf(YLLW "\n[cub status]\n" RESET);
 	if (cub->fd)
 		printf("cub fd:%d\n", cub->fd);
 	if (cub->map)
 		print_map(cub->map);
 	if (cub->textures)
 		print_texture(cub->textures);
-	
+	if (cub->minimap)
+		print_minimap(cub->minimap);
 }

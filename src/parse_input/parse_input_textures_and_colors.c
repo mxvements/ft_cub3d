@@ -2,14 +2,8 @@
 
 static char	*get_err_msg(int i)
 {
-	const char	*err_msg[WALL_SIDES + 2] = {
-		ERR_TXT_NORTH,
-		ERR_TXT_SOUTH,
-		ERR_TXT_WEST,
-		ERR_TXT_EAST,
-		ERR_COL_F,
-		ERR_COL_C
-	};
+	const char	*err_msg[WALL_SIDES + 2] = {ERR_TXT_NORTH, ERR_TXT_SOUTH,
+			ERR_TXT_WEST, ERR_TXT_EAST, ERR_COL_F, ERR_COL_C};
 
 	if (i >= (WALL_SIDES + 2))
 		return (NULL);
@@ -74,9 +68,10 @@ static int	save_color(int j, char *line, t_texture *tx)
 	return (0);
 }
 
-static int check_texture_eof(t_texture *tx)
+static int	check_texture_eof(t_texture *tx)
 {
 	int	i;
+
 	i = -1;
 	while (++i < WALL_SIDES)
 	{
@@ -84,7 +79,7 @@ static int check_texture_eof(t_texture *tx)
 			return (print_error("check_texture_eof", ERR_TXT_MISSING));
 	}
 	if (tx->ceiling == -1 || tx->floor == -1)
- 		return (print_error("check_texture_eof", ERR_COL_MISSING));
+		return (print_error("check_texture_eof", ERR_COL_MISSING));
 	return (0);
 }
 

@@ -35,7 +35,7 @@
 
 CC=			cc
 NAME=		cub3D
-CFLAGS=		-Wall -Wextra -Werror -g3
+CFLAGS=		-Wall -Wextra -g3 -O3
 CFLAG_SAN=	-fsanitize=address
 MLX_LINUX=	-Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 
@@ -58,17 +58,18 @@ SRC=		main.c\
 			
 
 GAME_DIR=	./src/game/
-GAME=		ray_casting.c\
-			mov.c\
-			printMap.c\
-			adicional.c
+GAME=		move.c\
+			is_touching_wall.c \
+			distance.c \
+			put_line.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \
 			parse_input_textures_and_colors.c \
 			parse_input_map.c \
 			parse_utils.c \
-			check_input.c \
+			check_input_textures_and_colors.c \
+			check_input_map_map.c \
 			check_input_map.c
 			
 PRS_T_DIR=	./src/parse_test/
@@ -79,7 +80,27 @@ ERR=		print_error.c
 
 UTILS_DIR=	./src/struct_utils/
 UTILS=		free_cub.c \
-			print_cub.c
+			free_cub_utils.c \
+			print_cub.c \
+			print_cub_options.c
+
+MINIMAP_DIR=	./src/minimap/
+MINIMAP=		minimap_init.c \
+				minimap_render.c \
+				minimap_put_str.c
+
+HOOKS_DIR=	./src/hooks/
+HOOKS=		key_press.c \
+			key_release.c \
+			win_close.c
+
+WTX_DIR=	./src/wall_textures/
+WTX=		init_textures.c \
+			texture.c
+DRAW_DIR=	./src/draw/
+DRAW=		put_pixel.c \
+			put_square.c
+
 # libft
 
 LIBFT_DIR=	./libft/
@@ -102,7 +123,7 @@ MLX=		./minilibx-linux/libmlx_Linux.a
 ###############################################################################
 
 # objs
-
+# mirar vpath
 OBJ_DIR=	./obj/
 OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(SRC:%.c=$(OBJ_DIR)%.o) \
@@ -110,7 +131,12 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS:%.c=$(OBJ_DIR)%.o) \
 		$(PRS_T:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
-		$(UTILS:%.c=$(OBJ_DIR)%.o)
+		$(UTILS:%.c=$(OBJ_DIR)%.o) \
+		$(MINIMAP:%.c=$(OBJ_DIR)%.o) \
+		$(HOOKS:%.c=$(OBJ_DIR)%.o) \
+		$(WTX:%.c=$(OBJ_DIR)%.o) \
+		$(DRAW:%.c=$(OBJ_DIR)%.o)
+
 
 ###############################################################################
 
@@ -160,6 +186,27 @@ $(OBJ_DIR)%.o: $(UTILS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(MINIMAP_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(HOOKS_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(WTX_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(DRAW_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 sanitize: fclean $(NAME)
 	$(CC) $(CFLAGS) $(CFLAG_SAN) $(OBJ) $(LIBFT) $(MLX) $(MLX_LINUX) -o $(NAME)

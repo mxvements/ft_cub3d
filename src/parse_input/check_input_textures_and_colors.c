@@ -36,45 +36,6 @@ int	is_color(char **rgb)
 	return (0);
 }
 
-/**
- * @brief Function that takes the line to append to the map and checks if all
- * the chars contained are permitted by the program:
- *
- * + chars of map:		' ', '0', '1','\n'
- *
- * + chars  of player:	'N','E','S','W'
- *
- * @param line
- * @return int length evaluated
- */
-int	is_permitted_char(char *line)
-{
-	const char	permitted[9] = {' ', '0', '1', '\n', '\t', 'N', 'E', 'S', 'W'};
-	int			i;
-	int			j;
-	int			flag;
-
-	i = -1;
-	flag = 0;
-	while (line[++i])
-	{
-		j = -1;
-		while (permitted[++j])
-		{
-			if (line[i] == permitted[j])
-			{
-				flag = 0;
-				break ;
-			}
-			if (line[i] != permitted[j])
-				flag = 1;
-		}
-		if (flag == 1)
-			return (print_error("check_permitted_char", ERR_MAP_CHAR));
-	}
-	return (i);
-}
-
 int	is_texture_struct_full(t_texture *tx)
 {
 	int	i;
@@ -92,15 +53,15 @@ int	is_texture_struct_full(t_texture *tx)
 
 int	is_player(t_player *player)
 {
-	if (player->x == -1 || player->y == -1)
+	if (player->map_row == -1 || player->map_col == -1)
 		return (0);
 	return (1);
 }
 
 int	is_player_on_edge(t_map *map, t_player *player)
 {
-	if (player->x == 0 || player->y == 0 || player->x == map->rows
-		|| player->y == map->cols)
+	if (player->map_row == 0 || player->map_col == 0 
+		|| player->map_row == map->rows || player->map_col == map->cols)
 		return (print_error("is_player", ERR_PL_EDGE));
 	return (0);
 }

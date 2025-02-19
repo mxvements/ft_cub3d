@@ -2,9 +2,13 @@
 
 /**
  * @brief Function to set all rows to max length of the map, filling with ' ' on
- * empty spaces
+ * empty spaces. This 'normalization' allow us to access any map location
+ * avoiding segfaults. *
  *
- * @return int
+ * @param map
+ * @return int, status error,
+ *		0: OK
+ *		-1: Error (parsing err or initialization err)
  */
 static int	normalize_map(t_map *map)
 {
@@ -33,88 +37,78 @@ static int	normalize_map(t_map *map)
 	return (0);
 }
 
+/**
+ * @brief Get the player object, with its position, and direction vector.
+ * This function checks for multiple instances of player and returns the
+ * custom error in that case.
+ *
+ * @param map
+ * @param line
+ * @param row
+ * @return int, error status,
+ * 		0: OK,
+ * 		-1: error (parse or initialization)
+ */
 static int	get_player(t_map *map, char *line, int row)
 {
 	char		*player;
-	const char	dir[4] = {'N', 'S', 'E', 'W'};
-	const int	vector[4][2] = {{-1, 0}, {1, 0}, {0, 1}, {-1, 0}};
+	const char	dir[4] = {'S', 'E', 'N', 'W'};
 	int			i;
 
 	i = -1;
-	while (dir[++i])
+	while (++i < 4)
 	{
 		player = ft_strchr(line, dir[i]);
 		if (player && is_player(map->player) == 1)
 			return (print_error("get_player", ERR_PL_MULT));
 		if (player)
 		{
-			map->player->x = row;
-			map->player->y = player - line; // check this
-			map->player->dirX = vector[i][0];
-			map->player->dirY = vector[i][1];
+			map->player->map_row = row;
+			map->player->map_col = player - line;
+			map->player->angle = (PI * i)/2;
 			return (0);
 		}
 	}
-	return (1);
+	return (1); // TODO: check this, could be a zero
 }
 
-static int	get_map(t_map *map, int fd)
+static int	get_line_data(t_map *map, char *line)
 {
-	size_t	tmp_len;
-	char	*tmp;
+	size_t	line_len;
 
-	while (1)
-	{
-		tmp = strtrim_gnl(fd, "\t\n");
-		if (!tmp)
-			break ;
-		if (*tmp == '\0')
-		{
-			free(tmp);
-			if (map->rows > 0) // check
-				break ; //ERROR, spaces at the end of map
-			continue ; //spaces at the start
-		}
-		tmp_len = is_permitted_char(tmp);
-		if (tmp_len < 0)
-			return (free(tmp), -1);
-		if (get_player(map, tmp, map->rows) < 0)
-			return (free(tmp), -1);
-		if ((int)tmp_len > map->cols)
-			map->cols = (int)tmp_len;
-		map->map = strarr_add(map->map, tmp);
-		if (!map->map)
-			return (print_error("get_map", NULL));
-		free(tmp);
-		map->rows++;
-	}
+	line_len = is_permitted_char(line);
+	if (line_len < 0)
+		return (-1);
+	if (get_player(map, line, map->rows) < 0)
+		return (-1);
+	if ((int)line_len > map->cols)
+		map->cols = (int)line_len;
+	map->map = strarr_add(map->map, line);
+	if (!map->map)
+		return (print_error("get_map", NULL));
 	return (0);
 }
 
-/**
- * @name check_eof
- * @brief Checks the end of file. Spaces, tabs and new lines are accepted as
- * lines after the map reading. If any other char is found in a line, an 
- * error is thrown
- * 
- * @param fd file to read
- * @return int, end status, 0 for OK, -1 for error
- */
-static int	check_map_eof(int fd)
+static int	get_map(t_map *map, int fd)
 {
 	char	*line;
 
 	while (1)
 	{
-		line = strtrim_gnl(fd, "\t\n ");
+		line = strtrim_gnl(fd, "\t\n");
 		if (!line)
 			break ;
-		if (*line != '\0')
+		if (*line == '\0')
 		{
 			free(line);
-			return (print_error("check_eof", ERR_MAP_END));
+			if (map->rows > 0)
+				break ;
+			continue ;
 		}
+		if (get_line_data(map, line) < 0)
+			return (free(line), -1);
 		free(line);
+		map->rows++;
 	}
 	return (0);
 }
@@ -123,8 +117,8 @@ static int	check_map_eof(int fd)
  * @brief Read file line by line (after textures and colors lines), checking
  * each time for the length (cols), and the permitted chars. A the end, sets the
  * final length of the map (rows) and checks for the map to be compliant with
- * the rules of the subject
- *
+ * the rules of the subject,
+ * This function 
  * @param map
  * @param fd
  * @return int
@@ -139,11 +133,12 @@ int	parse_map(t_map *map, int fd)
 		return (print_error("parse_map", ERR_PL_MISSING));
 	if (is_player_on_edge(map, map->player) < 0)
 		return (-1);
-	if (check_map_eof(fd) < 0)
+	if (is_map_eof(fd) < 0)
 		return (-1);
 	if (normalize_map(map) < 0)
 		return (-1);
 	map->size = PIXEL_SIZE;
+	map->old_char = '0';
 	if (check_map(map) < 0)
 		return (-1);
 	return (0);
