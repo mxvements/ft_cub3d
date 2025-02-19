@@ -1,5 +1,11 @@
 #include "../includes/cub3d.h"
 
+void	free_int_ptr(int **ptr)
+{
+	free(*ptr);
+	*ptr = NULL;
+}
+
 void	free_map(void *data)
 {
 	t_map	*map;

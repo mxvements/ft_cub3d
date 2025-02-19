@@ -35,7 +35,7 @@
 
 CC=			cc
 NAME=		cub3D
-CFLAGS=		-Wall -Wextra -g3
+CFLAGS=		-Wall -Wextra -g3 -O3
 CFLAG_SAN=	-fsanitize=address
 MLX_LINUX=	-Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 
@@ -58,13 +58,10 @@ SRC=		main.c\
 			
 
 GAME_DIR=	./src/game/
-GAME=		ray_casting.c\
-			move.c\
-			render.c\
-			put_line.c \
-			put_pixel.c \
-			put_square.c \
-			texture.c
+GAME=		move.c\
+			is_touching_wall.c \
+			distance.c \
+			put_line.c
 
 PRS_DIR=	./src/parse_input/
 PRS=		parse_input.c \
@@ -92,10 +89,17 @@ MINIMAP=		minimap_init.c \
 				minimap_render.c \
 				minimap_put_str.c
 
-HOOKS_DIR=		./src/hooks/
-HOOKS=			key_press.c \
-				key_release.c \
-				win_close.c
+HOOKS_DIR=	./src/hooks/
+HOOKS=		key_press.c \
+			key_release.c \
+			win_close.c
+
+WTX_DIR=	./src/wall_textures/
+WTX=		init_textures.c \
+			texture.c
+DRAW_DIR=	./src/draw/
+DRAW=		put_pixel.c \
+			put_square.c
 
 # libft
 
@@ -129,7 +133,9 @@ OBJ=	$(GNL_SRCS:%.c=$(OBJ_DIR)%.o) \
 		$(ERR:%.c=$(OBJ_DIR)%.o) \
 		$(UTILS:%.c=$(OBJ_DIR)%.o) \
 		$(MINIMAP:%.c=$(OBJ_DIR)%.o) \
-		$(HOOKS:%.c=$(OBJ_DIR)%.o)
+		$(HOOKS:%.c=$(OBJ_DIR)%.o) \
+		$(WTX:%.c=$(OBJ_DIR)%.o) \
+		$(DRAW:%.c=$(OBJ_DIR)%.o)
 
 
 ###############################################################################
@@ -190,6 +196,17 @@ $(OBJ_DIR)%.o: $(HOOKS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(WTX_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)%.o: $(DRAW_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(BOLD)$(DARK_BLUE)[$(NAME)]	Commpiling $<...$(RESET_COLOR)"
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 sanitize: fclean $(NAME)
 	$(CC) $(CFLAGS) $(CFLAG_SAN) $(OBJ) $(LIBFT) $(MLX) $(MLX_LINUX) -o $(NAME)

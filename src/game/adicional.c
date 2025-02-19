@@ -11,7 +11,7 @@ void	set_image_pixel(t_imgen *image, int x, int y, int color)
 	// printf("setter img\n");
 }
 
-void	set_frame_image_pixel(t_cub *data, t_imgen *image, int x, int y)
+void	set_frame_image_pixel(t_cub *data, t_image *image, int x, int y)
 {
 	/* printf("x -> %d y -> %d.\n", x, y);
 	printf("d-> %d\n", data->textures->pixel[93][0]); */
@@ -27,7 +27,7 @@ void	set_frame_image_pixel(t_cub *data, t_imgen *image, int x, int y)
 
 void	render_frame(t_cub *data)
 {
-	t_imgen	image;
+	t_image	image;
 	int		x;
 	int		y;
 

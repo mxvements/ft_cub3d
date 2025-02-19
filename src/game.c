@@ -1,7 +1,21 @@
 
 #include "includes/cub3d.h"
 
-static void	clean_img(t_cub *cub)
+static int	get_player_win(t_cub *cub)
+{
+	t_player	*player;
+
+	player = cub->map->player;
+	if (player->map_row < 0 || player->map_col < 0)
+		return (-1);
+	player->win_row = player->map_row * MINIMAP_TILE_SIZE
+		+ cub->minimap->start_x + MINIMAP_TILE_SIZE / 2;
+	player->win_col = player->map_col * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE
+		/ 2;
+	return (0);
+}
+
+static void	clean_window(t_cub *cub)
 {
 	int	i;
 	int	j;
@@ -20,24 +34,21 @@ static int	render_loop(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	// move settings? to recalculate after key_press
-	clean_img(cub);
+	clean_window(cub);
 	move_and_rotate(cub);
-	// RENDER/DRAW everything
-	// render(cub, cub->map);
-	if (cub->options.show_minimap == 1)
-		minimap_render(cub);
-	put_camera(cub); // puts rays in minimap and draws perspective
+	get_player_win(cub);
+	put_perspective(cub); // puts rays calculates distance and draws perpective
 	if (cub->options.show_minimap == 1)
 	{
+		minimap_render(cub);
+		minimap_put_fov(cub, 0xAA6666);
 		minimap_put_player(cub, 0xFF0000);
 		minimap_put_axis(cub, 0xFF0000);
 	}
+	//at the end, put img to window, all at once
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
 	if (cub->options.show_minimap == 1)
 		minimap_put_str(cub);
-	// RAYCASTING
-	// ray(cub);
 	return (0);
 }
 
@@ -46,7 +57,6 @@ int	init_engine(t_cub *cub)
 	t_mlx	*mlx;
 
 	mlx = cub->mlx;
-	init_textures(cub); //TODO revisar
 	printf(LGREEN"\n****************\n");
 	printf("*  START GAME  *\n");
 	printf("****************\n"RESET);
