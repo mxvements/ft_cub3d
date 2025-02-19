@@ -93,19 +93,21 @@ static void	texture_floor(t_cub *cub, int end_row, int i)
 	}
 }
 
-static void	texture_wall(t_cub *cub, int start_row, int end_row, int i)
+static void	texture_wall(t_cub *cub, int start_row, int end_row,float wall_height, int i)
 {
-	int	k;
-	int factor;
+	int	j;
+	int texture_x;
+	int texture_y;
+	int color;
 
-
-	k = end_row;
-	while (k > start_row)
-	{
-		factor = (k-start_row)/(end_row-start_row);
-		put_pixel(i, k, cub->textures->text[0][k * factor * PIXEL_SIZE + i],
-			cub);
-		k--;
+	texture_x = i % PIXEL_SIZE;
+    j = start_row;
+    while (end_row > j)
+    {
+        texture_y = (j - start_row) * (PIXEL_SIZE / wall_height);
+        color = cub->textures->text[0][texture_y * PIXEL_SIZE + texture_x];
+        put_pixel(i, j, color, cub);
+		j++;
 	}
 }
 
@@ -121,16 +123,8 @@ static void	put_line(t_cub *cub, int i)
 		wall_height = (WIN_HEIGHT * 16);
 	start_row = ((WIN_HEIGHT - wall_height) / 2);
 	end_row = (start_row + wall_height);
-	/**
-		* BUG: accesing out-of-bounds
-		* end_row * PIXEL_SIZE + i >= PIXEL_SIZE * PIXEL_SIZE
-		*
-		* we need to map the texture to our wall_height
-		* texture_y = (y - start_row) * (texture_height / wall height)
-		* needs to be floats!
-		*/
 	texture_ceiling(cub, start_row, i);
-	texture_wall(cub, start_row, end_row,i);
+	texture_wall(cub, start_row, end_row,wall_height, i);
 	texture_floor(cub, end_row, i);
 }
 

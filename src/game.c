@@ -36,7 +36,9 @@ static int	render_loop(t_cub *cub)
 	mlx = cub->mlx;
 	clean_window(cub);
 	move_and_rotate(cub);
-	get_player_win(cub);
+	if (get_player_win(cub)<0)
+		return (0);
+	//TODO: controlar que el player este dentro de la ventana/mapa
 	put_perspective(cub); // puts rays calculates distance and draws perpective
 	if (cub->options.show_minimap == 1)
 	{
