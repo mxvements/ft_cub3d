@@ -43,7 +43,7 @@ static void	init_options(t_cub *cub)
 	cub->options.wall_col = 0;
 	cub->options.move_speed = (float)0.1;
 	cub->options.rotate_speed = (float)PI / 32; // dividir o multiplicar por 4
-	cub->options.fov = (float)PI/6;
+	cub->options.fov = (float)PI/4;
 }
 
 int	init_cub_game(char *filepath)

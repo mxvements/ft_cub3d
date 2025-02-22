@@ -40,6 +40,12 @@ enum			e_texture_index
 	EAST   // 3
 };
 
+enum			e_collision
+{
+	VERTICAL, //0: row
+	HORIZONTAL // 1: col
+};
+
 typedef struct s_texture
 {
 	char		*wall[WALL_SIDES]; // use enum to know wich side of wall
@@ -84,7 +90,7 @@ typedef struct s_player
 	float		win_row;
 	float		win_col;
 	float		angle;
-	t_move_keys	move_keys;
+	struct s_move_keys	move_keys;
 }				t_player;
 
 typedef struct s_map
@@ -121,8 +127,10 @@ typedef struct s_hit
 {
 	float	dist;
 	int		map_tile[2]; //[0] == row, [1] == col
+	float	ray[2];
 	float	angle;
-	int		texture_idx; //e_texture_index;		
+	int		texture_idx; //e_texture_index;	
+	int		collision_dir; //is vertical or horizontal
 }	t_hit;
 
 typedef struct s_cub

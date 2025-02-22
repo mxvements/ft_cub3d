@@ -79,8 +79,8 @@ void	minimap_put_fov(t_cub *cub, int color_fov)
 	float	ray_row;
 	float	ray_col;
 
-	fraction = (cub->options.fov * 3) / WIN_WIDTH;
-	start_angle = cub->map->player->angle - cub->options.fov;
+	fraction = (cub->options.fov) / WIN_WIDTH;
+	start_angle = cub->map->player->angle - (cub->options.fov / 2);
 	screen_col_idx = WIN_WIDTH;
 	while (screen_col_idx > 0)
 	{

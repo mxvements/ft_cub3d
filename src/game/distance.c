@@ -32,6 +32,7 @@ static void	get_hit_side(t_cub *cub, int i, float prev_ray[2])
 
 	if ((prev_tile[0] != cub->hits[i].map_tile[0]))
 	{
+		cub->hits[i].collision_dir = VERTICAL;
 		if ((prev_tile[0] - cub->hits[i].map_tile[0]) > 0)
 			cub->hits[i].texture_idx = NORTH; //0
 		else
@@ -39,6 +40,7 @@ static void	get_hit_side(t_cub *cub, int i, float prev_ray[2])
 	}
 	else if (prev_tile[1] != cub->hits->map_tile[1])
 	{
+		cub->hits[i].collision_dir = HORIZONTAL;
 		if ((prev_tile[1] - cub->hits[i].map_tile[1]) > 0)
 			cub->hits[i].texture_idx = WEST; //2
 		else
@@ -63,6 +65,8 @@ void	get_distance(t_cub *cub, float cos_f, float sin_f, int i)
 		ray[0] += cos_f;
 		ray[1] += sin_f;
 	}
+	cub->hits[i].ray[0] = ray[0];
+	cub->hits[i].ray[1] = ray[1];
 	// cub->dist[i]  = distance(cub, (pl->win_row - ray_row), (pl->win_col - ray_col));
 	cub->hits[i].dist = distance(cub, (pl->win_row - ray[0]), (pl->win_col - ray[1]));
 	// intersection tile
