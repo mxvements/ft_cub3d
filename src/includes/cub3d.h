@@ -22,11 +22,11 @@
 # define	WALL_SIDES	4
 # define	MOVE_MAX 1
 # define	DEBUG		1 //for the print_error 
-# define	PIXEL_SIZE	128 // tamaño de imagen en un cuadrado
+# define	PIXEL_SIZE	64 // tamaño de imagen en un cuadrado
 # define	IMG_SIZE	10
 # define	WIN_HEIGHT	540
 # define 	WIN_WIDTH	960
-# define 	MINIMAP_TILE_SIZE	16
+# define 	MINIMAP_TILE	16
 # define	TILE_SIZE 32
 
 
@@ -117,6 +117,14 @@ typedef struct s_options
 	float		fov;
 }				t_options;
 
+typedef struct s_hit
+{
+	float	dist;
+	int		map_tile[2]; //[0] == row, [1] == col
+	float	angle;
+	int		texture_idx; //e_texture_index;		
+}	t_hit;
+
 typedef struct s_cub
 {
 	int			count;
@@ -125,6 +133,7 @@ typedef struct s_cub
 	t_minimap	*minimap;
 	t_texture	*textures;
 	t_options	options;
+	t_hit 		hits[WIN_WIDTH];
 	float		dist[WIN_WIDTH];
 	int			fd;
 }				t_cub;

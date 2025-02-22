@@ -20,9 +20,9 @@ void put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset)
 
     tile_data = mlx_get_data_addr(tile_img, &tile_bpp, &tile_line_len, &tile_endian);
 
-    for (col = 0; col < MINIMAP_TILE_SIZE; col++)
+    for (col = 0; col < MINIMAP_TILE; col++)
     {
-        for (row = 0; row < MINIMAP_TILE_SIZE; row++)
+        for (row = 0; row < MINIMAP_TILE; row++)
         {
             int color = *(int *)(tile_data + (col * tile_line_len + row * (tile_bpp / 8)));
             if ((color & 0xFF000000) != 0xFF000000) // Skip transparent pixels

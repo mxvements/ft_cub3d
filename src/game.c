@@ -8,10 +8,12 @@ static int	get_player_win(t_cub *cub)
 	player = cub->map->player;
 	if (player->map_row < 0 || player->map_col < 0)
 		return (-1);
-	player->win_row = player->map_row * MINIMAP_TILE_SIZE
-		+ cub->minimap->start_x + MINIMAP_TILE_SIZE / 2;
-	player->win_col = player->map_col * MINIMAP_TILE_SIZE + MINIMAP_TILE_SIZE
+	player->win_row = player->map_row * MINIMAP_TILE
+		+ cub->minimap->start_x + MINIMAP_TILE / 2;
+	player->win_col = player->map_col * MINIMAP_TILE + MINIMAP_TILE
 		/ 2;
+	if (player->win_row > WIN_WIDTH || player->win_col > WIN_HEIGHT)
+		return (-1);
 	return (0);
 }
 
@@ -32,7 +34,7 @@ static void	clean_window(t_cub *cub)
 static int	render_loop(t_cub *cub)
 {
 	t_mlx	*mlx;
-
+	// printf(YLLW"loop"RESET);
 	mlx = cub->mlx;
 	clean_window(cub);
 	move_and_rotate(cub);

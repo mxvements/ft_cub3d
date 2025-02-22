@@ -1,7 +1,7 @@
-NO ./textures/pared128.xpm
-SO ./textures/pared128.xpm
-WE ./textures/pared128.xpm
-EA ./textures/pared128.xpm
+NO ./textures/north64x64.xpm
+SO ./textures/south64x64.xpm
+WE ./textures/west64x64.xpm
+EA ./textures/east64x64.xpm
 F 0, 255, 0
 C 0, 0, 255
         1111111111111111111111111

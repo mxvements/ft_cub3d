@@ -13,19 +13,15 @@ static void	free_texture(void *data)
 		ft_freenull(&texture->wall[EAST]);
 	if (texture->wall[WEST])
 		ft_freenull(&texture->wall[WEST]);
-	// if (texture->text)
-	// {
-		if (texture->text[NORTH])
-			free_int_ptr(&texture->text[NORTH]);
-		if (texture->text[SOUTH])
-			free_int_ptr(&texture->text[SOUTH]);
-		if (texture->text[EAST])
-			free_int_ptr(&texture->text[EAST]);
-		if (texture->text[WEST])
-			free_int_ptr(&texture->text[WEST]);
-		// free(texture->text);
-		// texture->text = NULL;
-	// }
+
+	if (texture->text[NORTH])
+		free_int_ptr(&texture->text[NORTH]);
+	if (texture->text[SOUTH])
+		free_int_ptr(&texture->text[SOUTH]);
+	if (texture->text[EAST])
+		free_int_ptr(&texture->text[EAST]);
+	if (texture->text[WEST])
+		free_int_ptr(&texture->text[WEST]);
 }
 
 static void	free_minimap(t_mlx *mlx, t_minimap *minimap)

@@ -95,17 +95,18 @@ static void	texture_floor(t_cub *cub, int end_row, int i)
 
 static void	texture_wall(t_cub *cub, int start_row, int end_row,float wall_height, int i)
 {
+	const int wall_side = cub->hits[i].texture_idx;
 	int	j;
 	int texture_x;
 	int texture_y;
 	int color;
 
-	texture_x = i % PIXEL_SIZE;
+	texture_x = i % PIXEL_SIZE; //no debe de la pantalla sino de la casilla
     j = start_row;
     while (end_row > j)
     {
         texture_y = (j - start_row) * (PIXEL_SIZE / wall_height);
-        color = cub->textures->text[0][texture_y * PIXEL_SIZE + texture_x];
+        color = cub->textures->text[wall_side][texture_y * PIXEL_SIZE + texture_x];
         put_pixel(i, j, color, cub);
 		j++;
 	}
@@ -113,16 +114,17 @@ static void	texture_wall(t_cub *cub, int start_row, int end_row,float wall_heigh
 
 static void	put_line(t_cub *cub, int i)
 {
+	// const float  dist = cub->hits[i].dist;
 	float	wall_height;
 	int		start_row;
 	int		end_row;
-	int		color;
-	int		texture_x;
-	int		texture_y;
+	// int		color;
+	// int		texture_x;
+	// int		texture_y;
 
 	//
-	if (cub->dist[i] > 0.1)
-		wall_height = (WIN_HEIGHT * 16) / cub->dist[i];
+	if (cub->hits[i].dist > 0.1)
+		wall_height = (WIN_HEIGHT * 16) / cub->hits[i].dist;
 	else
 		wall_height = (WIN_HEIGHT * 16);
 	start_row = ((WIN_HEIGHT - wall_height) / 2);

@@ -46,7 +46,7 @@ int	minimap_init(t_cub *cub)
 	if (!cub->minimap)
 		return (print_error("init_minimap", NULL));
 	mini = cub->minimap;
-	mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_TILE_SIZE;
+	mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_TILE;
 
 	// if (add_path(&mini->path_floor, MINI_F) < 0)
 	// 	return (-1);

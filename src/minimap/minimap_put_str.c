@@ -75,7 +75,7 @@ static char	*get_player_dir_str(t_player *player)
 void	minimap_put_str(t_cub *cub)
 {
 	const int	minimap_start_height = WIN_HEIGHT - cub->map->rows
-			* MINIMAP_TILE_SIZE;
+			* MINIMAP_TILE;
 	char	*str_position;
 	char	*str_vector;
 
