@@ -67,9 +67,7 @@ void	get_distance(t_cub *cub, float cos_f, float sin_f, int i)
 	}
 	cub->hits[i].ray[0] = ray[0];
 	cub->hits[i].ray[1] = ray[1];
-	// cub->dist[i]  = distance(cub, (pl->win_row - ray_row), (pl->win_col - ray_col));
 	cub->hits[i].dist = distance(cub, (pl->win_row - ray[0]), (pl->win_col - ray[1]));
-	// intersection tile
 	cub->hits[i].map_tile[0] = (int)((ray[0] - cub->minimap->start_x) / MINIMAP_TILE);
 	cub->hits[i].map_tile[1] = (int)(ray[1] / MINIMAP_TILE);
 	cub->hits[i].angle = atan2(ray[1], ray[0]); // atan2(sin, cos)

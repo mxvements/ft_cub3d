@@ -5,7 +5,7 @@ static void	texture_ceiling(t_cub *cub, int start_row, int i)
 	int	k;
 
 	k = 0;
-	while (k < start_row)
+	while (k <= start_row)
 	{
 		put_pixel(i, k, cub->textures->ceiling, cub);
 		k++;
@@ -17,7 +17,7 @@ static void	texture_floor(t_cub *cub, int end_row, int i)
 	int	k;
 
 	k = end_row;
-	while (k < WIN_WIDTH)
+	while (k <= WIN_WIDTH)
 	{
 		put_pixel(i, k, cub->textures->floor, cub);
 		k++;
@@ -26,34 +26,39 @@ static void	texture_floor(t_cub *cub, int end_row, int i)
 
 static float	wall_offset(t_cub *cub, int i)
 {
+	const float world_row = (cub->hits[i].ray[0] - cub->minimap->start_x);
+	const float world_col = cub->hits[i].ray[1];
 	const int	collistion_dir = cub->hits[i].collision_dir;
+	float		offset;
 
 	if (collistion_dir == VERTICAL)
-		return (fmod(cub->hits[i].ray[1], MINIMAP_TILE));
+		offset = fmod(world_col, MINIMAP_TILE);
 	else
-		return (fmod(cub->hits[i].ray[0], MINIMAP_TILE));
+		offset = fmod(world_row, MINIMAP_TILE);
+	return (offset);
 }
 
 static void	texture_wall(t_cub *cub, int start_row, int end_row,
 		float wall_height, int i)
 {
-	const int	wall_side = cub->hits[i].texture_idx;
+	const int	side = cub->hits[i].texture_idx;
 	int			j;
-	int			texture_x;
-	int			texture_y;
+	float		tex_x;
+	float		tex_y;
 	int			color;
 
-	printf("Collision dir: %d | Side: %d | Offset: %f\n",
-		cub->hits[i].collision_dir, cub->hits[i].texture_idx, wall_offset(cub,
-			i));
-	texture_x = (int)((wall_offset(cub, i) / MINIMAP_TILE) * PIXEL_SIZE);
-	// no debe de la pantalla sino de la casilla
+	/**
+	 * offset/MINIMAP_TILE gives a float between [0,1] to know 
+	 * at which point in the minimap tile the ray has hit 
+	 */
+	float offset = (wall_offset(cub, i) / MINIMAP_TILE);
+	tex_x = (int)round((wall_offset(cub, i) /MINIMAP_TILE) * PIXEL_SIZE);
+	// printf("offset: %f - texture_x: %f\n", offset, texture_x);
 	j = start_row;
 	while (end_row > j)
 	{
-		texture_y = (j - start_row) * (PIXEL_SIZE / wall_height);
-		color = cub->textures->text[wall_side][texture_y * PIXEL_SIZE
-			+ texture_x];
+		tex_y = (int)round((j - start_row) * (PIXEL_SIZE / wall_height));
+		color = cub->textures->text[side][(int)round(tex_y * PIXEL_SIZE + tex_x)];
 		put_pixel(i, j, color, cub);
 		j++;
 	}
@@ -65,15 +70,10 @@ static void	put_line(t_cub *cub, int i)
 	int		start_row;
 	int		end_row;
 
-	// const float  dist = cub->hits[i].dist;
-	// int		color;
-	// int		texture_x;
-	// int		texture_y;
-	//
 	if (cub->hits[i].dist > 0.1)
-		wall_height = (WIN_HEIGHT * 16) / cub->hits[i].dist;
+		wall_height = (WIN_HEIGHT * MINIMAP_TILE) / cub->hits[i].dist;
 	else
-		wall_height = (WIN_HEIGHT * 16);
+		wall_height = (WIN_HEIGHT * MINIMAP_TILE);
 	start_row = ((WIN_HEIGHT - wall_height) / 2);
 	end_row = (start_row + wall_height);
 	texture_ceiling(cub, start_row, i);

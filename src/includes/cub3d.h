@@ -19,15 +19,14 @@
 # include <errno.h>
 # include <math.h>
 
-# define	WALL_SIDES	4
-# define	MOVE_MAX 1
-# define	DEBUG		1 //for the print_error 
-# define	PIXEL_SIZE	64 // tamaño de imagen en un cuadrado
-# define	IMG_SIZE	10
-# define	WIN_HEIGHT	540
-# define 	WIN_WIDTH	960
+# define	WALL_SIDES		4
+# define	MOVE_MAX 		1
+# define	DEBUG			1 //for the print_error 
+# define	PIXEL_SIZE		64 // tamaño de imagen en un cuadrado
 # define 	MINIMAP_TILE	16
-# define	TILE_SIZE 32
+# define	IMG_SIZE		10
+# define	WIN_HEIGHT		540
+# define 	WIN_WIDTH		960
 
 
 # define PI 3.14159265359
