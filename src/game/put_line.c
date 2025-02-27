@@ -38,6 +38,9 @@ static float	wall_offset(t_cub *cub, int i)
 	return (offset);
 }
 
+//bounds[2] o range[2]
+//start_row -> bound[0]
+//end_row -> bound[1]
 static void	texture_wall(t_cub *cub, int start_row, int end_row,
 		float wall_height, int i)
 {

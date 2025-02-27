@@ -4,21 +4,8 @@ static void	update_map(t_cub *cub, char player_char, float new_pos[2])
 {
 	t_player	*player;
 	int			new_map_pos[2];
-	int			padding;
 
-	player = cub->map->player;
-	// proteccion!
-	if (cub->options.wall_col == 0)
-		padding = 1;
-	else
-		padding = 2;
-	if ((int)new_pos[0]< 0)
-		new_pos[0] = 0;
-	if ((int)new_pos[1] < 0)
-		new_pos[1] = 0;
-	if ((int)new_pos[0]>= (cub->map->rows - padding)
-		|| (int)new_pos[1] >= (cub->map->cols - padding))
-		return ;
+	player = cub->map->player;	
 	// new_pos, con la posicion cambiada de move
 	new_map_pos[0] = (int)(new_pos[0]);
 	new_map_pos[1] = (int)(new_pos[1]);

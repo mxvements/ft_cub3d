@@ -20,10 +20,12 @@ mxvements' libft and gnl
 + https://github.com/Saxsori/ray-cast
 
 # TODO:
-- camara
-- texturas en 3d
-- diferencias bonus de no bonus:
-  - dibujar minimap
-  - colision con muros
-  - rotar con mouse
-  - sprites animados (mover puertas, mover personajes)
+- LU -> comprobar bien los mapas
+  - los colores deben tener proteccion isascii && isdigit y tiene que estar entre 0..255 (letras dan error, negativos dan error)
+   
+- EDU -> precision para ver siempre la pared dentro de la pared
+
+- poner solo un cuadrado del minimapa, limitando lo que vemos, definir el tamaño segun la posicion del player (actualizar info el minimap start_x)
+
+- revisar leaks
+- norminette

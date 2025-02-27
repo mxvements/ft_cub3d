@@ -6,7 +6,7 @@ static void	change_move_speed(int keycode, t_cub *cub)
 
 	if (keycode == KEY_F3)
 	{
-		if (cub->options.move_speed <= 0)
+		if (cub->options.move_speed <= 0.001f)
 			return ;
 		cub->options.move_speed -= move_speed_diff;
 	}
@@ -25,7 +25,7 @@ static void	change_rotate_speed(int keycode, t_cub *cub)
 
 	if (keycode == KEY_F5)
 	{
-		if (cub->options.rotate_speed <= 0)
+		if (cub->options.rotate_speed <= 0.001f)
 			return ;
 		cub->options.rotate_speed -= rotate_speed_diff;
 	}
