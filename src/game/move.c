@@ -22,7 +22,9 @@ static void	update_map(t_cub *cub, char player_char, float new_pos[2])
 	// new_pos, con la posicion cambiada de move
 	new_map_pos[0] = (int)(new_pos[0]);
 	new_map_pos[1] = (int)(new_pos[1]);
-	// en donde esta el payer en el map, metemos el old_char
+	if(new_pos[0] < 0 || new_pos[0] >= cub->map->rows-1 || new_pos[1] < 0 || new_pos[1] >= cub->map->cols-1 ) //menos 1 porque es el la nueva casilla a donde
+		return;
+	//en donde esta el payer en el map, metemos el old_char
 	cub->map->map[(int)player->map_row][(int)player->map_col] = cub->map->old_char;
 	// actualizamos el old_char al que haya en el mapa en la posicion del player
 	cub->map->old_char = cub->map->map[new_map_pos[0]][new_map_pos[1]];
@@ -67,12 +69,7 @@ static void	move_and_update_map(t_cub *cub, float pos[2], float move_x,
 		limit_char = '1';
 	if (cub->map->map[(int)pos[0]][(int)pos[1]] == limit_char)
 		return ;
-	// TODO: do not update map if the player goes out of the map
-	// if (pos[0] == cub->map->rows || pos[1] == cub->map->cols || pos[0] == 0
-	// 	|| pos[1] == 0)
-	// 	return ;
-	update_map(cub, cub->map->map[(int)player->map_row][(int)player->map_col],
-		pos);
+	update_map(cub, cub->map->map[(int)player->map_row][(int)player->map_col], pos);
 }
 
 void	move_and_rotate(t_cub *cub)
