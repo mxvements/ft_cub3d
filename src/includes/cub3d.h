@@ -22,9 +22,8 @@
 # define WALL_SIDES 4
 # define MOVE_MAX 1
 # define DEBUG 1 //for the print_error 
-# define PIXEL_SIZE 64 // tamaño de imagen en un cuadrado
-# define MINIMAP_TILE 16
-# define IMG_SIZE 10
+# define IMG_PX 64 // tamaño de imagen en un cuadrado
+# define MINIMAP_PX 16
 # define WIN_HEIGHT 540
 # define WIN_WIDTH 960
 
@@ -74,7 +73,7 @@ typedef struct s_minimap
 
 typedef struct s_image
 {
-	void	*img;
+	t_img	*img;
 	int		*addr;
 	int		pixel_bits;
 	int		size_line;
@@ -166,7 +165,7 @@ long long	color_str_to_long(char **rgb);
 char		*strtrim_gnl(int fd, char *trim);
 void		clean_gnl(int fd);
 void		free_map(void *data);
-void		free_struct(void **s, void(*free_s)(void *));
+void		free_struct(void **s, void (*free_s)(void *));
 void		free_int_ptr(int **ptr);
 
 /* ERRORS */

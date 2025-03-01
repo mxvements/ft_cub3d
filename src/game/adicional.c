@@ -4,7 +4,7 @@ void	set_image_pixel(t_image *image, int x, int y, int color)
 {
 	int	pixel;
 
-	pixel = y * PIXEL_SIZE + x;
+	pixel = y * IMG_PX + x;
 	image->addr[pixel] = color;
 }
 

@@ -7,9 +7,9 @@ static int	get_player_win(t_cub *cub)
 	player = cub->map->player;
 	if (player->map_row < 0 || player->map_col < 0)
 		return (-1);
-	player->win_row = player->map_row * MINIMAP_TILE
-		+ cub->minimap->start_x + MINIMAP_TILE / 2;
-	player->win_col = player->map_col * MINIMAP_TILE + MINIMAP_TILE
+	player->win_row = player->map_row * MINIMAP_PX
+		+ cub->minimap->start_x + MINIMAP_PX / 2;
+	player->win_col = player->map_col * MINIMAP_PX + MINIMAP_PX
 		/ 2;
 	if (player->win_row > WIN_WIDTH || player->win_col > WIN_HEIGHT)
 		return (-1);
@@ -34,6 +34,8 @@ static int	render_loop(t_cub *cub)
 {
 	t_mlx	*mlx;
 
+	if (!cub || !cub->mlx)
+		return (0);
 	mlx = cub->mlx;
 	clean_window(cub);
 	move_and_rotate(cub);

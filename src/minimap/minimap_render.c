@@ -6,8 +6,8 @@ int	minimap_set_img(t_cub *cub)
 	int			img_size[2];
 
 	mini = cub->minimap;
-	img_size[0] = MINIMAP_TILE;
-	img_size[1] = MINIMAP_TILE;
+	img_size[0] = MINIMAP_PX;
+	img_size[1] = MINIMAP_PX;
 	mini->img_floor = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_F,
 			&img_size[0], &img_size[1]);
 	if (!mini->img_floor)
@@ -26,8 +26,8 @@ int	minimap_set_img(t_cub *cub)
 static int	minimap_choose_tile(t_cub *cub, int i, int j)
 {
 	const t_minimap	*mini = cub->minimap;
-	const int		row = i * MINIMAP_TILE + mini->start_x;
-	const int		col = j * MINIMAP_TILE;
+	const int		row = i * MINIMAP_PX + mini->start_x;
+	const int		col = j * MINIMAP_PX;
 
 	if (cub->map->map[i][j] == ' ')
 		put_tile(cub, mini->img_void, col, row);

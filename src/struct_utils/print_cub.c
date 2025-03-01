@@ -56,7 +56,7 @@ void	print_minimap(t_minimap *minimap)
 	if (minimap->img_floor)
 		printf("img_floor: %p\n", minimap->img_floor);
 }
-
+//print cub options
 void	print_cub(t_cub *cub)
 {
 	printf(YLLW "\n[cub status]\n" RESET);

@@ -3,7 +3,8 @@
 void	put_pixel(int col, int row, int color, t_cub *cub)
 {
 	int	index;
-
+	if (!cub || !cub->mlx)
+		return ;
 	if (col >= WIN_WIDTH || row >= WIN_HEIGHT || row < 0 || col < 0)
 		return ;
 	index = (row * cub->mlx->line_len) + (col * cub->mlx->bpp / 8);
@@ -20,13 +21,15 @@ void	put_tile(t_cub *cub, void *tile_img, int row_offset, int col_offset)
 	int		map[2];
 	int		color;
 
+	if (!cub || !cub->mlx)
+		return ;
 	tile_data = mlx_get_data_addr(tile_img, &tile_bpp, \
 		&util[0], &util[1]);
 	map[1] = 0;
-	while (map[1] < MINIMAP_TILE)
+	while (map[1] < MINIMAP_PX)
 	{
 		map[0] = 0;
-		while (map[0] < MINIMAP_TILE)
+		while (map[0] < MINIMAP_PX)
 		{
 			color = *(int *)(tile_data + (map[1] * util[0] \
 				+ map[0] * (tile_bpp / 8)));

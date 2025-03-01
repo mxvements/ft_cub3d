@@ -27,5 +27,5 @@ mxvements' libft and gnl
 
 - poner solo un cuadrado del minimapa, limitando lo que vemos, definir el tamaño segun la posicion del player (actualizar info el minimap start_x)
 
-- revisar leaks
+- revisar  / invalid reads
 - norminette (casi todo hecho)

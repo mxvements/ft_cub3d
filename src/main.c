@@ -2,6 +2,8 @@
 
 static int	init_map_struct(t_map *map)
 {
+	if (!map)
+		return (0);
 	map->player = (t_player *)ft_calloc(1, sizeof(t_player));
 	if (!map->player)
 		return (print_error("init_map", NULL));
@@ -14,12 +16,25 @@ static int	init_map_struct(t_map *map)
 
 static void	init_texture_struct(t_texture *tx)
 {
+	int	i;
+	if (!tx)
+		return ;
+	ft_memset(tx, 0, sizeof(t_texture));
 	tx->floor = -1;
 	tx->ceiling = -1;
+	i = -1;
+	while (++i < WALL_SIDES)
+	{
+		tx->wall[i] = NULL;
+		tx->text[i] = NULL;
+	}
+	tx->pixel = NULL;
 }
 
 static int	init_cub_struct(t_cub *cub)
 {
+	if (!cub)
+		return (0);
 	cub->map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!cub->map)
 		return (print_error("init_cub", NULL));
@@ -37,6 +52,8 @@ static int	init_cub_struct(t_cub *cub)
 
 static void	init_options(t_cub *cub)
 {
+	if (!cub)
+		return ;
 	cub->options.show_minimap = 0;
 	cub->options.wall_col = 0;
 	cub->options.move_speed = (float)0.1;

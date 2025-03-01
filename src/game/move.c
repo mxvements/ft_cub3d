@@ -1,6 +1,6 @@
 #include "../includes/cub3d.h"
 
-static void	update_map(t_cub *cub, char player_char, float new_pos[2])
+static void	update_map(t_cub *cub, float new_pos[2])
 {
 	t_player	*player;
 	int			new_map_pos[2];
@@ -50,7 +50,7 @@ static void	move_and_update_map(t_cub *cub, float pos[2], float move_x,
 		limit_char = '1';
 	if (cub->map->map[(int)round(pos[0])][(int)round(pos[1])] == limit_char)
 		return ;
-	update_map(cub, cub->map->map[(int)player->map_row][(int)player->map_col], pos);
+	update_map(cub, pos);
 }
 
 void	move_and_rotate(t_cub *cub)

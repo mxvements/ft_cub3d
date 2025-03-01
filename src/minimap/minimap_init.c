@@ -8,6 +8,6 @@ int	minimap_init(t_cub *cub)
 	if (!cub->minimap)
 		return (print_error("init_minimap", NULL));
 	mini = cub->minimap;
-	mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_TILE;
+	mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_PX;
 	return (0);
 }
