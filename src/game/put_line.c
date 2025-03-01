@@ -30,11 +30,11 @@ static void	put_line(t_cub *cub, int i)
 {
 	float	wall_height;
 	int		row[2];
-
-	if (cub->hits[i].dist > 0.1)
-		wall_height = (WIN_HEIGHT * MINIMAP_TILE) / cub->hits[i].dist;
-	else
+	// printf("-->%f\n", cub->hits[i].dist);
+	if (cub->hits[i].dist < 0.01f)
 		wall_height = (WIN_HEIGHT * MINIMAP_TILE);
+	else
+		wall_height = (WIN_HEIGHT * MINIMAP_TILE) / cub->hits[i].dist;
 	row[0] = ((WIN_HEIGHT - wall_height) / 2);
 	row[1] = (row[0] + wall_height);
 	texture_ceiling(cub, row[0], i);

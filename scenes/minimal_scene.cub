@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture.xpm
-SO ./path_to_the_south_texture.xpm
-WE ./path_to_the_west_texture.xpm
-EA ./path_to_the_east_texture.xpm
+NO ./textures/north64x64.xpm
+SO ./textures/chiseled_tuff_top.xpm
+WE ./textures/west64x64.xpm
+EA ./textures/chiseled_tuff_top.xpm
 F 220,100,0
 C 225,30,0
         1111111111111111111111111

@@ -6,8 +6,8 @@ static float	fix_fisheye(t_cub *cub, float delta_row, float delta_col,
 	float	angle;
 	float	fixed_dist;
 
-	if (d < 1.0f)
-		return (0.99f);
+	/* if (d < 1.0f)
+		return (0.99f); */
 	angle = atan2(delta_col, delta_row) - cub->map->player->angle;
 	// POSIBLE BUG on a atan2
 	fixed_dist = fabs(d * cos(angle));
@@ -37,7 +37,7 @@ static void	get_hit_side(t_cub *cub, int i, float prev_ray[2])
 		else
 			cub->hits[i].texture_idx = SOUTH;
 	}
-	else if (prev_tile[1] != cub->hits->map_tile[1])
+	else if (prev_tile[1] != cub->hits[i].map_tile[1])
 	{
 		cub->hits[i].collision_dir = HORIZONTAL;
 		if ((prev_tile[1] - cub->hits[i].map_tile[1]) > 0)
@@ -66,10 +66,8 @@ void	get_distance(t_cub *cub, float cos_f, float sin_f, int i)
 	}
 	cub->hits[i].ray[0] = ray[0];
 	cub->hits[i].ray[1] = ray[1];
-	cub->hits[i].dist = distance(cub, (pl->win_row - ray[0]), \
-		(pl->win_col - ray[1]));
-	cub->hits[i].map_tile[0] = (int)((ray[0] - cub->minimap->start_x) \
-		/ MINIMAP_TILE);
+	cub->hits[i].dist = distance(cub, (pl->win_row - ray[0]), (pl->win_col - ray[1]));
+	cub->hits[i].map_tile[0] = (int)((ray[0] - cub->minimap->start_x) / MINIMAP_TILE);
 	cub->hits[i].map_tile[1] = (int)(ray[1] / MINIMAP_TILE);
 	cub->hits[i].angle = atan2(ray[1], ray[0]);
 	get_hit_side(cub, i, prev_ray);

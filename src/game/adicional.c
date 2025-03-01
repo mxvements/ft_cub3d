@@ -1,6 +1,5 @@
 #include "../includes/cub3d.h"
 
-//este archivo por ahora no lo usamos
 void	set_image_pixel(t_image *image, int x, int y, int color)
 {
 	int	pixel;
