@@ -25,8 +25,8 @@
 # define PIXEL_SIZE 64 // tamaño de imagen en un cuadrado
 # define MINIMAP_TILE 16
 # define IMG_SIZE 10
-# define WIN_HEIGHT 540
-# define WIN_WIDTH 960
+# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1920
 
 # define PI 3.14159265359
 
