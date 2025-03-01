@@ -4,7 +4,7 @@
  *
  * This function calculates texture coordinates for each pixel of the wall 
  * slice and draws the corresponding pixel from the texture onto the screen. 
- * The `offset` and `tex_y` values determine the exact point on the texture 
+ * The `offset` and `tex_x`,`tex_y` values determine the exact point on the texture 
  * based on the ray's intersection with the wall and the wall's height.
  *
  * The `offset` is calculated by dividing the horizontal distance where the 
@@ -65,6 +65,23 @@ static void	put_line(t_cub *cub, int i)
 	texture_floor(cub, row[1], i);
 }
 
+/**
+ * @brief Renders the 3D perspective view of the world based on the player's 
+ * position and orientation.
+ *
+ * This function calculates the distance to walls and objects for each column 
+ * of the screen, simulating a 3D perspective by casting rays from the player's 
+ * position and rendering the corresponding vertical slices of the scene. 
+ * The field of view (FOV) and the player's angle are taken into account 
+ * for correct projection.
+ *
+ * It iterates over each column of the screen and adjusts the ray's angle to 
+ * create the proper perspective, then calls `get_distance` to calculate 
+ * distances and `put_line` to render the walls and objects in the correct 
+ * perspective.
+ *
+ * @param cub The game's context data structure.
+ */
 void	put_perspective(t_cub *cub)
 {
 	t_player	*player;
