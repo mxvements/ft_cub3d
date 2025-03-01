@@ -35,8 +35,6 @@ static int	init_cub_struct(t_cub *cub)
 	return (0);
 }
 
-
-
 static void	init_options(t_cub *cub)
 {
 	cub->options.show_minimap = 0;

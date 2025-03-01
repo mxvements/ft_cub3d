@@ -1,4 +1,3 @@
-
 #include "includes/cub3d.h"
 
 static int	get_player_win(t_cub *cub)
@@ -34,7 +33,7 @@ static void	clean_window(t_cub *cub)
 static int	render_loop(t_cub *cub)
 {
 	t_mlx	*mlx;
-	// printf(YLLW"loop"RESET);
+
 	mlx = cub->mlx;
 	clean_window(cub);
 	move_and_rotate(cub);
@@ -84,7 +83,6 @@ int	init_mlx(t_cub *cub)
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr)
 		return (print_error("init-mlx", NULL));
-	// printf("x-> %d y y-> %d.\n",data->x_max, data->y_max );
 	mlx->win = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	if (!mlx->win)
 		return (print_error("init-mlx", NULL));

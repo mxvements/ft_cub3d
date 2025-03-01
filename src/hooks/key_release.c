@@ -41,7 +41,6 @@ static void	change_rotate_speed(int keycode, t_cub *cub)
 
 static void	handle_options(int keycode, t_cub *cub)
 {
-	// printf("key %d\n", keycode);
 	if (keycode == KEY_O)
 		print_key_options(cub);
 	if (keycode == KEY_i)
@@ -68,7 +67,6 @@ int	key_release(int keycode, t_cub *cub)
 {
 	t_player	*player;
 
-	// printf("key %d\n", keycode);
 	player = cub->map->player;
 	if (keycode == KEY_W)
 		player->move_keys.key_up = 0;

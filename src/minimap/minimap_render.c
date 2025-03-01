@@ -20,9 +20,9 @@ int	minimap_set_img(t_cub *cub)
 			&img_size[0], &img_size[1]);
 	if (!mini->img_wall)
 		return (print_error("set_img", ERR_MINI_IMG));
-	// print_minimap(mini);
 	return (0);
 }
+
 static int	minimap_choose_tile(t_cub *cub, int i, int j)
 {
 	const t_minimap	*mini = cub->minimap;
@@ -53,8 +53,9 @@ static int	minimap_choose_tile(t_cub *cub, int i, int j)
 int	minimap_render(t_cub *cub)
 {
 	t_minimap	*mini;
+	int			i;
+	int			j;
 
-	int i, j;
 	mini = cub->minimap;
 	i = -1;
 	while (cub->map->map[++i])
@@ -67,9 +68,6 @@ int	minimap_render(t_cub *cub)
 	}
 	return (0);
 }
-
-/* ----------------------------------------------------------------------- */
-
 
 void	minimap_put_fov(t_cub *cub, int color_fov)
 {
@@ -98,8 +96,6 @@ void	minimap_put_fov(t_cub *cub, int color_fov)
 	}
 }
 
-/* ----------------------------------------------------------------------- */
-
 void	minimap_put_axis(t_cub *cub, int color_axis)
 {
 	t_player	*player;
@@ -108,7 +104,6 @@ void	minimap_put_axis(t_cub *cub, int color_axis)
 	float		cos_angle;
 	float		sin_angle;
 
-	// printf("minimap_put_axis\n");
 	player = cub->map->player;
 	ray_row = cub->map->player->win_row;
 	ray_col = cub->map->player->win_col;
@@ -118,7 +113,7 @@ void	minimap_put_axis(t_cub *cub, int color_axis)
 		&& cub->options.show_minimap == 1)
 	{
 		put_pixel((int)ray_col, (int)ray_row, color_axis, cub);
-		ray_row += cos_angle; // cos(player->angle)
-		ray_col += sin_angle; // sin(player->angle)
+		ray_row += cos_angle;
+		ray_col += sin_angle;
 	}
 }

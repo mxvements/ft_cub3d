@@ -23,12 +23,11 @@ static int	*xpm_to_img(t_cub *data, char *path)
 	int		x;
 	int		y;
 
-	// printf("tamaño -> %d\n", sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
 	buffer = ft_calloc(PIXEL_SIZE * PIXEL_SIZE, sizeof(int));
 	if (!buffer)
 		return (print_error("xpm_to_img", NULL), NULL);
 	if (init_texture_img(data, &tmp, path) < 0)
-		return (free(buffer),  NULL);
+		return (free(buffer), NULL);
 	if (!tmp.addr)
 	{
 		mlx_destroy_image(data->mlx->mlx_ptr, tmp.img);
@@ -48,10 +47,6 @@ static int	*xpm_to_img(t_cub *data, char *path)
 
 int	init_textures(t_cub *cub)
 {
-	// cub->textures->text = ft_calloc(5, sizeof *cub->textures);
-	// cub->textures->text = ft_calloc(5, sizeof(int *));
-	// if (!cub->textures->text)
-	// 	return (print_error("init_texture", NULL));
 	cub->textures->text[NORTH] = xpm_to_img(cub, cub->textures->wall[NORTH]);
 	if (!cub->textures->text[NORTH])
 		return (-1);
@@ -64,6 +59,5 @@ int	init_textures(t_cub *cub)
 	cub->textures->text[WEST] = xpm_to_img(cub, cub->textures->wall[WEST]);
 	if (!cub->textures->text[WEST])
 		return (-1);
-	// printf("init_textures\n");
 	return (0);
 }

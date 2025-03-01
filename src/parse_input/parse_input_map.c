@@ -65,11 +65,11 @@ static int	get_player(t_map *map, char *line, int row)
 		{
 			map->player->map_row = row;
 			map->player->map_col = player - line;
-			map->player->angle = (PI * i)/2;
+			map->player->angle = (PI * i) / 2;
 			return (0);
 		}
 	}
-	return (1); // TODO: check this, could be a zero
+	return (1);
 }
 
 static int	get_line_data(t_map *map, char *line)

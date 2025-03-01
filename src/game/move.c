@@ -47,9 +47,9 @@ static void	move_and_update_map(t_cub *cub, float pos[2], float move_x,
 
 	speed = cub->options.move_speed;
 	player = cub->map->player;
+
 	pos[0] += speed * move_x;
 	pos[1] += speed * move_y;
-	// put limit here
 	if (cub->options.wall_col == 0)
 		limit_char = ' ';
 	else
@@ -67,6 +67,7 @@ void	move_and_rotate(t_cub *cub)
 	player = cub->map->player;
 	new_pos[0] = player->map_row;
 	new_pos[1] = player->map_col;
+
 	rotate(cub);
 	if (player->move_keys.key_up)
 		move_and_update_map(cub, new_pos, (float)cos(player->angle),

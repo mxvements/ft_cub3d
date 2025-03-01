@@ -73,7 +73,8 @@ PRS=		parse_input.c \
 			check_input_map.c
 			
 PRS_T_DIR=	./src/parse_test/
-PRS_T=		parse_test.c
+PRS_T=		parse_test.c \
+			parse_test_2.c
 
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 

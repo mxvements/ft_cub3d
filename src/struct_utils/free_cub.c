@@ -13,7 +13,6 @@ static void	free_texture(void *data)
 		ft_freenull(&texture->wall[EAST]);
 	if (texture->wall[WEST])
 		ft_freenull(&texture->wall[WEST]);
-
 	if (texture->text[NORTH])
 		free_int_ptr(&texture->text[NORTH]);
 	if (texture->text[SOUTH])
@@ -63,7 +62,7 @@ int	free_cub(t_cub *cub)
 		free(cub->minimap);
 		cub->minimap = NULL;
 	}
-	if (cub->mlx) // always last
+	if (cub->mlx)
 		free_struct((void **)&cub->mlx, free_mlx);
 	return (0);
 }
