@@ -56,8 +56,8 @@ static void	init_options(t_cub *cub)
 		return ;
 	cub->options.show_minimap = 0;
 	cub->options.wall_col = 0;
-	cub->options.move_speed = (float)0.1;
-	cub->options.rotate_speed = (float)PI / 32; // dividir o multiplicar por 4
+	cub->options.move_speed = (float)0.2;
+	cub->options.rotate_speed = (float)PI / 32;
 	cub->options.fov = (float)PI/4;
 }
 
@@ -77,14 +77,11 @@ int	init_cub_game(char *filepath)
 		return (free_cub(&cub), -1);
 	if (init_mlx(&cub) < 0)
 		return (free_cub(&cub), -1);
-	// add images after initializing mlx
 	if (minimap_set_img(&cub) < 0)
 		return (free_cub(&cub), -1);
-	if (init_textures(&cub) < 0) //nuevo
+	if (init_textures(&cub) < 0)
 		return (free_cub(&cub));
-	// start engine
 	init_engine(&cub);
-	// end
 	free_cub(&cub);
 	return (0);
 }
@@ -98,8 +95,7 @@ int	init_cub_game(char *filepath)
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
-		print_error("main", ERR_USE);
-	// parsing test multiple maps
+		return (print_error("main", ERR_USE));
 	if (ft_strncmp(argv[1], "test\0", 5) == 0)
 		return (parse_test());
 	if (init_cub_game(argv[1]) < 0)
