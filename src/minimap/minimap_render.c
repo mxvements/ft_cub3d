@@ -50,70 +50,37 @@ static int	minimap_choose_tile(t_cub *cub, int i, int j)
 	return (0);
 }
 
+static int minimap_bounds(int value)
+{
+	float result;
+	result = (int)round(value - MINIMAP_RADIUS);
+	if (result < 0)
+		return (0);
+	return (result);
+}
+
 int	minimap_render(t_cub *cub)
 {
 	t_minimap	*mini;
 	int			i;
 	int			j;
+	int			start[2];
+	int			end[2];
 
 	mini = cub->minimap;
-	i = -1;
-	while (cub->map->map[++i])
+	start[0] = 0;//minimap_bounds(cub->map->player->map_row - MINIMAP_RADIUS);
+	// start[1] = minimap_bounds(cub->map->player->map_col - MINIMAP_RADIUS);
+	end[0] = 0;//minimap_bounds(cub->map->player->map_row + MINIMAP_RADIUS);
+	// end[1] = minimap_bounds(cub->map->player->map_col + MINIMAP_RADIUS);
+	i = start[0] - 1;
+	while (cub->map->map[++i]) //&&  i <= end[0])
 	{
-		j = -1;
-		while (cub->map->map[i][++j])
+		j = start[1] - 1;
+		while (cub->map->map[i][++j])// && j <= end[1])
 		{
-			minimap_choose_tile(cub, i, j);
+			if (i >= 0 && i < cub->map->rows && j>= 0 && j < cub->map->cols)
+				minimap_choose_tile(cub, i, j);
 		}
 	}
 	return (0);
-}
-
-void	minimap_put_fov(t_cub *cub, int color_fov)
-{
-	float	fraction;
-	float	start_angle;
-	int		screen_col_idx;
-	float	ray_row;
-	float	ray_col;
-
-	fraction = (cub->options.fov) / WIN_WIDTH;
-	start_angle = cub->map->player->angle - (cub->options.fov / 2);
-	screen_col_idx = WIN_WIDTH;
-	while (screen_col_idx > 0)
-	{
-		ray_row = (float)cub->map->player->win_row;
-		ray_col = (float)cub->map->player->win_col;
-		while (!is_touching_wall(ray_col, ray_row, cub)
-			&& cub->options.show_minimap == 1)
-		{
-			put_pixel((int)ray_col, (int)ray_row, color_fov, cub);
-			ray_row += cos(start_angle);
-			ray_col += sin(start_angle);
-		}
-		start_angle += fraction;
-		screen_col_idx--;
-	}
-}
-
-void	minimap_put_axis(t_cub *cub, int color_axis)
-{
-	t_player	*player;
-	float		ray_row;
-	float		ray_col;
-	float		cos_angle;
-	float		sin_angle;
-
-	player = cub->map->player;
-	ray_row = cub->map->player->win_row;
-	ray_col = cub->map->player->win_col;
-	cos_angle = cos(player->angle);
-	sin_angle = sin(player->angle);
-	while (!is_touching_wall(ray_col, ray_row, cub)
-		&& cub->options.show_minimap == 1)
-	{
-		put_pixel((int)ray_col, (int)ray_row, color_axis, cub);
-		ray_row += cos_angle;
-		ray_col += sin_angle;
-	}
 }

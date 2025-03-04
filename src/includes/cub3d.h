@@ -26,6 +26,8 @@
 # define MINIMAP_PX 16
 # define WIN_HEIGHT 540
 # define WIN_WIDTH 960
+# define MINIMAP_RADIUS 7 //tiles
+
 
 # define PI 3.14159265359
 
@@ -65,6 +67,7 @@ typedef struct s_move_keys
 typedef struct s_minimap
 {
 	float	start_x;
+	float	end_y;
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_player;
@@ -221,6 +224,7 @@ void		init_texture_pixels(t_cub *data);
 void		put_pixel(int col, int row, int color, t_cub *cub);
 void		put_tile(t_cub *cub, void *tile_img, int row_offset, \
 			int col_offset);
+void		put_square(int prow, int pcol, int color, t_cub *cub);
 
 /* TEST */
 int			test_colors(void);

@@ -88,6 +88,7 @@ UTILS=		free_cub.c \
 MINIMAP_DIR=	./src/minimap/
 MINIMAP=		minimap_init.c \
 				minimap_render.c \
+				minimap_render_aux.c \
 				minimap_put_str.c
 
 HOOKS_DIR=	./src/hooks/
