@@ -26,7 +26,7 @@
 # define MINIMAP_PX 16
 # define WIN_HEIGHT 540
 # define WIN_WIDTH 960
-# define MINIMAP_RADIUS 7 //tiles
+# define MINIMAP_RADIUS 8 //tiles
 
 
 # define PI 3.14159265359
@@ -224,6 +224,8 @@ void		init_texture_pixels(t_cub *data);
 void		put_pixel(int col, int row, int color, t_cub *cub);
 void		put_tile(t_cub *cub, void *tile_img, int row_offset, \
 			int col_offset);
+void	put_partial_tile(t_cub *cub, void *tile_img, int row_offset,
+		int col_offset);
 void		put_square(int prow, int pcol, int color, t_cub *cub);
 
 /* TEST */

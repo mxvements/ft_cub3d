@@ -1,5 +1,7 @@
 #include "../includes/cub3d.h"
 
+
+
 void	minimap_put_player(t_cub *cub, int color)
 {
 	t_player	*player;
