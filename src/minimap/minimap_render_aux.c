@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_render_aux.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:16 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:17 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static void	sum_player_relative_position(t_cub *cub, float *r, float *c)
@@ -48,7 +60,7 @@ void	minimap_put_fov(t_cub *cub, int color_fov)
 			px[1] = (ray[1] - cub->map->player->win_col);
 			sum_player_relative_position(cub, &px[0], &px[1]);
 			if (is_on_minimap_bounds(cub, px[0], px[1]))
-				put_pixel((int)px[1], (int)px[0], color_fov, cub);
+				put_pixel((int)floor(px[1]), (int)floor(px[0]), color_fov, cub);
 			ray[0] += cos(start_angle);
 			ray[1] += sin(start_angle);
 		}
