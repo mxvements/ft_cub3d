@@ -26,7 +26,7 @@
 # define MINIMAP_PX 16
 # define WIN_HEIGHT 540
 # define WIN_WIDTH 960
-# define MINIMAP_RADIUS 8 //tiles
+# define MINIMAP_RADIUS 10 //tiles
 
 
 # define PI 3.14159265359

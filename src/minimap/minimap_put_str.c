@@ -71,8 +71,7 @@ static char	*get_player_dir_str(t_player *player)
 
 void	minimap_put_str(t_cub *cub)
 {
-	const int	minimap_start_height = WIN_HEIGHT - cub->map->rows \
-			* MINIMAP_PX;
+	const int	start_x = cub->minimap->start_x;
 	char		*str_position;
 	char		*str_vector;
 
@@ -85,9 +84,9 @@ void	minimap_put_str(t_cub *cub)
 		free(str_position);
 		return ;
 	}
-	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
+	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, start_x
 		+ 16, 0xFF1100, (char *)str_position);
-	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
+	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, start_x
 		+ 32, 0xFF1100, (char *)str_vector);
 	free(str_position);
 	free(str_vector);

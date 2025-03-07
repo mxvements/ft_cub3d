@@ -2,15 +2,14 @@
 
 static int	get_player_win(t_cub *cub)
 {
+	const float start_x = cub->minimap->start_x;
 	t_player	*player;
 
 	player = cub->map->player;
 	if (player->map_row < 0 || player->map_col < 0)
 		return (-1);
-	player->win_row = player->map_row * MINIMAP_PX
-		+ cub->minimap->start_x + MINIMAP_PX / 2;
-	player->win_col = player->map_col * MINIMAP_PX + MINIMAP_PX
-		/ 2;
+	player->win_row = player->map_row * MINIMAP_PX + start_x + MINIMAP_PX / 2;
+	player->win_col = player->map_col * MINIMAP_PX + MINIMAP_PX / 2;
 	if (player->win_row > WIN_WIDTH || player->win_col > WIN_HEIGHT)
 		return (-1);
 	return (0);
@@ -46,9 +45,9 @@ static int	render_loop(t_cub *cub)
 	if (cub->options.show_minimap == 1)
 	{
 		minimap_render(cub);
-		minimap_put_fov(cub, 0xAA6666);
-		minimap_put_player(cub, 0xFF0000);
-		minimap_put_axis(cub, 0xFF0000);
+		minimap_put_fov(cub, 0xD6D3D1);
+		minimap_put_axis(cub, 0xA8A29E);
+		minimap_put_player(cub, 0xEF4444);
 	}
 	// at the end, put img to window, all at once
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
