@@ -1,7 +1,7 @@
 #include "../includes/cub3d.h"
 
 int	print_error(char *origin, char *custom_msg)
-{	
+{
 	printf(RED"Error\n");
 	if (DEBUG == 1)
 		printf(RED"%s - "RESET, origin);

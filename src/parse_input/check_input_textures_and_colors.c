@@ -8,7 +8,6 @@ int	is_file_extension(char *filepath, char *extension)
 	int			i;
 
 	i = 0;
-	// printf("%s\n", filepath + start);
 	while (filepath[start + i])
 	{
 		if (filepath[start + i] - extension[i] != 0)
@@ -60,7 +59,7 @@ int	is_player(t_player *player)
 
 int	is_player_on_edge(t_map *map, t_player *player)
 {
-	if (player->map_row == 0 || player->map_col == 0 
+	if (player->map_row == 0 || player->map_col == 0 \
 		|| player->map_row == map->rows || player->map_col == map->cols)
 		return (print_error("is_player", ERR_PL_EDGE));
 	return (0);

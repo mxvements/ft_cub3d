@@ -73,7 +73,8 @@ PRS=		parse_input.c \
 			check_input_map.c
 			
 PRS_T_DIR=	./src/parse_test/
-PRS_T=		parse_test.c
+PRS_T=		parse_test.c \
+			parse_test_2.c
 
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 
@@ -87,6 +88,7 @@ UTILS=		free_cub.c \
 MINIMAP_DIR=	./src/minimap/
 MINIMAP=		minimap_init.c \
 				minimap_render.c \
+				minimap_render_aux.c \
 				minimap_put_str.c
 
 HOOKS_DIR=	./src/hooks/
@@ -217,6 +219,7 @@ clean:
 	make clean -C $(MLX_DIR)
 	@echo "$(PINK)[$(NAME)]	Removing $(OBJ_DIR)...$(RESET_COLOR)"
 	rm -rf $(OBJ)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo "$(BOLD)$(ORANGE)[$(NAME)]	fCleaning libft...$(RESET_COLOR)"

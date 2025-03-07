@@ -29,7 +29,7 @@ int	parse_input(t_cub *cub, char *filepath)
 	{
 		clean_gnl(cub->fd);
 		close(cub->fd);
-		return (-1); 
+		return (-1);
 	}
 	clean_gnl(cub->fd);
 	close(cub->fd);

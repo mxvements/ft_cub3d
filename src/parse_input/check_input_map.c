@@ -67,3 +67,12 @@ int	is_map_eof(int fd)
 	}
 	return (0);
 }
+
+char	*get_prefix(int i)
+{
+	const char	*prefix[WALL_SIDES + 2] = {"NO", "SO", "WE", "EA", "F", "C"};
+
+	if (i < (WALL_SIDES + 2))
+		return ((char *)prefix[i]);
+	return (NULL);
+}

@@ -1,13 +1,14 @@
 #include "../includes/cub3d.h"
 
+//TODO: delete this
 int	minimap_set_img(t_cub *cub)
 {
 	t_minimap	*mini;
 	int			img_size[2];
 
 	mini = cub->minimap;
-	img_size[0] = MINIMAP_TILE_SIZE;
-	img_size[1] = MINIMAP_TILE_SIZE;
+	img_size[0] = MINIMAP_PX;
+	img_size[1] = MINIMAP_PX;
 	mini->img_floor = mlx_xpm_file_to_image(cub->mlx->mlx_ptr, MINI_F,
 			&img_size[0], &img_size[1]);
 	if (!mini->img_floor)
@@ -20,105 +21,81 @@ int	minimap_set_img(t_cub *cub)
 			&img_size[0], &img_size[1]);
 	if (!mini->img_wall)
 		return (print_error("set_img", ERR_MINI_IMG));
-	// print_minimap(mini);
 	return (0);
 }
-static int	minimap_choose_tile(t_cub *cub, int i, int j)
+
+// static int	minimap_choose_tile(t_cub *cub, int i, int j)
+// {
+// 	const t_minimap	*mini = cub->minimap;
+// 	const int		row = (i - cub->map->player->map_row + MINIMAP_RADIUS / 2)
+// 				* MINIMAP_PX + mini->start_x;
+// 	const int		col = (j - cub->map->player->map_col + MINIMAP_RADIUS / 2)
+// 				* MINIMAP_PX;
+// 	if (cub->map->map[i][j] == ' ')
+// 		put_partial_tile(cub, mini->img_void, col, row);
+// 	else if (cub->map->map[i][j] == '1')
+// 		put_partial_tile(cub, mini->img_wall, col, row);
+// 	else if (cub->map->map[i][j] == '0')
+// 		put_partial_tile(cub, mini->img_floor, col, row);
+// 	else if (cub->map->map[i][j] == 'N' || cub->map->map[i][j] == 'E'
+// 		|| cub->map->map[i][j] == 'S' || cub->map->map[i][j] == 'W')
+// 	{
+// 		if (cub->map->old_char == '0')
+// 			put_partial_tile(cub, mini->img_floor, col, row);
+// 		else if (cub->map->old_char == '1')
+// 			put_partial_tile(cub, mini->img_wall, col, row);
+// 		else
+// 			return (print_error("render_minimap", ERR_MAP_CHAR));
+// 	}
+// 	else
+// 		return (print_error("render_minimap", ERR_MAP_CHAR));
+// 	return (0);
+// }
+
+static int	minimap_choose_pixel(t_cub *cub, float r, float c)
 {
 	const t_minimap	*mini = cub->minimap;
-	const int		row = i * MINIMAP_TILE_SIZE + mini->start_x;
-	const int		col = j * MINIMAP_TILE_SIZE;
+	int				color;
+	char			map_char;
+	const float		row = (cub->map->player->win_row - cub->minimap->start_x - ((MINIMAP_RADIUS * MINIMAP_PX) / 2) + r - cub->minimap->start_x) / MINIMAP_PX;
+	const float		col = (cub->map->player->win_col - ((MINIMAP_RADIUS * MINIMAP_PX) / 2) + c) / MINIMAP_PX;
 
-	if (cub->map->map[i][j] == ' ')
-		put_tile(cub, mini->img_void, col, row);
-	else if (cub->map->map[i][j] == '1')
-		put_tile(cub, mini->img_wall, col, row);
-	else if (cub->map->map[i][j] == '0')
-		put_tile(cub, mini->img_floor, col, row);
-	else if (cub->map->map[i][j] == 'N' || cub->map->map[i][j] == 'E'
-		|| cub->map->map[i][j] == 'S' || cub->map->map[i][j] == 'W')
-	{
-		if (cub->map->old_char == '0')
-			put_tile(cub, mini->img_floor, col, row);
-		else if (cub->map->old_char == '1')
-			put_tile(cub, mini->img_wall, col, row);
-		else
-			return (print_error("render_minimap", ERR_MAP_CHAR));
-	}
+	if (row < 0 || col < 0 || row >= cub->map->rows || col >= cub->map->cols)
+		return (0);
+	map_char = cub->map->map[(int)(row)][(int)(col)];
+	// get color from map
+	if (map_char == ' ')
+		color = 0x000000;
+	else if (map_char == '1')
+		color = 0x5d79a1;
+	else if (map_char == '0')
+		color = 0xdbbeaf;
+	else if (map_char == 'N' || map_char == 'E' || map_char == 'S'
+		|| map_char == 'W')
+		color = 0xdbbeaf;
 	else
 		return (print_error("render_minimap", ERR_MAP_CHAR));
+	// put pixel
+	put_pixel(c, r, color, cub);
 	return (0);
 }
 
 int	minimap_render(t_cub *cub)
 {
 	t_minimap	*mini;
+	int			r;
+	int			c;
 
-	int i, j;
 	mini = cub->minimap;
-	i = -1;
-	while (cub->map->map[++i])
+	r = -1 + cub->minimap->start_x;
+	while (++r < WIN_HEIGHT)
 	{
-		j = -1;
-		while (cub->map->map[i][++j])
+		c = -1;
+		while (++c < MINIMAP_RADIUS * MINIMAP_PX)
 		{
-			minimap_choose_tile(cub, i, j);
+			put_pixel(c, r, 0x000000, cub);
+			minimap_choose_pixel(cub, r, c);
 		}
 	}
 	return (0);
-}
-
-/* ----------------------------------------------------------------------- */
-
-
-void	minimap_put_fov(t_cub *cub, int color_fov)
-{
-	float	fraction;
-	float	start_angle;
-	int		screen_col_idx;
-	float	ray_row;
-	float	ray_col;
-
-	fraction = (cub->options.fov * 3) / WIN_WIDTH;
-	start_angle = cub->map->player->angle - cub->options.fov;
-	screen_col_idx = WIN_WIDTH;
-	while (screen_col_idx > 0)
-	{
-		ray_row = (float)cub->map->player->win_row;
-		ray_col = (float)cub->map->player->win_col;
-		while (!is_touching_wall(ray_col, ray_row, cub)
-			&& cub->options.show_minimap == 1)
-		{
-			put_pixel((int)ray_col, (int)ray_row, color_fov, cub);
-			ray_row += cos(start_angle);
-			ray_col += sin(start_angle);
-		}
-		start_angle += fraction;
-		screen_col_idx--;
-	}
-}
-
-/* ----------------------------------------------------------------------- */
-
-void	minimap_put_axis(t_cub *cub, int color_axis)
-{
-	t_player	*player;
-	float		ray_row;
-	float		ray_col;
-	float		cos_angle;
-	float		sin_angle;
-
-	// printf("minimap_put_axis\n");
-	player = cub->map->player;
-	ray_row = cub->map->player->win_row;
-	ray_col = cub->map->player->win_col;
-	cos_angle = cos(player->angle);
-	sin_angle = sin(player->angle);
-	while (!is_touching_wall(ray_col, ray_row, cub)
-		&& cub->options.show_minimap == 1)
-	{
-		put_pixel((int)ray_col, (int)ray_row, color_axis, cub);
-		ray_row += cos_angle; // cos(player->angle)
-		ray_col += sin_angle; // sin(player->angle)
-	}
 }
