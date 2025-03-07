@@ -12,10 +12,10 @@ void	free_map(void *data)
 
 	map = data;
 	if (map->map)
-		strarr_freenull(&map->map); // TODO: revisar esta funcion
+		strarr_freenull(&map->map);
 	if (map->player)
 	{
-		free(map->player); // it just has floats and int
+		free(map->player);
 		map->player = NULL;
 	}
 }

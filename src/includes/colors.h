@@ -1,5 +1,5 @@
 #ifndef COLORS_H
-#define COLORS_H
+# define COLORS_H
 
 // Color: Foreground (text)
 # define BLACK "\x1B[30m"

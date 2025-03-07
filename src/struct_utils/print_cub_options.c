@@ -1,6 +1,6 @@
 #include "../includes/cub3d.h"
 
-void print_options_status(t_options *options)
+void	print_options_status(t_options *options)
 {
 	printf(YLLW "\n[options status]\n" RESET);
 	printf("wall collisions\t %d\n", options->wall_col);

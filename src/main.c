@@ -2,6 +2,8 @@
 
 static int	init_map_struct(t_map *map)
 {
+	if (!map)
+		return (0);
 	map->player = (t_player *)ft_calloc(1, sizeof(t_player));
 	if (!map->player)
 		return (print_error("init_map", NULL));
@@ -14,12 +16,25 @@ static int	init_map_struct(t_map *map)
 
 static void	init_texture_struct(t_texture *tx)
 {
+	int	i;
+	if (!tx)
+		return ;
+	ft_memset(tx, 0, sizeof(t_texture));
 	tx->floor = -1;
 	tx->ceiling = -1;
+	i = -1;
+	while (++i < WALL_SIDES)
+	{
+		tx->wall[i] = NULL;
+		tx->text[i] = NULL;
+	}
+	tx->pixel = NULL;
 }
 
 static int	init_cub_struct(t_cub *cub)
 {
+	if (!cub)
+		return (0);
 	cub->map = (t_map *)ft_calloc(1, sizeof(t_map));
 	if (!cub->map)
 		return (print_error("init_cub", NULL));
@@ -35,15 +50,15 @@ static int	init_cub_struct(t_cub *cub)
 	return (0);
 }
 
-
-
 static void	init_options(t_cub *cub)
 {
+	if (!cub)
+		return ;
 	cub->options.show_minimap = 0;
 	cub->options.wall_col = 0;
-	cub->options.move_speed = (float)0.1;
-	cub->options.rotate_speed = (float)PI / 32; // dividir o multiplicar por 4
-	cub->options.fov = (float)PI/6;
+	cub->options.move_speed = (float)0.2;
+	cub->options.rotate_speed = (float)PI / 32;
+	cub->options.fov = (float)PI/4;
 }
 
 int	init_cub_game(char *filepath)
@@ -62,14 +77,11 @@ int	init_cub_game(char *filepath)
 		return (free_cub(&cub), -1);
 	if (init_mlx(&cub) < 0)
 		return (free_cub(&cub), -1);
-	// add images after initializing mlx
 	if (minimap_set_img(&cub) < 0)
 		return (free_cub(&cub), -1);
-	if (init_textures(&cub) < 0) //nuevo
+	if (init_textures(&cub) < 0)
 		return (free_cub(&cub));
-	// start engine
 	init_engine(&cub);
-	// end
 	free_cub(&cub);
 	return (0);
 }
@@ -83,8 +95,7 @@ int	init_cub_game(char *filepath)
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
-		print_error("main", ERR_USE);
-	// parsing test multiple maps
+		return (print_error("main", ERR_USE));
 	if (ft_strncmp(argv[1], "test\0", 5) == 0)
 		return (parse_test());
 	if (init_cub_game(argv[1]) < 0)
