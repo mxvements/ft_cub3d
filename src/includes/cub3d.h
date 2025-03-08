@@ -6,7 +6,7 @@
 /*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:06:45 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/08 11:42:10 by zlu              ###   ########.fr       */
+/*   Updated: 2025/03/08 12:37:54 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <math.h>
 
 # define WALL_SIDES 4
-# define MOVE_MAX 1
+# define MOVE_MAX 0.5f
 # define DEBUG 1
 # define IMG_PX 64
 # define MINIMAP_PX 16

@@ -6,7 +6,7 @@
 /*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:04:54 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/08 10:58:09 by zlu              ###   ########.fr       */
+/*   Updated: 2025/03/08 13:06:06 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	change_rotate_speed(int keycode, t_cub *cub)
 	}
 	else if (keycode == KEY_F6)
 	{
-		if (cub->options.rotate_speed >= PI * 2)
+		if (cub->options.rotate_speed >= PI / 8)
 			return ;
 		cub->options.rotate_speed += rotate_speed_diff;
 	}

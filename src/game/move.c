@@ -6,7 +6,7 @@
 /*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:04:44 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/08 11:32:32 by zlu              ###   ########.fr       */
+/*   Updated: 2025/03/08 12:58:30 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ static void	move_and_update_map(t_cub *cub, float pos[2], float move_x,
 		limit_char = ' ';
 	else
 		limit_char = '1';
+	if (pos[0] < 0 || pos[0] >= cub->map->rows - 1 \
+		|| pos[1] < 0 || pos[1] >= cub->map->cols - 1)
+		return ;
 	if (cub->map->map[(int)round(pos[0])][(int)round(pos[1])] == limit_char)
 		return ;
 	update_map(cub, pos);
