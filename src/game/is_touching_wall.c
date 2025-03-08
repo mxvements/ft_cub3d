@@ -6,7 +6,7 @@
 /*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:04:36 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/08 11:29:21 by zlu              ###   ########.fr       */
+/*   Updated: 2025/03/08 15:32:40 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	is_touching_wall(float pcol, float prow, t_cub *cub)
 	int	j;
 	int	i;
 
-	i = ((prow - cub->minimap->start_x) / MINIMAP_PX);
-	j = (pcol / MINIMAP_PX);
-	if (cub->map->map[i][j] == '1')
-		return (1);
+	i = (int)((prow - cub->minimap->start_x) / MINIMAP_PX);
+	j = (int)(pcol / MINIMAP_PX);
 	if (i < 0 || i >= cub->map->rows || j < 0 || j >= cub->map->cols)
+		return (1);
+	if (cub->map->map[i][j] == '1')
 		return (1);
 	return (0);
 }

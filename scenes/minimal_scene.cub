@@ -1,9 +1,9 @@
-NO ./textures/north64x64.xpm
+NO ./textures/ladrillo64.xpm
 SO ./textures/chiseled_tuff_top.xpm
-WE ./textures/west64x64.xpm
-EA ./textures/chiseled_tuff_top.xpm
-F 220,100,0
-C 225,30,0
+WE ./textures/wood64.xpm
+EA ./textures/blue64.xpm
+F 141,132,131
+C 135,206,235
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001
