@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linux_keys.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:06:51 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:06:52 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:57:29 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../../minilibx-linux/mlx_int.h"
 //LINUX->KEYSYM
-//https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h
 # define KEY_ESC		XK_Escape
 # define KEY_TAB		XK_KP_Tab
 # define KEY_ENTER		XK_KP_Enter
@@ -37,7 +36,7 @@
 # define KEY_S			XK_s
 # define KEY_D			XK_d
 # define KEY_O			XK_o
-# define KEY_i			XK_i
+# define KEY_I			XK_i
 # define KEY_LEFT		XK_Left
 # define KEY_RIGHT		XK_Right
 # define KEY_DOWN		XK_Down

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:06:13 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:06:14 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:21:31 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	get_player_win(t_cub *cub)
 {
-	const float start_x = cub->minimap->start_x;
+	const float	start_x = cub->minimap->start_x;
 	t_player	*player;
 
 	player = cub->map->player;
@@ -52,8 +52,7 @@ static int	render_loop(t_cub *cub)
 	move_and_rotate(cub);
 	if (get_player_win(cub) < 0)
 		return (0);
-	// TODO: controlar que el player este dentro de la ventana/mapa
-	put_perspective(cub); // puts rays calculates distance and draws perpective
+	put_perspective(cub);
 	if (cub->options.show_minimap == 1)
 	{
 		minimap_render(cub);
@@ -61,7 +60,6 @@ static int	render_loop(t_cub *cub)
 		minimap_put_axis(cub, 0xA8A29E);
 		minimap_put_player(cub, 0xEF4444);
 	}
-	// at the end, put img to window, all at once
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img, 0, 0);
 	if (cub->options.show_minimap == 1)
 		minimap_put_str(cub);

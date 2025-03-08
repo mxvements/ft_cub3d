@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_render_aux.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:05:16 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:05:17 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:09:22 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	sum_player_relative_position(t_cub *cub, float *r, float *c)
 
 static int	is_on_minimap_bounds(t_cub *cub, float r, float c)
 {
-	if (r < cub->minimap->start_x || r  >= WIN_HEIGHT)
+	if (r < cub->minimap->start_x || r >= WIN_HEIGHT)
 		return (0);
 	if (c < 0 || c >= (MINIMAP_RADIUS * MINIMAP_PX))
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_release.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:04:54 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:04:55 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:58:09 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	handle_options(int keycode, t_cub *cub)
 {
 	if (keycode == KEY_O)
 		print_key_options(cub);
-	if (keycode == KEY_i)
+	if (keycode == KEY_I)
 		print_cub(cub);
 	if (keycode == KEY_SP)
 		print_options_status(&cub->options);

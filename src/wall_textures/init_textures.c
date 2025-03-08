@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:06:05 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:06:06 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:19:39 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	*xpm_to_img(t_cub *data, char *path)
 	mlx_destroy_image(data->mlx->mlx_ptr, tmp.img);
 	return (buffer);
 }
+
 int	init_textures(t_cub *cub)
 {
 	cub->textures->text[NORTH] = xpm_to_img(cub, cub->textures->wall[NORTH]);

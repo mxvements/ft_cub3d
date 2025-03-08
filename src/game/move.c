@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:04:44 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:04:45 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:32:32 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ static void	update_map(t_cub *cub, float new_pos[2])
 	player = cub->map->player;
 	new_map_pos[0] = (int)(new_pos[0]);
 	new_map_pos[1] = (int)(new_pos[1]);
-	if(cub->map->map[new_map_pos[0]][new_map_pos[1]])
-	if(new_pos[0] < 0 || new_pos[0] >= cub->map->rows-1 || new_pos[1] < 0 || new_pos[1] >= cub->map->cols-1 )
-		return;
+	if (cub->map->map[new_map_pos[0]][new_map_pos[1]])
+		if (new_pos[0] < 0 || new_pos[0] >= cub->map->rows - 1 \
+			|| new_pos[1] < 0 || new_pos[1] >= cub->map->cols - 1)
+			return ;
 	player->map_row = (float)new_pos[0];
 	player->map_col = (float)new_pos[1];
 }
@@ -53,7 +54,6 @@ static void	move_and_update_map(t_cub *cub, float pos[2], float move_x,
 
 	speed = cub->options.move_speed;
 	player = cub->map->player;
-
 	pos[0] += speed * move_x;
 	pos[1] += speed * move_y;
 	if (cub->options.wall_col == 0)

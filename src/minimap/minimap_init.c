@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 20:05:11 by luciama2          #+#    #+#             */
-/*   Updated: 2025/03/07 20:05:12 by luciama2         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:55:01 by zlu              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	minimap_init(t_cub *cub)
 	if (!cub->minimap)
 		return (print_error("init_minimap", NULL));
 	mini = cub->minimap;
-	// // mini->start_x = WIN_HEIGHT - cub->map->rows * MINIMAP_PX;
 	mini->start_x = WIN_HEIGHT - (MINIMAP_RADIUS * MINIMAP_PX);
-	mini->end_y = MINIMAP_RADIUS * MINIMAP_PX;
 	return (0);
 }
