@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:04:44 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/10 18:16:58 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static void	update_map(t_cub *cub, float new_pos[2])
@@ -8,9 +20,10 @@ static void	update_map(t_cub *cub, float new_pos[2])
 	player = cub->map->player;
 	new_map_pos[0] = (int)(new_pos[0]);
 	new_map_pos[1] = (int)(new_pos[1]);
-	if(cub->map->map[new_map_pos[0]][new_map_pos[1]])
-	if(new_pos[0] < 0 || new_pos[0] >= cub->map->rows-1 || new_pos[1] < 0 || new_pos[1] >= cub->map->cols-1 )
-		return;
+	if (cub->map->map[new_map_pos[0]][new_map_pos[1]])
+		if (new_pos[0] < 0 || new_pos[0] >= cub->map->rows - 1 \
+			|| new_pos[1] < 0 || new_pos[1] >= cub->map->cols - 1)
+			return ;
 	player->map_row = (float)new_pos[0];
 	player->map_col = (float)new_pos[1];
 }
@@ -36,19 +49,26 @@ static void	move_and_update_map(t_cub *cub, float pos[2], float move_x,
 		float move_y)
 {
 	t_player	*player;
+	float		old[2];
 	float		speed;
 	char		limit_char;
 
 	speed = cub->options.move_speed;
 	player = cub->map->player;
-
+	old[0] = pos[0];
+	old[1] = pos[1];
 	pos[0] += speed * move_x;
 	pos[1] += speed * move_y;
 	if (cub->options.wall_col == 0)
 		limit_char = ' ';
 	else
 		limit_char = '1';
-	if (cub->map->map[(int)round(pos[0])][(int)round(pos[1])] == limit_char)
+	if (pos[0] < 0 || pos[0] >= cub->map->rows - 1 \
+		|| pos[1] < 0 || pos[1] >= cub->map->cols - 1)
+		return ;
+	if (cub->map->map[(int)round(pos[0])][(int)round(pos[1])] == limit_char
+		|| (cub->map->map[(int)round(pos[0])][(int)round(old[1])] == limit_char
+		&& cub->map->map[(int)round(old[0])][(int)round(pos[1])] == limit_char))
 		return ;
 	update_map(cub, pos);
 }
