@@ -1,38 +1,4 @@
 
-# LIB=minilibx-linux/libmlx_Linux.a
-# CC=gcc
-# CFLAGS=-Wall -Wextra -Werror -Imlx
-
-# SOFLAGS= -Lmlx -L/usr/lib -Imlx -lXext -lX11 -lm
-
-# # rules
-# all: $(NAME)
-
-# Libft/libft.a : 
-# 	@make bonus -C Libft/
-# 	@make -C minilibx-linux/
-
-# $(NAME):$(OBJ) Libft/libft.a 
-# 	$(CC) $^ $(LIB) $(SOFLAGS) -o $(NAME)
-
-# $(OBJ_DIR)%.o: $(SRC_PATH)%.c
-# 	@mkdir -p $(OBJ_DIR)
-# 	$(CC) $(CFLAGS) -c $< -o $@
-
-# clean:
-# 	rm -rf $(OBJ)
-# 	rm -rf $(OBJ_DIR)
-# 	@make -C Libft/ clean
-# 	@make -C minilibx-linux/ clean
-# fclean: clean
-# 	rm -f $(NAME)
-# 	@make -C Libft/ fclean
-# re: fclean all
-# 	@meke -C Libft/ re
-# .PHONY: all re fclean clean
-
-# compilation variables
-
 CC=			cc
 NAME=		cub3D
 CFLAGS=		-Wall -Wextra -g3 -O3
@@ -54,6 +20,7 @@ RESET_COLOR = \033[0m
 
 SRC_DIR=	./src/
 SRC=		main.c\
+			init_game.c\
 			game.c
 			
 
@@ -73,7 +40,8 @@ PRS=		parse_input.c \
 			check_input_map.c
 			
 PRS_T_DIR=	./src/parse_test/
-PRS_T=		parse_test.c
+PRS_T=		parse_test.c \
+			parse_test_2.c
 
 ERR_DIR=	./src/errors/
 ERR=		print_error.c 
@@ -87,6 +55,7 @@ UTILS=		free_cub.c \
 MINIMAP_DIR=	./src/minimap/
 MINIMAP=		minimap_init.c \
 				minimap_render.c \
+				minimap_render_aux.c \
 				minimap_put_str.c
 
 HOOKS_DIR=	./src/hooks/

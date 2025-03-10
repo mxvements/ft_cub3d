@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap_put_str.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:13 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:14 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 // util function, to add to libft
@@ -15,7 +27,6 @@ char	*ft_concat(char *first, ...)
 	current = va_arg(vargs, char *);
 	while (current)
 	{
-		// printf("current: %s\n", current);
 		tmp = ft_strdup(rslt);
 		if (!tmp)
 			return (free(rslt), NULL);
@@ -47,7 +58,6 @@ static char	*get_player_pos_str(t_player *player)
 	free(y);
 	if (!rslt)
 		return (NULL);
-	// printf("playe dir: %s\n", rslt);
 	return (rslt);
 }
 
@@ -68,16 +78,14 @@ static char	*get_player_dir_str(t_player *player)
 	free(y);
 	if (!rslt)
 		return (NULL);
-	// printf("playe dir: %s\n", rslt);
 	return (rslt);
 }
 
 void	minimap_put_str(t_cub *cub)
 {
-	const int	minimap_start_height = WIN_HEIGHT - cub->map->rows
-			* MINIMAP_TILE;
-	char	*str_position;
-	char	*str_vector;
+	const int	start_x = cub->minimap->start_x;
+	char		*str_position;
+	char		*str_vector;
 
 	str_position = get_player_pos_str(cub->map->player);
 	if (!str_position)
@@ -88,10 +96,9 @@ void	minimap_put_str(t_cub *cub)
 		free(str_position);
 		return ;
 	}
-	// print_player(cub->map->player);
-	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
+	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, start_x
 		+ 16, 0xFF1100, (char *)str_position);
-	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, minimap_start_height
+	mlx_string_put(cub->mlx->mlx_ptr, cub->mlx->win, 0, start_x
 		+ 32, 0xFF1100, (char *)str_vector);
 	free(str_position);
 	free(str_vector);

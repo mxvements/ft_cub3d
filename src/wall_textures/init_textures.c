@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_textures.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:06:05 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/08 11:19:39 by zlu              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static int	init_texture_img(t_cub *data, t_image *image, char *path)
@@ -15,7 +27,6 @@ static int	init_texture_img(t_cub *data, t_image *image, char *path)
 	return (0);
 }
 
-// BUG: leaks!
 static int	*xpm_to_img(t_cub *data, char *path)
 {
 	t_image	tmp;
@@ -23,12 +34,11 @@ static int	*xpm_to_img(t_cub *data, char *path)
 	int		x;
 	int		y;
 
-	// printf("tamaño -> %d\n", sizeof * buffer * PIXEL_SIZE * PIXEL_SIZE);
-	buffer = ft_calloc(PIXEL_SIZE * PIXEL_SIZE, sizeof(int));
+	buffer = ft_calloc(IMG_PX * IMG_PX, sizeof(int));
 	if (!buffer)
 		return (print_error("xpm_to_img", NULL), NULL);
 	if (init_texture_img(data, &tmp, path) < 0)
-		return (free(buffer),  NULL);
+		return (free(buffer), NULL);
 	if (!tmp.addr)
 	{
 		mlx_destroy_image(data->mlx->mlx_ptr, tmp.img);
@@ -36,11 +46,11 @@ static int	*xpm_to_img(t_cub *data, char *path)
 		return (print_error("xpm_to_img", "Failed to get texture data."), NULL);
 	}
 	y = -1;
-	while (++y < PIXEL_SIZE)
+	while (++y < IMG_PX)
 	{
 		x = -1;
-		while (++x < PIXEL_SIZE)
-			buffer[y * PIXEL_SIZE + x] = tmp.addr[y * PIXEL_SIZE + x];
+		while (++x < IMG_PX)
+			buffer[y * IMG_PX + x] = tmp.addr[y * IMG_PX + x];
 	}
 	mlx_destroy_image(data->mlx->mlx_ptr, tmp.img);
 	return (buffer);
@@ -48,10 +58,6 @@ static int	*xpm_to_img(t_cub *data, char *path)
 
 int	init_textures(t_cub *cub)
 {
-	// cub->textures->text = ft_calloc(5, sizeof *cub->textures);
-	// cub->textures->text = ft_calloc(5, sizeof(int *));
-	// if (!cub->textures->text)
-	// 	return (print_error("init_texture", NULL));
 	cub->textures->text[NORTH] = xpm_to_img(cub, cub->textures->wall[NORTH]);
 	if (!cub->textures->text[NORTH])
 		return (-1);
@@ -64,6 +70,5 @@ int	init_textures(t_cub *cub)
 	cub->textures->text[WEST] = xpm_to_img(cub, cub->textures->wall[WEST]);
 	if (!cub->textures->text[WEST])
 		return (-1);
-	// printf("init_textures\n");
 	return (0);
 }

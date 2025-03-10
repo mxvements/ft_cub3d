@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_input_map.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:27 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:28 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 /**
@@ -66,4 +78,13 @@ int	is_map_eof(int fd)
 		free(line);
 	}
 	return (0);
+}
+
+char	*get_prefix(int i)
+{
+	const char	*prefix[WALL_SIDES + 2] = {"NO", "SO", "WE", "EA", "F", "C"};
+
+	if (i < (WALL_SIDES + 2))
+		return ((char *)prefix[i]);
+	return (NULL);
 }

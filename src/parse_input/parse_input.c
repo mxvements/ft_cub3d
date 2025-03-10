@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:38 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:39 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 /**
@@ -29,7 +41,7 @@ int	parse_input(t_cub *cub, char *filepath)
 	{
 		clean_gnl(cub->fd);
 		close(cub->fd);
-		return (-1); 
+		return (-1);
 	}
 	clean_gnl(cub->fd);
 	close(cub->fd);

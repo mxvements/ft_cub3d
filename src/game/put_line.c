@@ -1,67 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   put_line.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:04:49 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/08 11:35:25 by zlu              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
-static void	texture_ceiling(t_cub *cub, int start_row, int i)
-{
-	int	k;
-
-	k = 0;
-	while (k <= start_row)
-	{
-		put_pixel(i, k, cub->textures->ceiling, cub);
-		k++;
-	}
-}
-
-static void	texture_floor(t_cub *cub, int end_row, int i)
-{
-	int	k;
-
-	k = end_row;
-	while (k <= WIN_WIDTH)
-	{
-		put_pixel(i, k, cub->textures->floor, cub);
-		k++;
-	}
-}
-
-static float	wall_offset(t_cub *cub, int i)
-{
-	const float world_row = (cub->hits[i].ray[0] - cub->minimap->start_x);
-	const float world_col = cub->hits[i].ray[1];
-	const int	collistion_dir = cub->hits[i].collision_dir;
-	float		offset;
-
-	if (collistion_dir == VERTICAL)
-		offset = fmod(world_col, MINIMAP_TILE);
-	else
-		offset = fmod(world_row, MINIMAP_TILE);
-	return (offset);
-}
-
-//bounds[2] o range[2]
-//start_row -> bound[0]
-//end_row -> bound[1]
-static void	texture_wall(t_cub *cub, int start_row, int end_row,
-		float wall_height, int i)
+static void	texture_wall(t_cub *cub, int row[2], float wall_height, int i)
 {
 	const int	side = cub->hits[i].texture_idx;
 	int			j;
-	float		tex_x;
-	float		tex_y;
+	float		tex[2];
 	int			color;
+	float		offset;
 
-	/**
-	 * offset/MINIMAP_TILE gives a float between [0,1] to know 
-	 * at which point in the minimap tile the ray has hit 
-	 */
-	float offset = (wall_offset(cub, i) / MINIMAP_TILE);
-	tex_x = (int)round((wall_offset(cub, i) /MINIMAP_TILE) * PIXEL_SIZE);
-	// printf("offset: %f - texture_x: %f\n", offset, texture_x);
-	j = start_row;
-	while (end_row > j)
+	offset = (wall_offset(cub, i) / MINIMAP_PX);
+	tex[0] = (int)round((wall_offset(cub, i) / MINIMAP_PX) * IMG_PX);
+	j = row[0];
+	while (row[1] > j)
 	{
-		tex_y = (int)round((j - start_row) * (PIXEL_SIZE / wall_height));
-		color = cub->textures->text[side][(int)round(tex_y * PIXEL_SIZE + tex_x)];
+		tex[1] = (int)round((j - row[0]) * (IMG_PX / wall_height));
+		if (side < 0 || side >= WALL_SIDES || ((tex[1] * IMG_PX) + tex[0]) < 0)
+			color = 0x000000;
+		else if (((tex[1] * IMG_PX) + tex[0]) > IMG_PX * IMG_PX - 1)
+			color = cub->textures->text[side][(int)round(IMG_PX * IMG_PX - 1)];
+		else
+			color = cub->textures->text[side] \
+				[(int)round((tex[1] * IMG_PX) + tex[0])];
 		put_pixel(i, j, color, cub);
 		j++;
 	}
@@ -70,18 +41,17 @@ static void	texture_wall(t_cub *cub, int start_row, int end_row,
 static void	put_line(t_cub *cub, int i)
 {
 	float	wall_height;
-	int		start_row;
-	int		end_row;
+	int		row[2];
 
-	if (cub->hits[i].dist > 0.1)
-		wall_height = (WIN_HEIGHT * MINIMAP_TILE) / cub->hits[i].dist;
+	if (cub->hits[i].dist < 0.01f)
+		wall_height = (WIN_HEIGHT * MINIMAP_PX);
 	else
-		wall_height = (WIN_HEIGHT * MINIMAP_TILE);
-	start_row = ((WIN_HEIGHT - wall_height) / 2);
-	end_row = (start_row + wall_height);
-	texture_ceiling(cub, start_row, i);
-	texture_wall(cub, start_row, end_row, wall_height, i);
-	texture_floor(cub, end_row, i);
+		wall_height = (WIN_HEIGHT * MINIMAP_PX) / cub->hits[i].dist;
+	row[0] = ((WIN_HEIGHT - wall_height) / 2);
+	row[1] = (row[0] + wall_height);
+	texture_ceiling(cub, row[0], i);
+	texture_wall(cub, row, wall_height, i);
+	texture_floor(cub, row[1], i);
 }
 
 void	put_perspective(t_cub *cub)

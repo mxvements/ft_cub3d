@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_input_map.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:33 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:34 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 /**
@@ -65,11 +77,11 @@ static int	get_player(t_map *map, char *line, int row)
 		{
 			map->player->map_row = row;
 			map->player->map_col = player - line;
-			map->player->angle = (PI * i)/2;
+			map->player->angle = (PI * i) / 2;
 			return (0);
 		}
 	}
-	return (1); // TODO: check this, could be a zero
+	return (1);
 }
 
 static int	get_line_data(t_map *map, char *line)
@@ -137,7 +149,7 @@ int	parse_map(t_map *map, int fd)
 		return (-1);
 	if (normalize_map(map) < 0)
 		return (-1);
-	map->size = PIXEL_SIZE;
+	map->size = IMG_PX;
 	map->old_char = '0';
 	if (check_map(map) < 0)
 		return (-1);

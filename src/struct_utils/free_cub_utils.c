@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_cub_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:53 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:54 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	free_int_ptr(int **ptr)
@@ -12,10 +24,10 @@ void	free_map(void *data)
 
 	map = data;
 	if (map->map)
-		strarr_freenull(&map->map); // TODO: revisar esta funcion
+		strarr_freenull(&map->map);
 	if (map->player)
 	{
-		free(map->player); // it just has floats and int
+		free(map->player);
 		map->player = NULL;
 	}
 }
