@@ -1,22 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_input_textures_and_colors.c                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:35 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:36 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static char	*get_err_msg(int i)
 {
-	const char	*err_msg[WALL_SIDES + 2] = {ERR_TXT_NORTH, ERR_TXT_SOUTH,
+	const char	*err_msg[WALL_SIDES + 2] = {ERR_TXT_NORTH, ERR_TXT_SOUTH, \
 			ERR_TXT_WEST, ERR_TXT_EAST, ERR_COL_F, ERR_COL_C};
 
 	if (i >= (WALL_SIDES + 2))
 		return (NULL);
 	return ((char *)err_msg[i]);
-}
-
-static char	*get_prefix(int i)
-{
-	const char	*prefix[WALL_SIDES + 2] = {"NO", "SO", "WE", "EA", "F", "C"};
-
-	if (i < (WALL_SIDES + 2))
-		return ((char *)prefix[i]);
-	return (NULL);
 }
 
 static int	save_texture(int j, char *line, t_texture *tx)

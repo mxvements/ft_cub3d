@@ -1,9 +1,9 @@
-      NO      ./path_to_the_north_texture.xpm
-WE ./path_to_the_west_texture.xpm
+      NO      ./textures/north64x64.xpm
+WE ./textures/west64x64.xpm
 
-SO ./path_to_the_south_texture.xpm
-C          0,   0,     0
-EA ./path_to_the_east_texture.xpm
+SO ./textures/south64x64.xpm
+C          50,   0,     0
+EA ./textures/east64x64.xpm
 F 220,100,0
 
         1111111111111111111111111

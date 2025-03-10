@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_cub_options.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:59 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:06:00 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
-void print_options_status(t_options *options)
+void	print_options_status(t_options *options)
 {
 	printf(YLLW "\n[options status]\n" RESET);
 	printf("wall collisions\t %d\n", options->wall_col);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_cub.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:06:01 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/08 11:41:11 by zlu              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	print_player(t_player *pl)
@@ -62,8 +74,6 @@ void	print_cub(t_cub *cub)
 	printf(YLLW "\n[cub status]\n" RESET);
 	if (cub->fd)
 		printf("cub fd:%d\n", cub->fd);
-	if (cub->map)
-		print_map(cub->map);
 	if (cub->textures)
 		print_texture(cub->textures);
 	if (cub->minimap)

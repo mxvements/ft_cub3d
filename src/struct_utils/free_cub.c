@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_cub.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luciama2 <luciama2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:05:56 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/07 20:05:57 by luciama2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static void	free_texture(void *data)
@@ -13,19 +25,14 @@ static void	free_texture(void *data)
 		ft_freenull(&texture->wall[EAST]);
 	if (texture->wall[WEST])
 		ft_freenull(&texture->wall[WEST]);
-	// if (texture->text)
-	// {
-		if (texture->text[NORTH])
-			free_int_ptr(&texture->text[NORTH]);
-		if (texture->text[SOUTH])
-			free_int_ptr(&texture->text[SOUTH]);
-		if (texture->text[EAST])
-			free_int_ptr(&texture->text[EAST]);
-		if (texture->text[WEST])
-			free_int_ptr(&texture->text[WEST]);
-		// free(texture->text);
-		// texture->text = NULL;
-	// }
+	if (texture->text[NORTH])
+		free_int_ptr(&texture->text[NORTH]);
+	if (texture->text[SOUTH])
+		free_int_ptr(&texture->text[SOUTH]);
+	if (texture->text[EAST])
+		free_int_ptr(&texture->text[EAST]);
+	if (texture->text[WEST])
+		free_int_ptr(&texture->text[WEST]);
 }
 
 static void	free_minimap(t_mlx *mlx, t_minimap *minimap)
@@ -67,7 +74,7 @@ int	free_cub(t_cub *cub)
 		free(cub->minimap);
 		cub->minimap = NULL;
 	}
-	if (cub->mlx) // always last
+	if (cub->mlx)
 		free_struct((void **)&cub->mlx, free_mlx);
 	return (0);
 }
