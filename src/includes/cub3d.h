@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zlu <zlu@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 20:06:45 by luciama2          #+#    #+#             */
+/*   Updated: 2025/03/08 12:37:54 by zlu              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # include "../../gnl/get_next_line.h"
 # include "../../libft/libft.h"
 # include "../../minilibx-linux/mlx.h"
-# include "minimap.h"
 # include "colors.h"
 # include "error_msg.h"
 # include "linux_keys.h"
@@ -20,15 +31,13 @@
 # include <math.h>
 
 # define WALL_SIDES 4
-# define MOVE_MAX 1
-# define DEBUG 1 //for the print_error 
-# define IMG_PX 64 // tamaño de imagen en un cuadrado
+# define MOVE_MAX 0.5f
+# define DEBUG 1
+# define IMG_PX 64
 # define MINIMAP_PX 16
 # define WIN_HEIGHT 540
 # define WIN_WIDTH 960
-# define MINIMAP_RADIUS 10 //tiles
-
-
+# define MINIMAP_RADIUS 10
 # define PI 3.14159265359
 
 enum			e_texture_index
@@ -67,7 +76,6 @@ typedef struct s_move_keys
 typedef struct s_minimap
 {
 	float	start_x;
-	float	end_y;
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_player;
@@ -126,7 +134,7 @@ typedef struct s_options
 typedef struct s_hit
 {
 	float	dist;
-	int		map_tile[2]; //[0] == row, [1] == col
+	int		map_tile[2];
 	float	ray[2];
 	float	angle;
 	int		texture_idx;
@@ -183,7 +191,7 @@ void		print_minimap(t_minimap *minimap);
 void		print_map(t_map *map);
 void		print_options_status(t_options *options);
 void		print_key_options(t_cub *cub);
-char		*ft_concat(char *first, ...); // at add_minimap.c
+char		*ft_concat(char *first, ...);
 
 /* PARSING TEST */
 int			parse_test(void);
@@ -207,7 +215,6 @@ int			win_close(t_cub *cub);
 int			minimap_init(t_cub *cub);
 int			minimap_render(t_cub *cub);
 void		minimap_put_str(t_cub *cub);
-int			minimap_set_img(t_cub *cub);
 void		minimap_put_player(t_cub *cub, int color);
 void		minimap_put_axis(t_cub *cub, int color_axis);
 void		minimap_put_fov(t_cub *cub, int color_fov);
@@ -222,10 +229,6 @@ void		init_texture_pixels(t_cub *data);
 
 /* DRAW */
 void		put_pixel(int col, int row, int color, t_cub *cub);
-void		put_tile(t_cub *cub, void *tile_img, int row_offset, \
-			int col_offset);
-void	put_partial_tile(t_cub *cub, void *tile_img, int row_offset,
-		int col_offset);
 void		put_square(int prow, int pcol, int color, t_cub *cub);
 
 /* TEST */

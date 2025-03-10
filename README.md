@@ -23,9 +23,9 @@ mxvements' libft and gnl
 - LU -> comprobar bien los mapas
   - los colores deben tener proteccion isascii && isdigit y tiene que estar entre 0..255 (letras dan error, negativos dan error) -> OK
    
-- EDU -> precision para ver siempre la pared dentro de la pared
+- EDU -> precision para ver siempre la pared dentro de la pared-> OK
 
-- poner solo un cuadrado del minimapa, limitando lo que vemos, definir el tamaño segun la posicion del player (actualizar info el minimap start_x)
+- poner solo un cuadrado del minimapa, limitando lo que vemos, definir el tamaño segun la posicion del player (actualizar info el minimap start_x)-> OK
 
 - LU -> revisar  / invalid reads -> OK
-- norminette (casi todo hecho)
+- norminette -> OK
